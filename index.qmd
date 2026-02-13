@@ -75,22 +75,22 @@ illustrate practical trade-offs.
 
 ## Standard Logistic Selectivity {#sec-logistic}
 
-Full section: [Standard Logistic Selectivity](logistic_selectivity.html).
+{{< embed logistic_selectivity.qmd >}}
 
 
 ## Double Logistic Selectivity {#sec-double-logistic}
 
-Full section: [Double Logistic Selectivity](double_logistic_selectivity.html).
+{{< embed double_logistic_selectivity.qmd >}}
 
 
 ## Spline-Based Selectivity {#sec-spline}
 
-Full section: [Spline-Based Selectivity](spline_selectivity.html).
+{{< embed spline_selectivity.qmd >}}
 
 
 ## Time-Varying Selectivity with 2D Autoregressive Structure {#sec-timevarying}
 
-Full section: [Time-Varying Selectivity with 2D Autoregressive Structure](timevarying_selectivity.html).
+{{< embed timevarying_selectivity.qmd >}}
 
 
 ## Comparison and Discussion {#sec-discussion}

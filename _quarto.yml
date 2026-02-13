@@ -8,6 +8,9 @@ project:
     - spline_selectivity.qmd
     - timevarying_selectivity.qmd
 
+filters:
+  - filters/remove_embedded_markdown_source.lua
+
 format:
   html:
     lightbox: false

@@ -5,7 +5,6 @@ format:
   html:
     toc: true
     number-sections: true
-    embed-resources: true
 execute:
   echo: false
   message: false

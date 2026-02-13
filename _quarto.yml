@@ -16,18 +16,8 @@ format:
   html:
     toc: true
     number-sections: true
-    embed-resources: true
     theme: cosmo
     css: style.css
-  pdf:
-    documentclass: article
-    number-sections: true
-    geometry:
-      - margin=1in
-    keep-tex: false
-  docx:
-    toc: true
-    number-sections: true
 
 execute:
   echo: false
@@ -36,4 +26,3 @@ execute:
   freeze: auto
 
 bibliography: references.bib
-csl: canadian-journal-of-fisheries-and-aquatic-sciences.csl

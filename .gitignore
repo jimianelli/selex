@@ -3,7 +3,7 @@ _manuscript/
 *.html
 *.pdf
 .quarto/
-_freeze/
+# _freeze/ must be committed for freeze: true to work in CI
 .Rhistory
 .RData
 .Rproj.user

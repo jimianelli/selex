@@ -35,7 +35,7 @@ function of age (or size) and are among the most influential---yet least
 observable---components of stock assessment models. The assumed shape of the
 selectivity curve directly affects estimates of spawning biomass, recruitment, and
 fishing mortality, and misspecification can propagate into biased reference points
-and management advice [@punt2024; @deriso1996].
+and management advice [@punt2013; @thompson1994].
 
 Despite its importance, selectivity is often treated as a modelling convenience
 rather than a biological or technological quantity to be estimated carefully. Most

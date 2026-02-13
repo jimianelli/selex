@@ -1,15 +1,6 @@
 ---
 title: "Double Logistic Selectivity (3-parameter formulation)"
 subtitle: "Parameterization, sensitivity, and prior elicitation via RTMB"
-lightbox: true
-format:
-  html:
-    toc: true
-    number-sections: true
-execute:
-  echo: false
-  message: false
-  warning: false
 ---
 
 ## Overview

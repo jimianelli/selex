@@ -1,14 +1,6 @@
 ---
 title: "Spline-Based Selectivity"
 subtitle: "Penalized B-spline selectivity with smoothness control"
-format:
-  html:
-    toc: true
-    number-sections: true
-execute:
-  echo: false
-  message: false
-  warning: false
 ---
 
 ## Overview

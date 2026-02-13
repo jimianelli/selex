@@ -1,14 +1,6 @@
 ---
 title: "Standard Logistic Selectivity"
 subtitle: "Two-parameter ascending logistic formulation"
-format:
-  html:
-    toc: true
-    number-sections: true
-execute:
-  echo: false
-  message: false
-  warning: false
 ---
 
 ## Overview

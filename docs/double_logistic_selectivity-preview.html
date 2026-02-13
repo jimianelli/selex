@@ -178,7 +178,7 @@
      <header id="title-block-header" class="quarto-title-block default toc-left page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
-      <h1 class="title">Double Logistic Selectivity (3-parameter formulation)</h1>
+      <div class="quarto-title-block"><div><h1 class="title">Double Logistic Selectivity (3-parameter formulation)</h1><button type="button" class="btn code-tools-button dropdown-toggle" id="quarto-code-tools-menu" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi"></i> Code</button><ul class="dropdown-menu dropdown-menu-end" aria-labelelledby="quarto-code-tools-menu"><li><a id="quarto-show-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Show All Code</a></li><li><a id="quarto-hide-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Hide All Code</a></li><li><hr class="dropdown-divider"></li><li><a id="quarto-view-source" class="dropdown-item" href="javascript:void(0)" role="button">View Source</a></li></ul></div></div>
             <p class="subtitle lead">Parameterization, sensitivity, and prior elicitation via RTMB</p>
           </div>
 
@@ -263,9 +263,12 @@
 </section>
 <section id="scenarios" class="level2">
 <h2 class="anchored" data-anchor-id="scenarios">Scenarios</h2>
-<div class="cell-container"><div class="cell-decorator"><pre>In [1]:</pre></div><div class="cell">
+<div class="cell-container code-fold"><div class="cell-decorator"><pre>In [1]:</pre></div><div class="cell">
+<details class="code-fold">
+<summary>Show code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
 <div class="cell-output cell-output-stderr">
 <pre><code>
 Attaching package: 'dplyr'</code></pre>
@@ -280,6 +283,8 @@ Attaching package: 'dplyr'</code></pre>
 
     intersect, setdiff, setequal, union</code></pre>
 </div>
+<details class="code-fold">
+<summary>Show code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyr)</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(patchwork)</span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -332,12 +337,16 @@ Attaching package: 'dplyr'</code></pre>
 <span id="cb5-50"><a href="#cb5-50" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
 <span id="cb5-51"><a href="#cb5-51" aria-hidden="true" tabindex="-1"></a>    <span class="at">label =</span> <span class="fu">sprintf</span>(<span class="st">"%s</span><span class="sc">\n</span><span class="st">(p1=%.1f, p2=%.1f, p3=%.1f)"</span>, scenario, p1, p2, p3)</span>
 <span id="cb5-52"><a href="#cb5-52" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
 </div></div>
-<div class="cell-container"><div class="cell-decorator"><pre>In [2]:</pre></div><div class="cell">
+<div class="cell-container code-fold"><div class="cell-decorator"><pre>In [2]:</pre></div><div class="cell">
+<details class="code-fold">
+<summary>Show code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(</span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  scenarios,</span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">digits =</span> <span class="dv">2</span></span>
 <span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
 <div class="cell-container"><div class="cell-decorator"><pre>In [3]:</pre></div><div id="tbl-dl-scenarios" class="cell quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-tbl figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-dl-scenarios-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -433,7 +442,9 @@ Scenario parameters and derived inflection points
 <section id="faceted-scenario-curves" class="level2">
 <h2 class="anchored" data-anchor-id="faceted-scenario-curves">Faceted scenario curves</h2>
 <p>Each scenario appears on its own panel in <span class="citation" data-cites="fig-dl-faceted">(<a href="#ref-fig-dl-faceted" role="doc-biblioref"><strong>fig-dl-faceted?</strong></a>)</span> so the ascent, descent, and dome width can be compared against the 50% and 95% reference lines.</p>
-<div class="cell-container"><div class="cell-decorator"><pre>In [4]:</pre></div><div id="cell-fig-dl-faceted" class="cell">
+<div class="cell-container code-fold"><div class="cell-decorator"><pre>In [4]:</pre></div><div id="cell-fig-dl-faceted" class="cell">
+<details class="code-fold">
+<summary>Show code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>p1_plot <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(sel_data, <span class="fu">aes</span>(<span class="at">x =</span> age, <span class="at">y =</span> selectivity)) <span class="sc">+</span></span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">linewidth =</span> <span class="fl">1.2</span>, <span class="at">color =</span> <span class="st">"steelblue"</span>) <span class="sc">+</span></span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="fu">c</span>(<span class="fl">0.5</span>, <span class="fl">0.95</span>), <span class="at">linetype =</span> <span class="st">"dashed"</span>,</span>
@@ -460,6 +471,7 @@ Scenario parameters and derived inflection points
 <span id="cb7-24"><a href="#cb7-24" aria-hidden="true" tabindex="-1"></a>  )</span>
 <span id="cb7-25"><a href="#cb7-25" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb7-26"><a href="#cb7-26" aria-hidden="true" tabindex="-1"></a>p1_plot</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
 <div class="cell-output-display">
 <div id="fig-dl-faceted" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
@@ -477,7 +489,9 @@ Double logistic selectivity for each parameter scenario.
 <section id="overlay-comparison" class="level2">
 <h2 class="anchored" data-anchor-id="overlay-comparison">Overlay comparison</h2>
 <p>All scenarios are overlaid in <span class="citation" data-cites="fig-dl-overlay">(<a href="#ref-fig-dl-overlay" role="doc-biblioref"><strong>fig-dl-overlay?</strong></a>)</span> to highlight differences in peak age and decline shape when the curves are viewed on a common axis.</p>
-<div class="cell-container"><div class="cell-decorator"><pre>In [5]:</pre></div><div id="cell-fig-dl-overlay" class="cell">
+<div class="cell-container code-fold"><div class="cell-decorator"><pre>In [5]:</pre></div><div id="cell-fig-dl-overlay" class="cell">
+<details class="code-fold">
+<summary>Show code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>p2_plot <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(sel_data, <span class="fu">aes</span>(<span class="at">x =</span> age, <span class="at">y =</span> selectivity, <span class="at">color =</span> scenario)) <span class="sc">+</span></span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">linewidth =</span> <span class="fl">1.2</span>) <span class="sc">+</span></span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="fu">c</span>(<span class="fl">0.5</span>, <span class="fl">0.95</span>), <span class="at">linetype =</span> <span class="st">"dashed"</span>,</span>
@@ -499,6 +513,7 @@ Double logistic selectivity for each parameter scenario.
 <span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a>  )</span>
 <span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb8-21"><a href="#cb8-21" aria-hidden="true" tabindex="-1"></a>p2_plot</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
 <div class="cell-output-display">
 <div id="fig-dl-overlay" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
@@ -516,7 +531,9 @@ All scenarios overlaid for direct comparison.
 <section id="parameter-sensitivity-analysis" class="level2">
 <h2 class="anchored" data-anchor-id="parameter-sensitivity-analysis">Parameter sensitivity analysis</h2>
 <p>The three panels in <span class="citation" data-cites="fig-dl-sensitivity">(<a href="#ref-fig-dl-sensitivity" role="doc-biblioref"><strong>fig-dl-sensitivity?</strong></a>)</span> show how each parameter changes the curve when the other two are held fixed.</p>
-<div class="cell-container"><div class="cell-decorator"><pre>In [6]:</pre></div><div id="cell-fig-dl-sensitivity" class="cell">
+<div class="cell-container code-fold"><div class="cell-decorator"><pre>In [6]:</pre></div><div id="cell-fig-dl-sensitivity" class="cell">
+<details class="code-fold">
+<summary>Show code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>p1_vary <span class="ot">&lt;-</span> <span class="fu">expand_grid</span>(</span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">p1 =</span> <span class="fu">seq</span>(<span class="fl">0.5</span>, <span class="dv">3</span>, <span class="at">by =</span> <span class="fl">0.5</span>),</span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">p2 =</span> <span class="dv">5</span>,</span>
@@ -584,6 +601,7 @@ All scenarios overlaid for direct comparison.
 <span id="cb9-65"><a href="#cb9-65" aria-hidden="true" tabindex="-1"></a>  )</span>
 <span id="cb9-66"><a href="#cb9-66" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb9-67"><a href="#cb9-67" aria-hidden="true" tabindex="-1"></a>p_sensitivity</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
 <div class="cell-output-display">
 <div id="fig-dl-sensitivity" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
@@ -609,7 +627,9 @@ Sensitivity to p1, p2, and p3 with other parameters fixed.
 \mu = \log(m), \qquad \sigma = \sqrt{\log(\text{CV}^2 + 1)}.
 \]</span></p>
 <p>Parameter <span class="math inline">\(p_2\)</span> can remain unconstrained (normal prior) or be modeled on the log scale if you want to enforce <span class="math inline">\(p_2 &gt; 0\)</span>.</p>
-<div class="cell-container"><div class="cell-decorator"><pre>In [7]:</pre></div><div class="cell">
+<div class="cell-container code-fold"><div class="cell-decorator"><pre>In [7]:</pre></div><div class="cell">
+<details class="code-fold">
+<summary>Show code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(RTMB)</span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>dbl_logistic_sel <span class="ot">&lt;-</span> <span class="cf">function</span>(age, p1, p2, p3) {</span>
@@ -698,10 +718,14 @@ Sensitivity to p1, p2, and p3 with other parameters fixed.
 <span id="cb10-86"><a href="#cb10-86" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb10-87"><a href="#cb10-87" aria-hidden="true" tabindex="-1"></a>obj <span class="ot">&lt;-</span> <span class="fu">make_obj</span>(data, parameters)</span>
 <span id="cb10-88"><a href="#cb10-88" aria-hidden="true" tabindex="-1"></a>opt <span class="ot">&lt;-</span> <span class="fu">nlminb</span>(obj<span class="sc">$</span>par, obj<span class="sc">$</span>fn, obj<span class="sc">$</span>gr)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>outer mgc:  0 </code></pre>
 </div>
+<details class="code-fold">
+<summary>Show code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>sdrep <span class="ot">&lt;-</span> <span class="fu">sdreport</span>(obj)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>outer mgc:  0 
 outer mgc:  0.006737636 
@@ -716,11 +740,16 @@ outer mgc:  2.5 </code></pre>
 </section>
 <section id="mcmc-evaluation" class="level2">
 <h2 class="anchored" data-anchor-id="mcmc-evaluation">MCMC evaluation</h2>
-<div class="cell-container"><div class="cell-decorator"><pre>In [8]:</pre></div><div class="cell">
+<div class="cell-container code-fold"><div class="cell-decorator"><pre>In [8]:</pre></div><div class="cell">
+<details class="code-fold">
+<summary>Show code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(SparseNUTS)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
 <div class="cell-output cell-output-stderr">
 <pre><code>Loading required package: StanEstimators</code></pre>
 </div>
+<details class="code-fold">
+<summary>Show code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>run_snuts <span class="ot">&lt;-</span> <span class="cf">function</span>(obj, data, <span class="at">seed =</span> <span class="dv">1</span>, <span class="at">model_name =</span> <span class="st">"selectivity"</span>) {</span>
 <span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">sample_snuts</span>(</span>
 <span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>    obj,</span>
@@ -736,6 +765,7 @@ outer mgc:  2.5 </code></pre>
 <span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a>}</span>
 <span id="cb16-14"><a href="#cb16-14" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb16-15"><a href="#cb16-15" aria-hidden="true" tabindex="-1"></a>fit_set1 <span class="ot">&lt;-</span> <span class="fu">run_snuts</span>(obj, data, <span class="at">seed =</span> <span class="dv">1</span>, <span class="at">model_name =</span> <span class="st">"selectivity_set1"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
 <div class="cell-output cell-output-stderr">
 <pre><code>Optimizing...</code></pre>
 </div>
@@ -773,7 +803,9 @@ Minimum ESS=360.7 (31.37%), and maximum Rhat=1.015
 There were 0 divergences after warmup</code></pre>
 </div>
 </div></div>
-<div class="cell-container"><div class="cell-decorator"><pre>In [9]:</pre></div><div class="cell">
+<div class="cell-container code-fold"><div class="cell-decorator"><pre>In [9]:</pre></div><div class="cell">
+<details class="code-fold">
+<summary>Show code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>mcmc_selectivity_df <span class="ot">&lt;-</span> <span class="cf">function</span>(fit, age) {</span>
 <span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>  p1 <span class="ot">&lt;-</span> <span class="fu">exp</span>(fit<span class="sc">$</span>samples[, , <span class="dv">1</span>])</span>
 <span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>  p2 <span class="ot">&lt;-</span> fit<span class="sc">$</span>samples[, , <span class="dv">2</span>]</span>
@@ -792,9 +824,13 @@ There were 0 divergences after warmup</code></pre>
 <span id="cb23-16"><a href="#cb23-16" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_line</span>(<span class="at">alpha =</span> alpha) <span class="sc">+</span></span>
 <span id="cb23-17"><a href="#cb23-17" aria-hidden="true" tabindex="-1"></a>    ggthemes<span class="sc">::</span><span class="fu">theme_few</span>()</span>
 <span id="cb23-18"><a href="#cb23-18" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
 </div></div>
-<div class="cell-container"><div class="cell-decorator"><pre>In [10]:</pre></div><div id="cell-fig-dl-marginals" class="cell">
+<div class="cell-container code-fold"><div class="cell-decorator"><pre>In [10]:</pre></div><div id="cell-fig-dl-marginals" class="cell">
+<details class="code-fold">
+<summary>Show code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>SparseNUTS<span class="sc">::</span><span class="fu">plot_marginals</span>(fit_set1, <span class="at">pars =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
 <div class="cell-output-display">
 <div id="fig-dl-marginals" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
@@ -810,8 +846,11 @@ Marginal posterior distributions for selectivity parameters (SparseNUTS, prior s
 </div></div>
 <p>The marginal posterior densities in <span class="citation" data-cites="fig-dl-marginals">(<a href="#ref-fig-dl-marginals" role="doc-biblioref"><strong>fig-dl-marginals?</strong></a>)</span> summarize <span class="math inline">\((p_1, p_2,
 p_3)\)</span> under prior set 1.</p>
-<div class="cell-container"><div class="cell-decorator"><pre>In [11]:</pre></div><div id="cell-fig-dl-pairs" class="cell">
+<div class="cell-container code-fold"><div class="cell-decorator"><pre>In [11]:</pre></div><div id="cell-fig-dl-pairs" class="cell">
+<details class="code-fold">
+<summary>Show code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">pairs</span>(fit_set1)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
 <div class="cell-output-display">
 <div id="fig-dl-pairs" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
@@ -825,9 +864,12 @@ Pairwise posterior scatterplots for selectivity parameters.
 </div>
 </div>
 </div></div>
-<div class="cell-container"><div class="cell-decorator"><pre>In [12]:</pre></div><div id="cell-fig-dl-mcmc-set1" class="cell">
+<div class="cell-container code-fold"><div class="cell-decorator"><pre>In [12]:</pre></div><div id="cell-fig-dl-mcmc-set1" class="cell">
+<details class="code-fold">
+<summary>Show code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>df_set1 <span class="ot">&lt;-</span> <span class="fu">mcmc_selectivity_df</span>(fit_set1, age)</span>
 <span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_mcmc_selectivity</span>(df_set1)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
 <div class="cell-output-display">
 <div id="fig-dl-mcmc-set1" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
@@ -843,13 +885,16 @@ MCMC selectivity draws for prior set 1 (p1 median 1.5, p3 median 2.5, p2 sd 1).
 </div></div>
 <section id="additional-prior-sets" class="level3">
 <h3 class="anchored" data-anchor-id="additional-prior-sets">Additional prior sets</h3>
-<div class="cell-container"><div class="cell-decorator"><pre>In [13]:</pre></div><div class="cell">
+<div class="cell-container code-fold"><div class="cell-decorator"><pre>In [13]:</pre></div><div class="cell">
+<details class="code-fold">
+<summary>Show code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>p1_prior_set2 <span class="ot">&lt;-</span> <span class="fu">lognorm_from_median_cv</span>(<span class="at">median =</span> <span class="fl">1.5</span>, <span class="at">cv =</span> <span class="fl">0.4</span>)</span>
 <span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>p3_prior_set2 <span class="ot">&lt;-</span> <span class="fu">lognorm_from_median_cv</span>(<span class="at">median =</span> <span class="dv">8</span>, <span class="at">cv =</span> <span class="fl">0.6</span>)</span>
 <span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>p2_prior_set2 <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">mu =</span> <span class="dv">4</span>, <span class="at">sigma =</span> <span class="dv">1</span>)</span>
 <span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>data_set2 <span class="ot">&lt;-</span> <span class="fu">make_prior_data</span>(p1_prior_set2, p2_prior_set2, p3_prior_set2)</span>
 <span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>obj_set2 <span class="ot">&lt;-</span> <span class="fu">make_obj</span>(data_set2, parameters)</span>
 <span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a>fit_set2 <span class="ot">&lt;-</span> <span class="fu">run_snuts</span>(obj_set2, data_set2, <span class="at">seed =</span> <span class="dv">2</span>, <span class="at">model_name =</span> <span class="st">"selectivity_set2"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
 <div class="cell-output cell-output-stderr">
 <pre><code>Optimizing...</code></pre>
 </div>
@@ -886,12 +931,15 @@ Average run time per chain was 0.13 seconds
 Minimum ESS=393.8 (34.24%), and maximum Rhat=1.003
 There were 0 divergences after warmup</code></pre>
 </div>
+<details class="code-fold">
+<summary>Show code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>p1_prior_set3 <span class="ot">&lt;-</span> <span class="fu">lognorm_from_median_cv</span>(<span class="at">median =</span> <span class="fl">1.5</span>, <span class="at">cv =</span> <span class="fl">0.4</span>)</span>
 <span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>p3_prior_set3 <span class="ot">&lt;-</span> <span class="fu">lognorm_from_median_cv</span>(<span class="at">median =</span> <span class="dv">8</span>, <span class="at">cv =</span> <span class="fl">0.6</span>)</span>
 <span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>p2_prior_set3 <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">mu =</span> <span class="dv">4</span>, <span class="at">sigma =</span> <span class="dv">2</span>)</span>
 <span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a>data_set3 <span class="ot">&lt;-</span> <span class="fu">make_prior_data</span>(p1_prior_set3, p2_prior_set3, p3_prior_set3)</span>
 <span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a>obj_set3 <span class="ot">&lt;-</span> <span class="fu">make_obj</span>(data_set3, parameters)</span>
 <span id="cb34-6"><a href="#cb34-6" aria-hidden="true" tabindex="-1"></a>fit_set3 <span class="ot">&lt;-</span> <span class="fu">run_snuts</span>(obj_set3, data_set3, <span class="at">seed =</span> <span class="dv">3</span>, <span class="at">model_name =</span> <span class="st">"selectivity_set3"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
 <div class="cell-output cell-output-stderr">
 <pre><code>Optimizing...</code></pre>
 </div>
@@ -929,9 +977,12 @@ Minimum ESS=427 (37.13%), and maximum Rhat=1.005
 There were 0 divergences after warmup</code></pre>
 </div>
 </div></div>
-<div class="cell-container"><div class="cell-decorator"><pre>In [14]:</pre></div><div id="cell-fig-dl-mcmc-set2" class="cell">
+<div class="cell-container code-fold"><div class="cell-decorator"><pre>In [14]:</pre></div><div id="cell-fig-dl-mcmc-set2" class="cell">
+<details class="code-fold">
+<summary>Show code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>df_set2 <span class="ot">&lt;-</span> <span class="fu">mcmc_selectivity_df</span>(fit_set2, age)</span>
 <span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_mcmc_selectivity</span>(df_set2)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
 <div class="cell-output-display">
 <div id="fig-dl-mcmc-set2" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
@@ -945,9 +996,12 @@ MCMC selectivity draws for prior set 2 (p1 median 1.5, p3 median 8, p2 sd 1).
 </div>
 </div>
 </div></div>
-<div class="cell-container"><div class="cell-decorator"><pre>In [15]:</pre></div><div id="cell-fig-dl-mcmc-set3" class="cell">
+<div class="cell-container code-fold"><div class="cell-decorator"><pre>In [15]:</pre></div><div id="cell-fig-dl-mcmc-set3" class="cell">
+<details class="code-fold">
+<summary>Show code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a>df_set3 <span class="ot">&lt;-</span> <span class="fu">mcmc_selectivity_df</span>(fit_set3, age)</span>
 <span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_mcmc_selectivity</span>(df_set3)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
 <div class="cell-output-display">
 <div id="fig-dl-mcmc-set3" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
@@ -961,6 +1015,8 @@ MCMC selectivity draws for prior set 3 (p1 median 1.5, p3 median 8, p2 sd 2).
 </div>
 </div>
 </div></div>
+<!-- -->
+
 </section>
 </section>
      </main>
@@ -1034,6 +1090,57 @@ MCMC selectivity draws for prior set 3 (p1 median 1.5, p3 median 8, p2 sd 2).
         container: window.document.getElementById('quarto-embedded-source-code-modal')
       });
       clipboardModal.on('success', onCopySuccess);
+    }
+    const viewSource = window.document.getElementById('quarto-view-source') ||
+                       window.document.getElementById('quarto-code-tools-source');
+    if (viewSource) {
+      const sourceUrl = viewSource.getAttribute("data-quarto-source-url");
+      viewSource.addEventListener("click", function(e) {
+        if (sourceUrl) {
+          // rstudio viewer pane
+          if (/\bcapabilities=\b/.test(window.location)) {
+            window.open(sourceUrl);
+          } else {
+            window.location.href = sourceUrl;
+          }
+        } else {
+          const modal = new bootstrap.Modal(document.getElementById('quarto-embedded-source-code-modal'));
+          modal.show();
+        }
+        return false;
+      });
+    }
+    function toggleCodeHandler(show) {
+      return function(e) {
+        const detailsSrc = window.document.querySelectorAll(".cell > details > .sourceCode");
+        for (let i=0; i<detailsSrc.length; i++) {
+          const details = detailsSrc[i].parentElement;
+          if (show) {
+            details.open = true;
+          } else {
+            details.removeAttribute("open");
+          }
+        }
+        const cellCodeDivs = window.document.querySelectorAll(".cell > .sourceCode");
+        const fromCls = show ? "hidden" : "unhidden";
+        const toCls = show ? "unhidden" : "hidden";
+        for (let i=0; i<cellCodeDivs.length; i++) {
+          const codeDiv = cellCodeDivs[i];
+          if (codeDiv.classList.contains(fromCls)) {
+            codeDiv.classList.remove(fromCls);
+            codeDiv.classList.add(toCls);
+          } 
+        }
+        return false;
+      }
+    }
+    const hideAllCode = window.document.getElementById("quarto-hide-all-code");
+    if (hideAllCode) {
+      hideAllCode.addEventListener("click", toggleCodeHandler(false));
+    }
+    const showAllCode = window.document.getElementById("quarto-show-all-code");
+    if (showAllCode) {
+      showAllCode.addEventListener("click", toggleCodeHandler(true));
     }
       var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
       var mailtoRegex = new RegExp(/^mailto:/);
@@ -1363,7 +1470,490 @@ MCMC selectivity draws for prior set 3 (p1 median 1.5, p3 median 8, p2 sd 2).
       }
     }
   });
-  </script>  </div> <!-- /content -->  <script>var lightboxQuarto = GLightbox({"closeEffect":"zoom","descPosition":"bottom","loop":false,"openEffect":"zoom","selector":".lightbox"});
+  </script><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb43" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "Double Logistic Selectivity (3-parameter formulation)"</span></span>
+<span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a><span class="an">subtitle:</span><span class="co"> "Parameterization, sensitivity, and prior elicitation via RTMB"</span></span>
+<span id="cb43-4"><a href="#cb43-4" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb43-5"><a href="#cb43-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-6"><a href="#cb43-6" aria-hidden="true" tabindex="-1"></a><span class="fu">## Overview</span></span>
+<span id="cb43-7"><a href="#cb43-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-8"><a href="#cb43-8" aria-hidden="true" tabindex="-1"></a>This notebook documents the 3-parameter double logistic selectivity curve used</span>
+<span id="cb43-9"><a href="#cb43-9" aria-hidden="true" tabindex="-1"></a>for prior elicitation in the EBS pollock assessment workflow. The formulation</span>
+<span id="cb43-10"><a href="#cb43-10" aria-hidden="true" tabindex="-1"></a>allows dome-shaped selectivity, where vulnerability increases with age to a peak</span>
+<span id="cb43-11"><a href="#cb43-11" aria-hidden="true" tabindex="-1"></a>and then declines. This behavior is motivated by gear avoidance at older ages,</span>
+<span id="cb43-12"><a href="#cb43-12" aria-hidden="true" tabindex="-1"></a>ontogenetic habitat shifts, or differential availability between age classes.</span>
+<span id="cb43-13"><a href="#cb43-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-14"><a href="#cb43-14" aria-hidden="true" tabindex="-1"></a><span class="fu">## Model definition</span></span>
+<span id="cb43-15"><a href="#cb43-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-16"><a href="#cb43-16" aria-hidden="true" tabindex="-1"></a>Let age be $a$, with parameters $p_1$, $p_2$, and $p_3$ and derived inflection</span>
+<span id="cb43-17"><a href="#cb43-17" aria-hidden="true" tabindex="-1"></a>points $\gamma_1$ and $\gamma_2$:</span>
+<span id="cb43-18"><a href="#cb43-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-19"><a href="#cb43-19" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb43-20"><a href="#cb43-20" aria-hidden="true" tabindex="-1"></a>\gamma_1 = p_1 + p_2, \qquad</span>
+<span id="cb43-21"><a href="#cb43-21" aria-hidden="true" tabindex="-1"></a>\gamma_2 = 2p_1 + p_2 + p_3.</span>
+<span id="cb43-22"><a href="#cb43-22" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb43-23"><a href="#cb43-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-24"><a href="#cb43-24" aria-hidden="true" tabindex="-1"></a>The ascending limb is a standard logistic and the descending limb is</span>
+<span id="cb43-25"><a href="#cb43-25" aria-hidden="true" tabindex="-1"></a>one minus a logistic:</span>
+<span id="cb43-26"><a href="#cb43-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-27"><a href="#cb43-27" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb43-28"><a href="#cb43-28" aria-hidden="true" tabindex="-1"></a>\text{asc}(a) = \frac{1}{1 + \exp\left<span class="co">[</span><span class="ot">-\log(19)\,\frac{a - \gamma_1}{p_1}\right</span><span class="co">]</span>},</span>
+<span id="cb43-29"><a href="#cb43-29" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb43-30"><a href="#cb43-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-31"><a href="#cb43-31" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb43-32"><a href="#cb43-32" aria-hidden="true" tabindex="-1"></a>\text{desc}(a) = 1 - \frac{1}{1 + \exp\left<span class="co">[</span><span class="ot">-\log(19)\,\frac{a - \gamma_2}{p_3}\right</span><span class="co">]</span>}.</span>
+<span id="cb43-33"><a href="#cb43-33" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb43-34"><a href="#cb43-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-35"><a href="#cb43-35" aria-hidden="true" tabindex="-1"></a>The full double logistic selectivity is</span>
+<span id="cb43-36"><a href="#cb43-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-37"><a href="#cb43-37" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb43-38"><a href="#cb43-38" aria-hidden="true" tabindex="-1"></a>\text{sel}(a) = \min\left(1,\ \frac{\text{asc}(a)\,\text{desc}(a)}{0.95^2}\right).</span>
+<span id="cb43-39"><a href="#cb43-39" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb43-40"><a href="#cb43-40" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-41"><a href="#cb43-41" aria-hidden="true" tabindex="-1"></a><span class="fu">### Interpretation</span></span>
+<span id="cb43-42"><a href="#cb43-42" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-43"><a href="#cb43-43" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>$p_1 &gt; 0$ controls the ascending slope and is the distance from</span>
+<span id="cb43-44"><a href="#cb43-44" aria-hidden="true" tabindex="-1"></a>  $\gamma_1$ (50% selectivity) to the 95% point.</span>
+<span id="cb43-45"><a href="#cb43-45" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>$p_2$ shifts the ascending limb through $\gamma_1 = p_1 + p_2$.</span>
+<span id="cb43-46"><a href="#cb43-46" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>$p_3 &gt; 0$ controls the descending slope and is the distance from</span>
+<span id="cb43-47"><a href="#cb43-47" aria-hidden="true" tabindex="-1"></a>  $\gamma_2$ (50% on the descending limb) to the 5% point.</span>
+<span id="cb43-48"><a href="#cb43-48" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>The dome width is $\gamma_2 - \gamma_1 = p_1 + p_3$.</span>
+<span id="cb43-49"><a href="#cb43-49" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>The factor $0.95^{-2}$ normalizes the curve so that when both limbs are at</span>
+<span id="cb43-50"><a href="#cb43-50" aria-hidden="true" tabindex="-1"></a>  0.95 the product is near 1 (then capped at 1.0).</span>
+<span id="cb43-51"><a href="#cb43-51" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-52"><a href="#cb43-52" aria-hidden="true" tabindex="-1"></a><span class="fu">## Scenarios</span></span>
+<span id="cb43-53"><a href="#cb43-53" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-54"><a href="#cb43-54" aria-hidden="true" tabindex="-1"></a><span class="in">```{r setup}</span></span>
+<span id="cb43-55"><a href="#cb43-55" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb43-56"><a href="#cb43-56" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb43-57"><a href="#cb43-57" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyr)</span>
+<span id="cb43-58"><a href="#cb43-58" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(patchwork)</span>
+<span id="cb43-59"><a href="#cb43-59" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-60"><a href="#cb43-60" aria-hidden="true" tabindex="-1"></a>dbl_logistic_sel <span class="ot">&lt;-</span> <span class="cf">function</span>(age, p1, p2, p3) {</span>
+<span id="cb43-61"><a href="#cb43-61" aria-hidden="true" tabindex="-1"></a>  gamma1 <span class="ot">&lt;-</span> p1 <span class="sc">+</span> p2</span>
+<span id="cb43-62"><a href="#cb43-62" aria-hidden="true" tabindex="-1"></a>  gamma2 <span class="ot">&lt;-</span> <span class="dv">2</span> <span class="sc">*</span> p1 <span class="sc">+</span> p2 <span class="sc">+</span> p3</span>
+<span id="cb43-63"><a href="#cb43-63" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-64"><a href="#cb43-64" aria-hidden="true" tabindex="-1"></a>  asc <span class="ot">&lt;-</span> <span class="dv">1</span> <span class="sc">/</span> (<span class="dv">1</span> <span class="sc">+</span> <span class="fu">exp</span>(<span class="sc">-</span><span class="fu">log</span>(<span class="dv">19</span>) <span class="sc">*</span> (age <span class="sc">-</span> gamma1) <span class="sc">/</span> p1))</span>
+<span id="cb43-65"><a href="#cb43-65" aria-hidden="true" tabindex="-1"></a>  desc <span class="ot">&lt;-</span> <span class="dv">1</span> <span class="sc">-</span> <span class="dv">1</span> <span class="sc">/</span> (<span class="dv">1</span> <span class="sc">+</span> <span class="fu">exp</span>(<span class="sc">-</span><span class="fu">log</span>(<span class="dv">19</span>) <span class="sc">*</span> (age <span class="sc">-</span> gamma2) <span class="sc">/</span> p3))</span>
+<span id="cb43-66"><a href="#cb43-66" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-67"><a href="#cb43-67" aria-hidden="true" tabindex="-1"></a>  sel <span class="ot">&lt;-</span> asc <span class="sc">*</span> desc <span class="sc">*</span> <span class="fl">0.95</span><span class="sc">^</span>(<span class="sc">-</span><span class="dv">2</span>)</span>
+<span id="cb43-68"><a href="#cb43-68" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pmin</span>(sel, <span class="fl">1.0</span>)</span>
+<span id="cb43-69"><a href="#cb43-69" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb43-70"><a href="#cb43-70" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-71"><a href="#cb43-71" aria-hidden="true" tabindex="-1"></a>ages <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="dv">1</span>, <span class="dv">15</span>, <span class="at">by =</span> <span class="fl">0.1</span>)</span>
+<span id="cb43-72"><a href="#cb43-72" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-73"><a href="#cb43-73" aria-hidden="true" tabindex="-1"></a>scenarios <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
+<span id="cb43-74"><a href="#cb43-74" aria-hidden="true" tabindex="-1"></a>  <span class="at">scenario =</span> <span class="fu">c</span>(</span>
+<span id="cb43-75"><a href="#cb43-75" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Wide dome"</span>,</span>
+<span id="cb43-76"><a href="#cb43-76" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Asymmetric</span><span class="sc">\n</span><span class="st">(fast rise, slow decline)"</span>,</span>
+<span id="cb43-77"><a href="#cb43-77" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Asymmetric</span><span class="sc">\n</span><span class="st">(slow rise, fast decline)"</span>,</span>
+<span id="cb43-78"><a href="#cb43-78" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Nearly asymptotic"</span></span>
+<span id="cb43-79"><a href="#cb43-79" aria-hidden="true" tabindex="-1"></a>  ),</span>
+<span id="cb43-80"><a href="#cb43-80" aria-hidden="true" tabindex="-1"></a>  <span class="at">p1 =</span> <span class="fu">c</span>(<span class="fl">2.0</span>, <span class="fl">0.8</span>, <span class="fl">2.0</span>, <span class="fl">1.5</span>),</span>
+<span id="cb43-81"><a href="#cb43-81" aria-hidden="true" tabindex="-1"></a>  <span class="at">p2 =</span> <span class="fu">c</span>(<span class="fl">4.0</span>, <span class="fl">4.0</span>, <span class="fl">3.0</span>, <span class="fl">4.0</span>),</span>
+<span id="cb43-82"><a href="#cb43-82" aria-hidden="true" tabindex="-1"></a>  <span class="at">p3 =</span> <span class="fu">c</span>(<span class="fl">2.5</span>, <span class="fl">3.0</span>, <span class="fl">0.8</span>, <span class="fl">8.0</span>)</span>
+<span id="cb43-83"><a href="#cb43-83" aria-hidden="true" tabindex="-1"></a>) <span class="sc">%&gt;%</span></span>
+<span id="cb43-84"><a href="#cb43-84" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb43-85"><a href="#cb43-85" aria-hidden="true" tabindex="-1"></a>    <span class="at">gamma1 =</span> p1 <span class="sc">+</span> p2,</span>
+<span id="cb43-86"><a href="#cb43-86" aria-hidden="true" tabindex="-1"></a>    <span class="at">gamma2 =</span> <span class="dv">2</span> <span class="sc">*</span> p1 <span class="sc">+</span> p2 <span class="sc">+</span> p3,</span>
+<span id="cb43-87"><a href="#cb43-87" aria-hidden="true" tabindex="-1"></a>    <span class="at">dome_width =</span> gamma2 <span class="sc">-</span> gamma1</span>
+<span id="cb43-88"><a href="#cb43-88" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb43-89"><a href="#cb43-89" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-90"><a href="#cb43-90" aria-hidden="true" tabindex="-1"></a>sel_data <span class="ot">&lt;-</span> scenarios <span class="sc">%&gt;%</span></span>
+<span id="cb43-91"><a href="#cb43-91" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rowwise</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb43-92"><a href="#cb43-92" aria-hidden="true" tabindex="-1"></a>  <span class="fu">do</span>({</span>
+<span id="cb43-93"><a href="#cb43-93" aria-hidden="true" tabindex="-1"></a>    scen <span class="ot">&lt;-</span> .</span>
+<span id="cb43-94"><a href="#cb43-94" aria-hidden="true" tabindex="-1"></a>    <span class="fu">tibble</span>(</span>
+<span id="cb43-95"><a href="#cb43-95" aria-hidden="true" tabindex="-1"></a>      <span class="at">scenario =</span> scen<span class="sc">$</span>scenario,</span>
+<span id="cb43-96"><a href="#cb43-96" aria-hidden="true" tabindex="-1"></a>      <span class="at">age =</span> ages,</span>
+<span id="cb43-97"><a href="#cb43-97" aria-hidden="true" tabindex="-1"></a>      <span class="at">selectivity =</span> <span class="fu">dbl_logistic_sel</span>(ages, scen<span class="sc">$</span>p1, scen<span class="sc">$</span>p2, scen<span class="sc">$</span>p3),</span>
+<span id="cb43-98"><a href="#cb43-98" aria-hidden="true" tabindex="-1"></a>      <span class="at">p1 =</span> scen<span class="sc">$</span>p1,</span>
+<span id="cb43-99"><a href="#cb43-99" aria-hidden="true" tabindex="-1"></a>      <span class="at">p2 =</span> scen<span class="sc">$</span>p2,</span>
+<span id="cb43-100"><a href="#cb43-100" aria-hidden="true" tabindex="-1"></a>      <span class="at">p3 =</span> scen<span class="sc">$</span>p3,</span>
+<span id="cb43-101"><a href="#cb43-101" aria-hidden="true" tabindex="-1"></a>      <span class="at">gamma1 =</span> scen<span class="sc">$</span>gamma1,</span>
+<span id="cb43-102"><a href="#cb43-102" aria-hidden="true" tabindex="-1"></a>      <span class="at">gamma2 =</span> scen<span class="sc">$</span>gamma2</span>
+<span id="cb43-103"><a href="#cb43-103" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb43-104"><a href="#cb43-104" aria-hidden="true" tabindex="-1"></a>  }) <span class="sc">%&gt;%</span></span>
+<span id="cb43-105"><a href="#cb43-105" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb43-106"><a href="#cb43-106" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb43-107"><a href="#cb43-107" aria-hidden="true" tabindex="-1"></a>    <span class="at">label =</span> <span class="fu">sprintf</span>(<span class="st">"%s</span><span class="sc">\n</span><span class="st">(p1=%.1f, p2=%.1f, p3=%.1f)"</span>, scenario, p1, p2, p3)</span>
+<span id="cb43-108"><a href="#cb43-108" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb43-109"><a href="#cb43-109" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb43-110"><a href="#cb43-110" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-111"><a href="#cb43-111" aria-hidden="true" tabindex="-1"></a><span class="in">```{r scenario-table}</span></span>
+<span id="cb43-112"><a href="#cb43-112" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: tbl-dl-scenarios</span></span>
+<span id="cb43-113"><a href="#cb43-113" aria-hidden="true" tabindex="-1"></a><span class="co">#| tbl-cap: "Scenario parameters and derived inflection points"</span></span>
+<span id="cb43-114"><a href="#cb43-114" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(</span>
+<span id="cb43-115"><a href="#cb43-115" aria-hidden="true" tabindex="-1"></a>  scenarios,</span>
+<span id="cb43-116"><a href="#cb43-116" aria-hidden="true" tabindex="-1"></a>  <span class="at">digits =</span> <span class="dv">2</span></span>
+<span id="cb43-117"><a href="#cb43-117" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb43-118"><a href="#cb43-118" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb43-119"><a href="#cb43-119" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-120"><a href="#cb43-120" aria-hidden="true" tabindex="-1"></a>The scenario summary in @tbl-dl-scenarios lists the four parameter sets and the</span>
+<span id="cb43-121"><a href="#cb43-121" aria-hidden="true" tabindex="-1"></a>derived inflection points ($\gamma_1$, $\gamma_2$) used in the selectivity</span>
+<span id="cb43-122"><a href="#cb43-122" aria-hidden="true" tabindex="-1"></a>scenarios.</span>
+<span id="cb43-123"><a href="#cb43-123" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-124"><a href="#cb43-124" aria-hidden="true" tabindex="-1"></a><span class="fu">## Faceted scenario curves</span></span>
+<span id="cb43-125"><a href="#cb43-125" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-126"><a href="#cb43-126" aria-hidden="true" tabindex="-1"></a>Each scenario appears on its own panel in @fig-dl-faceted so the ascent,</span>
+<span id="cb43-127"><a href="#cb43-127" aria-hidden="true" tabindex="-1"></a>descent, and dome width can be compared against the 50% and 95% reference</span>
+<span id="cb43-128"><a href="#cb43-128" aria-hidden="true" tabindex="-1"></a>lines.</span>
+<span id="cb43-129"><a href="#cb43-129" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-130"><a href="#cb43-130" aria-hidden="true" tabindex="-1"></a><span class="in">```{r plot-faceted}</span></span>
+<span id="cb43-131"><a href="#cb43-131" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fig-dl-faceted</span></span>
+<span id="cb43-132"><a href="#cb43-132" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: "Double logistic selectivity for each parameter scenario."</span></span>
+<span id="cb43-133"><a href="#cb43-133" aria-hidden="true" tabindex="-1"></a>p1_plot <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(sel_data, <span class="fu">aes</span>(<span class="at">x =</span> age, <span class="at">y =</span> selectivity)) <span class="sc">+</span></span>
+<span id="cb43-134"><a href="#cb43-134" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">linewidth =</span> <span class="fl">1.2</span>, <span class="at">color =</span> <span class="st">"steelblue"</span>) <span class="sc">+</span></span>
+<span id="cb43-135"><a href="#cb43-135" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="fu">c</span>(<span class="fl">0.5</span>, <span class="fl">0.95</span>), <span class="at">linetype =</span> <span class="st">"dashed"</span>,</span>
+<span id="cb43-136"><a href="#cb43-136" aria-hidden="true" tabindex="-1"></a>             <span class="at">color =</span> <span class="st">"gray50"</span>, <span class="at">alpha =</span> <span class="fl">0.7</span>) <span class="sc">+</span></span>
+<span id="cb43-137"><a href="#cb43-137" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="fu">aes</span>(<span class="at">xintercept =</span> gamma1), <span class="at">linetype =</span> <span class="st">"dotted"</span>,</span>
+<span id="cb43-138"><a href="#cb43-138" aria-hidden="true" tabindex="-1"></a>             <span class="at">color =</span> <span class="st">"red"</span>, <span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
+<span id="cb43-139"><a href="#cb43-139" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="fu">aes</span>(<span class="at">xintercept =</span> gamma2), <span class="at">linetype =</span> <span class="st">"dotted"</span>,</span>
+<span id="cb43-140"><a href="#cb43-140" aria-hidden="true" tabindex="-1"></a>             <span class="at">color =</span> <span class="st">"orange"</span>, <span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
+<span id="cb43-141"><a href="#cb43-141" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>label, <span class="at">ncol =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb43-142"><a href="#cb43-142" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">2</span>, <span class="dv">14</span>, <span class="at">by =</span> <span class="dv">2</span>)) <span class="sc">+</span></span>
+<span id="cb43-143"><a href="#cb43-143" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="fl">1.05</span>), <span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="at">by =</span> <span class="fl">0.25</span>)) <span class="sc">+</span></span>
+<span id="cb43-144"><a href="#cb43-144" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb43-145"><a href="#cb43-145" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"3-parameter double logistic selectivity curves"</span>,</span>
+<span id="cb43-146"><a href="#cb43-146" aria-hidden="true" tabindex="-1"></a>    <span class="at">subtitle =</span> <span class="st">"Dashed lines show 50% and 95% selectivity"</span>,</span>
+<span id="cb43-147"><a href="#cb43-147" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Age"</span>,</span>
+<span id="cb43-148"><a href="#cb43-148" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Selectivity"</span>,</span>
+<span id="cb43-149"><a href="#cb43-149" aria-hidden="true" tabindex="-1"></a>    <span class="at">caption =</span> <span class="st">"Red dotted = gamma1, orange dotted = gamma2"</span></span>
+<span id="cb43-150"><a href="#cb43-150" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb43-151"><a href="#cb43-151" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>(<span class="at">base_size =</span> <span class="dv">11</span>) <span class="sc">+</span></span>
+<span id="cb43-152"><a href="#cb43-152" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
+<span id="cb43-153"><a href="#cb43-153" aria-hidden="true" tabindex="-1"></a>    <span class="at">strip.text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">9</span>),</span>
+<span id="cb43-154"><a href="#cb43-154" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">face =</span> <span class="st">"bold"</span>),</span>
+<span id="cb43-155"><a href="#cb43-155" aria-hidden="true" tabindex="-1"></a>    <span class="at">panel.grid.minor =</span> <span class="fu">element_blank</span>()</span>
+<span id="cb43-156"><a href="#cb43-156" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb43-157"><a href="#cb43-157" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-158"><a href="#cb43-158" aria-hidden="true" tabindex="-1"></a>p1_plot</span>
+<span id="cb43-159"><a href="#cb43-159" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb43-160"><a href="#cb43-160" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-161"><a href="#cb43-161" aria-hidden="true" tabindex="-1"></a><span class="fu">## Overlay comparison</span></span>
+<span id="cb43-162"><a href="#cb43-162" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-163"><a href="#cb43-163" aria-hidden="true" tabindex="-1"></a>All scenarios are overlaid in @fig-dl-overlay to highlight differences in peak</span>
+<span id="cb43-164"><a href="#cb43-164" aria-hidden="true" tabindex="-1"></a>age and decline shape when the curves are viewed on a common axis.</span>
+<span id="cb43-165"><a href="#cb43-165" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-166"><a href="#cb43-166" aria-hidden="true" tabindex="-1"></a><span class="in">```{r plot-overlay}</span></span>
+<span id="cb43-167"><a href="#cb43-167" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fig-dl-overlay</span></span>
+<span id="cb43-168"><a href="#cb43-168" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: "All scenarios overlaid for direct comparison."</span></span>
+<span id="cb43-169"><a href="#cb43-169" aria-hidden="true" tabindex="-1"></a>p2_plot <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(sel_data, <span class="fu">aes</span>(<span class="at">x =</span> age, <span class="at">y =</span> selectivity, <span class="at">color =</span> scenario)) <span class="sc">+</span></span>
+<span id="cb43-170"><a href="#cb43-170" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">linewidth =</span> <span class="fl">1.2</span>) <span class="sc">+</span></span>
+<span id="cb43-171"><a href="#cb43-171" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="fu">c</span>(<span class="fl">0.5</span>, <span class="fl">0.95</span>), <span class="at">linetype =</span> <span class="st">"dashed"</span>,</span>
+<span id="cb43-172"><a href="#cb43-172" aria-hidden="true" tabindex="-1"></a>             <span class="at">color =</span> <span class="st">"gray50"</span>, <span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
+<span id="cb43-173"><a href="#cb43-173" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">2</span>, <span class="dv">14</span>, <span class="at">by =</span> <span class="dv">2</span>)) <span class="sc">+</span></span>
+<span id="cb43-174"><a href="#cb43-174" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="fl">1.05</span>), <span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="at">by =</span> <span class="fl">0.25</span>)) <span class="sc">+</span></span>
+<span id="cb43-175"><a href="#cb43-175" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_brewer</span>(<span class="at">palette =</span> <span class="st">"Set1"</span>, <span class="at">name =</span> <span class="st">"Scenario"</span>) <span class="sc">+</span></span>
+<span id="cb43-176"><a href="#cb43-176" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb43-177"><a href="#cb43-177" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Comparison of double logistic selectivity curves"</span>,</span>
+<span id="cb43-178"><a href="#cb43-178" aria-hidden="true" tabindex="-1"></a>    <span class="at">subtitle =</span> <span class="st">"All scenarios overlaid"</span>,</span>
+<span id="cb43-179"><a href="#cb43-179" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Age"</span>,</span>
+<span id="cb43-180"><a href="#cb43-180" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Selectivity"</span></span>
+<span id="cb43-181"><a href="#cb43-181" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb43-182"><a href="#cb43-182" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>(<span class="at">base_size =</span> <span class="dv">12</span>) <span class="sc">+</span></span>
+<span id="cb43-183"><a href="#cb43-183" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
+<span id="cb43-184"><a href="#cb43-184" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.position =</span> <span class="st">"right"</span>,</span>
+<span id="cb43-185"><a href="#cb43-185" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">face =</span> <span class="st">"bold"</span>),</span>
+<span id="cb43-186"><a href="#cb43-186" aria-hidden="true" tabindex="-1"></a>    <span class="at">panel.grid.minor =</span> <span class="fu">element_blank</span>()</span>
+<span id="cb43-187"><a href="#cb43-187" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb43-188"><a href="#cb43-188" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-189"><a href="#cb43-189" aria-hidden="true" tabindex="-1"></a>p2_plot</span>
+<span id="cb43-190"><a href="#cb43-190" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb43-191"><a href="#cb43-191" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-192"><a href="#cb43-192" aria-hidden="true" tabindex="-1"></a><span class="fu">## Parameter sensitivity analysis</span></span>
+<span id="cb43-193"><a href="#cb43-193" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-194"><a href="#cb43-194" aria-hidden="true" tabindex="-1"></a>The three panels in @fig-dl-sensitivity show how each parameter changes the</span>
+<span id="cb43-195"><a href="#cb43-195" aria-hidden="true" tabindex="-1"></a>curve when the other two are held fixed.</span>
+<span id="cb43-196"><a href="#cb43-196" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-197"><a href="#cb43-197" aria-hidden="true" tabindex="-1"></a><span class="in">```{r plot-sensitivity}</span></span>
+<span id="cb43-198"><a href="#cb43-198" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fig-dl-sensitivity</span></span>
+<span id="cb43-199"><a href="#cb43-199" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: "Sensitivity to p1, p2, and p3 with other parameters fixed."</span></span>
+<span id="cb43-200"><a href="#cb43-200" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-width: 8</span></span>
+<span id="cb43-201"><a href="#cb43-201" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-height: 8</span></span>
+<span id="cb43-202"><a href="#cb43-202" aria-hidden="true" tabindex="-1"></a>p1_vary <span class="ot">&lt;-</span> <span class="fu">expand_grid</span>(</span>
+<span id="cb43-203"><a href="#cb43-203" aria-hidden="true" tabindex="-1"></a>  <span class="at">p1 =</span> <span class="fu">seq</span>(<span class="fl">0.5</span>, <span class="dv">3</span>, <span class="at">by =</span> <span class="fl">0.5</span>),</span>
+<span id="cb43-204"><a href="#cb43-204" aria-hidden="true" tabindex="-1"></a>  <span class="at">p2 =</span> <span class="dv">5</span>,</span>
+<span id="cb43-205"><a href="#cb43-205" aria-hidden="true" tabindex="-1"></a>  <span class="at">p3 =</span> <span class="dv">2</span>,</span>
+<span id="cb43-206"><a href="#cb43-206" aria-hidden="true" tabindex="-1"></a>  <span class="at">age =</span> ages</span>
+<span id="cb43-207"><a href="#cb43-207" aria-hidden="true" tabindex="-1"></a>) <span class="sc">%&gt;%</span></span>
+<span id="cb43-208"><a href="#cb43-208" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rowwise</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb43-209"><a href="#cb43-209" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">selectivity =</span> <span class="fu">dbl_logistic_sel</span>(age, p1, p2, p3)) <span class="sc">%&gt;%</span></span>
+<span id="cb43-210"><a href="#cb43-210" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>()</span>
+<span id="cb43-211"><a href="#cb43-211" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-212"><a href="#cb43-212" aria-hidden="true" tabindex="-1"></a>p3a <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(p1_vary, <span class="fu">aes</span>(<span class="at">x =</span> age, <span class="at">y =</span> selectivity, <span class="at">color =</span> <span class="fu">factor</span>(p1))) <span class="sc">+</span></span>
+<span id="cb43-213"><a href="#cb43-213" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">linewidth =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb43-214"><a href="#cb43-214" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_viridis_d</span>(<span class="at">name =</span> <span class="st">"p1"</span>, <span class="at">option =</span> <span class="st">"C"</span>) <span class="sc">+</span></span>
+<span id="cb43-215"><a href="#cb43-215" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="fl">1.05</span>)) <span class="sc">+</span></span>
+<span id="cb43-216"><a href="#cb43-216" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Sensitivity to p1 (ascending slope)"</span>,</span>
+<span id="cb43-217"><a href="#cb43-217" aria-hidden="true" tabindex="-1"></a>       <span class="at">subtitle =</span> <span class="st">"p2 = 5, p3 = 2 fixed"</span>,</span>
+<span id="cb43-218"><a href="#cb43-218" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Age"</span>, <span class="at">y =</span> <span class="st">"Selectivity"</span>) <span class="sc">+</span></span>
+<span id="cb43-219"><a href="#cb43-219" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>(<span class="at">base_size =</span> <span class="dv">9</span>) <span class="sc">+</span></span>
+<span id="cb43-220"><a href="#cb43-220" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"right"</span>, <span class="at">aspect.ratio =</span> <span class="dv">1</span>)</span>
+<span id="cb43-221"><a href="#cb43-221" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-222"><a href="#cb43-222" aria-hidden="true" tabindex="-1"></a>p2_vary <span class="ot">&lt;-</span> <span class="fu">expand_grid</span>(</span>
+<span id="cb43-223"><a href="#cb43-223" aria-hidden="true" tabindex="-1"></a>  <span class="at">p1 =</span> <span class="fl">1.5</span>,</span>
+<span id="cb43-224"><a href="#cb43-224" aria-hidden="true" tabindex="-1"></a>  <span class="at">p2 =</span> <span class="fu">seq</span>(<span class="dv">2</span>, <span class="dv">8</span>, <span class="at">by =</span> <span class="dv">1</span>),</span>
+<span id="cb43-225"><a href="#cb43-225" aria-hidden="true" tabindex="-1"></a>  <span class="at">p3 =</span> <span class="dv">2</span>,</span>
+<span id="cb43-226"><a href="#cb43-226" aria-hidden="true" tabindex="-1"></a>  <span class="at">age =</span> ages</span>
+<span id="cb43-227"><a href="#cb43-227" aria-hidden="true" tabindex="-1"></a>) <span class="sc">%&gt;%</span></span>
+<span id="cb43-228"><a href="#cb43-228" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rowwise</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb43-229"><a href="#cb43-229" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">selectivity =</span> <span class="fu">dbl_logistic_sel</span>(age, p1, p2, p3)) <span class="sc">%&gt;%</span></span>
+<span id="cb43-230"><a href="#cb43-230" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>()</span>
+<span id="cb43-231"><a href="#cb43-231" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-232"><a href="#cb43-232" aria-hidden="true" tabindex="-1"></a>p3b <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(p2_vary, <span class="fu">aes</span>(<span class="at">x =</span> age, <span class="at">y =</span> selectivity, <span class="at">color =</span> <span class="fu">factor</span>(p2))) <span class="sc">+</span></span>
+<span id="cb43-233"><a href="#cb43-233" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">linewidth =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb43-234"><a href="#cb43-234" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_viridis_d</span>(<span class="at">name =</span> <span class="st">"p2"</span>, <span class="at">option =</span> <span class="st">"D"</span>) <span class="sc">+</span></span>
+<span id="cb43-235"><a href="#cb43-235" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="fl">1.05</span>)) <span class="sc">+</span></span>
+<span id="cb43-236"><a href="#cb43-236" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Sensitivity to p2 (horizontal shift)"</span>,</span>
+<span id="cb43-237"><a href="#cb43-237" aria-hidden="true" tabindex="-1"></a>       <span class="at">subtitle =</span> <span class="st">"p1 = 1.5, p3 = 2 fixed"</span>,</span>
+<span id="cb43-238"><a href="#cb43-238" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Age"</span>, <span class="at">y =</span> <span class="st">"Selectivity"</span>) <span class="sc">+</span></span>
+<span id="cb43-239"><a href="#cb43-239" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>(<span class="at">base_size =</span> <span class="dv">9</span>) <span class="sc">+</span></span>
+<span id="cb43-240"><a href="#cb43-240" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"right"</span>, <span class="at">aspect.ratio =</span> <span class="dv">1</span>)</span>
+<span id="cb43-241"><a href="#cb43-241" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-242"><a href="#cb43-242" aria-hidden="true" tabindex="-1"></a>p3_vary <span class="ot">&lt;-</span> <span class="fu">expand_grid</span>(</span>
+<span id="cb43-243"><a href="#cb43-243" aria-hidden="true" tabindex="-1"></a>  <span class="at">p1 =</span> <span class="fl">1.5</span>,</span>
+<span id="cb43-244"><a href="#cb43-244" aria-hidden="true" tabindex="-1"></a>  <span class="at">p2 =</span> <span class="dv">4</span>,</span>
+<span id="cb43-245"><a href="#cb43-245" aria-hidden="true" tabindex="-1"></a>  <span class="at">p3 =</span> <span class="fu">seq</span>(<span class="fl">0.5</span>, <span class="fl">6.5</span>, <span class="at">by =</span> <span class="dv">1</span>),</span>
+<span id="cb43-246"><a href="#cb43-246" aria-hidden="true" tabindex="-1"></a>  <span class="at">age =</span> ages</span>
+<span id="cb43-247"><a href="#cb43-247" aria-hidden="true" tabindex="-1"></a>) <span class="sc">%&gt;%</span></span>
+<span id="cb43-248"><a href="#cb43-248" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rowwise</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb43-249"><a href="#cb43-249" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">selectivity =</span> <span class="fu">dbl_logistic_sel</span>(age, p1, p2, p3)) <span class="sc">%&gt;%</span></span>
+<span id="cb43-250"><a href="#cb43-250" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>()</span>
+<span id="cb43-251"><a href="#cb43-251" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-252"><a href="#cb43-252" aria-hidden="true" tabindex="-1"></a>p3c <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(p3_vary, <span class="fu">aes</span>(<span class="at">x =</span> age, <span class="at">y =</span> selectivity, <span class="at">color =</span> <span class="fu">factor</span>(p3))) <span class="sc">+</span></span>
+<span id="cb43-253"><a href="#cb43-253" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">linewidth =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb43-254"><a href="#cb43-254" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_viridis_d</span>(<span class="at">name =</span> <span class="st">"p3"</span>, <span class="at">option =</span> <span class="st">"E"</span>) <span class="sc">+</span></span>
+<span id="cb43-255"><a href="#cb43-255" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="fl">1.05</span>)) <span class="sc">+</span></span>
+<span id="cb43-256"><a href="#cb43-256" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Sensitivity to p3 (descending slope)"</span>,</span>
+<span id="cb43-257"><a href="#cb43-257" aria-hidden="true" tabindex="-1"></a>       <span class="at">subtitle =</span> <span class="st">"p1 = 1.5, p2 = 4 fixed"</span>,</span>
+<span id="cb43-258"><a href="#cb43-258" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Age"</span>, <span class="at">y =</span> <span class="st">"Selectivity"</span>) <span class="sc">+</span></span>
+<span id="cb43-259"><a href="#cb43-259" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>(<span class="at">base_size =</span> <span class="dv">9</span>) <span class="sc">+</span></span>
+<span id="cb43-260"><a href="#cb43-260" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"right"</span>, <span class="at">aspect.ratio =</span> <span class="dv">1</span>)</span>
+<span id="cb43-261"><a href="#cb43-261" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-262"><a href="#cb43-262" aria-hidden="true" tabindex="-1"></a>p_sensitivity <span class="ot">&lt;-</span> (p3a <span class="sc">|</span> p3b) <span class="sc">/</span> (p3c <span class="sc">|</span> <span class="fu">plot_spacer</span>()) <span class="sc">+</span></span>
+<span id="cb43-263"><a href="#cb43-263" aria-hidden="true" tabindex="-1"></a>  <span class="fu">plot_annotation</span>(</span>
+<span id="cb43-264"><a href="#cb43-264" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Parameter sensitivity analysis"</span>,</span>
+<span id="cb43-265"><a href="#cb43-265" aria-hidden="true" tabindex="-1"></a>    <span class="at">subtitle =</span> <span class="st">"Effect of varying each parameter individually"</span></span>
+<span id="cb43-266"><a href="#cb43-266" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb43-267"><a href="#cb43-267" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-268"><a href="#cb43-268" aria-hidden="true" tabindex="-1"></a>p_sensitivity</span>
+<span id="cb43-269"><a href="#cb43-269" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb43-270"><a href="#cb43-270" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-271"><a href="#cb43-271" aria-hidden="true" tabindex="-1"></a><span class="fu">## RTMB implementation with priors</span></span>
+<span id="cb43-272"><a href="#cb43-272" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-273"><a href="#cb43-273" aria-hidden="true" tabindex="-1"></a>A common approach is to estimate on the log scale for the positive parameters</span>
+<span id="cb43-274"><a href="#cb43-274" aria-hidden="true" tabindex="-1"></a>and apply lognormal priors on $p_1$ and $p_3$:</span>
+<span id="cb43-275"><a href="#cb43-275" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-276"><a href="#cb43-276" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb43-277"><a href="#cb43-277" aria-hidden="true" tabindex="-1"></a>\log(p_k) \sim \mathcal{N}(\mu_k, \sigma_k^2), \qquad k \in <span class="sc">\{</span>1, 3<span class="sc">\}</span>.</span>
+<span id="cb43-278"><a href="#cb43-278" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb43-279"><a href="#cb43-279" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-280"><a href="#cb43-280" aria-hidden="true" tabindex="-1"></a>If using a lognormal prior specified by median $m$ and coefficient of variation</span>
+<span id="cb43-281"><a href="#cb43-281" aria-hidden="true" tabindex="-1"></a>$\text{CV}$ on the natural scale, a convenient conversion is</span>
+<span id="cb43-282"><a href="#cb43-282" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-283"><a href="#cb43-283" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb43-284"><a href="#cb43-284" aria-hidden="true" tabindex="-1"></a>\mu = \log(m), \qquad \sigma = \sqrt{\log(\text{CV}^2 + 1)}.</span>
+<span id="cb43-285"><a href="#cb43-285" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb43-286"><a href="#cb43-286" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-287"><a href="#cb43-287" aria-hidden="true" tabindex="-1"></a>Parameter $p_2$ can remain unconstrained (normal prior) or be modeled on the log</span>
+<span id="cb43-288"><a href="#cb43-288" aria-hidden="true" tabindex="-1"></a>scale if you want to enforce $p_2 &gt; 0$.</span>
+<span id="cb43-289"><a href="#cb43-289" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-290"><a href="#cb43-290" aria-hidden="true" tabindex="-1"></a><span class="in">```{r rtmb-draft}</span></span>
+<span id="cb43-291"><a href="#cb43-291" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: true</span></span>
+<span id="cb43-292"><a href="#cb43-292" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: true</span></span>
+<span id="cb43-293"><a href="#cb43-293" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(RTMB)</span>
+<span id="cb43-294"><a href="#cb43-294" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-295"><a href="#cb43-295" aria-hidden="true" tabindex="-1"></a>dbl_logistic_sel <span class="ot">&lt;-</span> <span class="cf">function</span>(age, p1, p2, p3) {</span>
+<span id="cb43-296"><a href="#cb43-296" aria-hidden="true" tabindex="-1"></a>  gamma1 <span class="ot">&lt;-</span> p1 <span class="sc">+</span> p2</span>
+<span id="cb43-297"><a href="#cb43-297" aria-hidden="true" tabindex="-1"></a>  gamma2 <span class="ot">&lt;-</span> <span class="dv">2</span> <span class="sc">*</span> p1 <span class="sc">+</span> p2 <span class="sc">+</span> p3</span>
+<span id="cb43-298"><a href="#cb43-298" aria-hidden="true" tabindex="-1"></a>  asc <span class="ot">&lt;-</span> <span class="dv">1</span> <span class="sc">/</span> (<span class="dv">1</span> <span class="sc">+</span> <span class="fu">exp</span>(<span class="sc">-</span><span class="fu">log</span>(<span class="dv">19</span>) <span class="sc">*</span> (age <span class="sc">-</span> gamma1) <span class="sc">/</span> p1))</span>
+<span id="cb43-299"><a href="#cb43-299" aria-hidden="true" tabindex="-1"></a>  desc <span class="ot">&lt;-</span> <span class="dv">1</span> <span class="sc">-</span> <span class="dv">1</span> <span class="sc">/</span> (<span class="dv">1</span> <span class="sc">+</span> <span class="fu">exp</span>(<span class="sc">-</span><span class="fu">log</span>(<span class="dv">19</span>) <span class="sc">*</span> (age <span class="sc">-</span> gamma2) <span class="sc">/</span> p3))</span>
+<span id="cb43-300"><a href="#cb43-300" aria-hidden="true" tabindex="-1"></a>  (asc <span class="sc">*</span> desc <span class="sc">*</span> <span class="fl">0.95</span><span class="sc">^</span>(<span class="sc">-</span><span class="dv">2</span>))</span>
+<span id="cb43-301"><a href="#cb43-301" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb43-302"><a href="#cb43-302" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-303"><a href="#cb43-303" aria-hidden="true" tabindex="-1"></a>lognorm_from_median_cv <span class="ot">&lt;-</span> <span class="cf">function</span>(median, cv) {</span>
+<span id="cb43-304"><a href="#cb43-304" aria-hidden="true" tabindex="-1"></a>  sigma <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(<span class="fu">log</span>(cv<span class="sc">^</span><span class="dv">2</span> <span class="sc">+</span> <span class="dv">1</span>))</span>
+<span id="cb43-305"><a href="#cb43-305" aria-hidden="true" tabindex="-1"></a>  mu <span class="ot">&lt;-</span> <span class="fu">log</span>(median)</span>
+<span id="cb43-306"><a href="#cb43-306" aria-hidden="true" tabindex="-1"></a>  <span class="fu">list</span>(<span class="at">mu =</span> mu, <span class="at">sigma =</span> sigma)</span>
+<span id="cb43-307"><a href="#cb43-307" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb43-308"><a href="#cb43-308" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-309"><a href="#cb43-309" aria-hidden="true" tabindex="-1"></a>age <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="dv">1</span>, <span class="dv">15</span>, <span class="at">by =</span> <span class="fl">0.25</span>)</span>
+<span id="cb43-310"><a href="#cb43-310" aria-hidden="true" tabindex="-1"></a>sel_obs <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
+<span id="cb43-311"><a href="#cb43-311" aria-hidden="true" tabindex="-1"></a>  <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="fl">0.01</span>, <span class="fl">0.01</span>, <span class="fl">0.037142857</span>, <span class="fl">0.064285714</span>, <span class="fl">0.091428571</span>,</span>
+<span id="cb43-312"><a href="#cb43-312" aria-hidden="true" tabindex="-1"></a>  <span class="fl">0.118571429</span>, <span class="fl">0.145714286</span>, <span class="fl">0.172857143</span>, <span class="fl">0.2</span>, <span class="fl">0.205882353</span>, <span class="fl">0.211764706</span>,</span>
+<span id="cb43-313"><a href="#cb43-313" aria-hidden="true" tabindex="-1"></a>  <span class="fl">0.217647059</span>, <span class="fl">0.223529412</span>, <span class="fl">0.229411765</span>, <span class="fl">0.235294118</span>, <span class="fl">0.241176471</span>,</span>
+<span id="cb43-314"><a href="#cb43-314" aria-hidden="true" tabindex="-1"></a>  <span class="fl">0.247058824</span>, <span class="fl">0.252941176</span>, <span class="fl">0.258823529</span>, <span class="fl">0.264705882</span>, <span class="fl">0.270588235</span>,</span>
+<span id="cb43-315"><a href="#cb43-315" aria-hidden="true" tabindex="-1"></a>  <span class="fl">0.276470588</span>, <span class="fl">0.282352941</span>, <span class="fl">0.288235294</span>, <span class="fl">0.294117647</span>, <span class="fl">0.3</span>, <span class="fl">0.31</span>, <span class="fl">0.32</span>,</span>
+<span id="cb43-316"><a href="#cb43-316" aria-hidden="true" tabindex="-1"></a>  <span class="fl">0.33</span>, <span class="fl">0.34</span>, <span class="fl">0.35</span>, <span class="fl">0.36</span>, <span class="fl">0.37</span>, <span class="fl">0.38</span>, <span class="fl">0.39</span>, <span class="fl">0.4</span>, <span class="fl">0.41</span>, <span class="fl">0.42</span>, <span class="fl">0.43</span>,</span>
+<span id="cb43-317"><a href="#cb43-317" aria-hidden="true" tabindex="-1"></a>  <span class="fl">0.44</span>, <span class="fl">0.45</span>, <span class="fl">0.46</span>, <span class="fl">0.47</span>, <span class="fl">0.48</span>, <span class="fl">0.49</span>, <span class="fl">0.5</span>, <span class="fl">0.5125</span>, <span class="fl">0.525</span>, <span class="fl">0.5375</span>, <span class="fl">0.55</span>,</span>
+<span id="cb43-318"><a href="#cb43-318" aria-hidden="true" tabindex="-1"></a>  <span class="fl">0.5625</span>, <span class="fl">0.575</span>, <span class="fl">0.5875</span>, <span class="fl">0.6</span>, <span class="fl">0.6125</span>, <span class="fl">0.625</span>, <span class="fl">0.6375</span>, <span class="fl">0.65</span>, <span class="fl">0.6625</span>,</span>
+<span id="cb43-319"><a href="#cb43-319" aria-hidden="true" tabindex="-1"></a>  <span class="fl">0.675</span>, <span class="fl">0.6875</span>, <span class="fl">0.7</span>, <span class="fl">0.7125</span>, <span class="fl">0.725</span>, <span class="fl">0.7375</span>, <span class="fl">0.75</span>, <span class="fl">0.7625</span>, <span class="fl">0.775</span>,</span>
+<span id="cb43-320"><a href="#cb43-320" aria-hidden="true" tabindex="-1"></a>  <span class="fl">0.7875</span>, <span class="fl">0.8</span>, <span class="fl">0.807894737</span>, <span class="fl">0.815789474</span>, <span class="fl">0.823684211</span>, <span class="fl">0.831578947</span>,</span>
+<span id="cb43-321"><a href="#cb43-321" aria-hidden="true" tabindex="-1"></a>  <span class="fl">0.839473684</span>, <span class="fl">0.847368421</span>, <span class="fl">0.855263158</span>, <span class="fl">0.863157895</span>, <span class="fl">0.871052632</span>,</span>
+<span id="cb43-322"><a href="#cb43-322" aria-hidden="true" tabindex="-1"></a>  <span class="fl">0.878947368</span>, <span class="fl">0.886842105</span>, <span class="fl">0.894736842</span>, <span class="fl">0.902631579</span>, <span class="fl">0.910526316</span>,</span>
+<span id="cb43-323"><a href="#cb43-323" aria-hidden="true" tabindex="-1"></a>  <span class="fl">0.918421053</span>, <span class="fl">0.926315789</span>, <span class="fl">0.934210526</span>, <span class="fl">0.942105263</span>, <span class="fl">0.95</span>, <span class="fl">0.954545455</span>,</span>
+<span id="cb43-324"><a href="#cb43-324" aria-hidden="true" tabindex="-1"></a>  <span class="fl">0.959090909</span>, <span class="fl">0.963636364</span>, <span class="fl">0.968181818</span>, <span class="fl">0.972727273</span>, <span class="fl">0.977272727</span>,</span>
+<span id="cb43-325"><a href="#cb43-325" aria-hidden="true" tabindex="-1"></a>  <span class="fl">0.981818182</span>, <span class="fl">0.986363636</span>, <span class="fl">0.990909091</span>, <span class="fl">0.995454545</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>,</span>
+<span id="cb43-326"><a href="#cb43-326" aria-hidden="true" tabindex="-1"></a>  <span class="dv">1</span>, <span class="fl">0.989285714</span>, <span class="fl">0.978571429</span>, <span class="fl">0.967857143</span>, <span class="fl">0.957142857</span>, <span class="fl">0.946428571</span>,</span>
+<span id="cb43-327"><a href="#cb43-327" aria-hidden="true" tabindex="-1"></a>  <span class="fl">0.935714286</span>, <span class="fl">0.925</span>, <span class="fl">0.914285714</span>, <span class="fl">0.903571429</span>, <span class="fl">0.892857143</span>, <span class="fl">0.882142857</span>,</span>
+<span id="cb43-328"><a href="#cb43-328" aria-hidden="true" tabindex="-1"></a>  <span class="fl">0.871428571</span>, <span class="fl">0.860714286</span>, <span class="fl">0.85</span>, <span class="fl">0.839285714</span>, <span class="fl">0.828571429</span>, <span class="fl">0.817857143</span>,</span>
+<span id="cb43-329"><a href="#cb43-329" aria-hidden="true" tabindex="-1"></a>  <span class="fl">0.807142857</span>, <span class="fl">0.796428571</span>, <span class="fl">0.785714286</span>, <span class="fl">0.775</span>, <span class="fl">0.764285714</span>, <span class="fl">0.753571429</span>,</span>
+<span id="cb43-330"><a href="#cb43-330" aria-hidden="true" tabindex="-1"></a>  <span class="fl">0.742857143</span>, <span class="fl">0.732142857</span>, <span class="fl">0.721428571</span>, <span class="fl">0.710714286</span>, <span class="fl">0.7</span></span>
+<span id="cb43-331"><a href="#cb43-331" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb43-332"><a href="#cb43-332" aria-hidden="true" tabindex="-1"></a>sel_sd <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="fl">0.05</span>, <span class="fu">length</span>(age))</span>
+<span id="cb43-333"><a href="#cb43-333" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-334"><a href="#cb43-334" aria-hidden="true" tabindex="-1"></a>p1_prior <span class="ot">&lt;-</span> <span class="fu">lognorm_from_median_cv</span>(<span class="at">median =</span> <span class="fl">1.5</span>, <span class="at">cv =</span> <span class="fl">0.4</span>)</span>
+<span id="cb43-335"><a href="#cb43-335" aria-hidden="true" tabindex="-1"></a>p3_prior <span class="ot">&lt;-</span> <span class="fu">lognorm_from_median_cv</span>(<span class="at">median =</span> <span class="fl">2.5</span>, <span class="at">cv =</span> <span class="fl">0.6</span>)</span>
+<span id="cb43-336"><a href="#cb43-336" aria-hidden="true" tabindex="-1"></a>p2_prior <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">mu =</span> <span class="dv">4</span>, <span class="at">sigma =</span> <span class="dv">1</span>)</span>
+<span id="cb43-337"><a href="#cb43-337" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-338"><a href="#cb43-338" aria-hidden="true" tabindex="-1"></a>make_prior_data <span class="ot">&lt;-</span> <span class="cf">function</span>(p1_prior, p2_prior, p3_prior) {</span>
+<span id="cb43-339"><a href="#cb43-339" aria-hidden="true" tabindex="-1"></a>  <span class="fu">list</span>(</span>
+<span id="cb43-340"><a href="#cb43-340" aria-hidden="true" tabindex="-1"></a>    <span class="at">age =</span> age,</span>
+<span id="cb43-341"><a href="#cb43-341" aria-hidden="true" tabindex="-1"></a>    <span class="at">sel_obs =</span> sel_obs,</span>
+<span id="cb43-342"><a href="#cb43-342" aria-hidden="true" tabindex="-1"></a>    <span class="at">sel_sd =</span> sel_sd,</span>
+<span id="cb43-343"><a href="#cb43-343" aria-hidden="true" tabindex="-1"></a>    <span class="at">mu_log_p1 =</span> p1_prior<span class="sc">$</span>mu,</span>
+<span id="cb43-344"><a href="#cb43-344" aria-hidden="true" tabindex="-1"></a>    <span class="at">sd_log_p1 =</span> p1_prior<span class="sc">$</span>sigma,</span>
+<span id="cb43-345"><a href="#cb43-345" aria-hidden="true" tabindex="-1"></a>    <span class="at">mu_p2 =</span> p2_prior<span class="sc">$</span>mu,</span>
+<span id="cb43-346"><a href="#cb43-346" aria-hidden="true" tabindex="-1"></a>    <span class="at">sd_p2 =</span> p2_prior<span class="sc">$</span>sigma,</span>
+<span id="cb43-347"><a href="#cb43-347" aria-hidden="true" tabindex="-1"></a>    <span class="at">mu_log_p3 =</span> p3_prior<span class="sc">$</span>mu,</span>
+<span id="cb43-348"><a href="#cb43-348" aria-hidden="true" tabindex="-1"></a>    <span class="at">sd_log_p3 =</span> p3_prior<span class="sc">$</span>sigma</span>
+<span id="cb43-349"><a href="#cb43-349" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb43-350"><a href="#cb43-350" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb43-351"><a href="#cb43-351" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-352"><a href="#cb43-352" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">make_prior_data</span>(p1_prior, p2_prior, p3_prior)</span>
+<span id="cb43-353"><a href="#cb43-353" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-354"><a href="#cb43-354" aria-hidden="true" tabindex="-1"></a>parameters <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
+<span id="cb43-355"><a href="#cb43-355" aria-hidden="true" tabindex="-1"></a>  <span class="at">log_p1 =</span> <span class="fu">log</span>(<span class="fl">1.5</span>),</span>
+<span id="cb43-356"><a href="#cb43-356" aria-hidden="true" tabindex="-1"></a>  <span class="at">p2 =</span> <span class="dv">4</span>,</span>
+<span id="cb43-357"><a href="#cb43-357" aria-hidden="true" tabindex="-1"></a>  <span class="at">log_p3 =</span> <span class="fu">log</span>(<span class="fl">2.5</span>)</span>
+<span id="cb43-358"><a href="#cb43-358" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb43-359"><a href="#cb43-359" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-360"><a href="#cb43-360" aria-hidden="true" tabindex="-1"></a>make_obj <span class="ot">&lt;-</span> <span class="cf">function</span>(data, parameters) {</span>
+<span id="cb43-361"><a href="#cb43-361" aria-hidden="true" tabindex="-1"></a>  f <span class="ot">&lt;-</span> <span class="cf">function</span>(parms) {</span>
+<span id="cb43-362"><a href="#cb43-362" aria-hidden="true" tabindex="-1"></a>    <span class="fu">getAll</span>(data, parms, <span class="at">warn =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb43-363"><a href="#cb43-363" aria-hidden="true" tabindex="-1"></a>    p1 <span class="ot">&lt;-</span> <span class="fu">exp</span>(log_p1)</span>
+<span id="cb43-364"><a href="#cb43-364" aria-hidden="true" tabindex="-1"></a>    p3 <span class="ot">&lt;-</span> <span class="fu">exp</span>(log_p3)</span>
+<span id="cb43-365"><a href="#cb43-365" aria-hidden="true" tabindex="-1"></a>    sel_hat <span class="ot">&lt;-</span> <span class="fu">dbl_logistic_sel</span>(age, p1, p2, p3)</span>
+<span id="cb43-366"><a href="#cb43-366" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-367"><a href="#cb43-367" aria-hidden="true" tabindex="-1"></a>    nll <span class="ot">&lt;-</span> <span class="dv">0</span></span>
+<span id="cb43-368"><a href="#cb43-368" aria-hidden="true" tabindex="-1"></a>    nll <span class="ot">&lt;-</span> nll <span class="sc">-</span> <span class="fu">dnorm</span>(log_p1, mu_log_p1, sd_log_p1, <span class="at">log =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb43-369"><a href="#cb43-369" aria-hidden="true" tabindex="-1"></a>    nll <span class="ot">&lt;-</span> nll <span class="sc">-</span> <span class="fu">dnorm</span>(p2, mu_p2, sd_p2, <span class="at">log =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb43-370"><a href="#cb43-370" aria-hidden="true" tabindex="-1"></a>    nll <span class="ot">&lt;-</span> nll <span class="sc">-</span> <span class="fu">dnorm</span>(log_p3, mu_log_p3, sd_log_p3, <span class="at">log =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb43-371"><a href="#cb43-371" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-372"><a href="#cb43-372" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ADREPORT</span>(<span class="fu">c</span>(<span class="at">p1 =</span> p1, <span class="at">p2 =</span> p2, <span class="at">p3 =</span> p3))</span>
+<span id="cb43-373"><a href="#cb43-373" aria-hidden="true" tabindex="-1"></a>    nll</span>
+<span id="cb43-374"><a href="#cb43-374" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb43-375"><a href="#cb43-375" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-376"><a href="#cb43-376" aria-hidden="true" tabindex="-1"></a>  <span class="fu">MakeADFun</span>(f, parameters)</span>
+<span id="cb43-377"><a href="#cb43-377" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb43-378"><a href="#cb43-378" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-379"><a href="#cb43-379" aria-hidden="true" tabindex="-1"></a>obj <span class="ot">&lt;-</span> <span class="fu">make_obj</span>(data, parameters)</span>
+<span id="cb43-380"><a href="#cb43-380" aria-hidden="true" tabindex="-1"></a>opt <span class="ot">&lt;-</span> <span class="fu">nlminb</span>(obj<span class="sc">$</span>par, obj<span class="sc">$</span>fn, obj<span class="sc">$</span>gr)</span>
+<span id="cb43-381"><a href="#cb43-381" aria-hidden="true" tabindex="-1"></a>sdrep <span class="ot">&lt;-</span> <span class="fu">sdreport</span>(obj)</span>
+<span id="cb43-382"><a href="#cb43-382" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb43-383"><a href="#cb43-383" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-384"><a href="#cb43-384" aria-hidden="true" tabindex="-1"></a><span class="fu">## MCMC evaluation</span></span>
+<span id="cb43-385"><a href="#cb43-385" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-386"><a href="#cb43-386" aria-hidden="true" tabindex="-1"></a><span class="in">```{r mcmc-run}</span></span>
+<span id="cb43-387"><a href="#cb43-387" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: true</span></span>
+<span id="cb43-388"><a href="#cb43-388" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: true</span></span>
+<span id="cb43-389"><a href="#cb43-389" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(SparseNUTS)</span>
+<span id="cb43-390"><a href="#cb43-390" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-391"><a href="#cb43-391" aria-hidden="true" tabindex="-1"></a>run_snuts <span class="ot">&lt;-</span> <span class="cf">function</span>(obj, data, <span class="at">seed =</span> <span class="dv">1</span>, <span class="at">model_name =</span> <span class="st">"selectivity"</span>) {</span>
+<span id="cb43-392"><a href="#cb43-392" aria-hidden="true" tabindex="-1"></a>  <span class="fu">sample_snuts</span>(</span>
+<span id="cb43-393"><a href="#cb43-393" aria-hidden="true" tabindex="-1"></a>    obj,</span>
+<span id="cb43-394"><a href="#cb43-394" aria-hidden="true" tabindex="-1"></a>    <span class="at">refresh =</span> <span class="dv">0</span>,</span>
+<span id="cb43-395"><a href="#cb43-395" aria-hidden="true" tabindex="-1"></a>    <span class="at">seed =</span> seed,</span>
+<span id="cb43-396"><a href="#cb43-396" aria-hidden="true" tabindex="-1"></a>    <span class="at">model_name =</span> model_name,</span>
+<span id="cb43-397"><a href="#cb43-397" aria-hidden="true" tabindex="-1"></a>    <span class="at">cores =</span> <span class="dv">1</span>,</span>
+<span id="cb43-398"><a href="#cb43-398" aria-hidden="true" tabindex="-1"></a>    <span class="at">chains =</span> <span class="dv">1</span>,</span>
+<span id="cb43-399"><a href="#cb43-399" aria-hidden="true" tabindex="-1"></a>    <span class="at">num_samples =</span> <span class="dv">1150</span>,</span>
+<span id="cb43-400"><a href="#cb43-400" aria-hidden="true" tabindex="-1"></a>    <span class="at">num_warmup =</span> <span class="dv">150</span>,</span>
+<span id="cb43-401"><a href="#cb43-401" aria-hidden="true" tabindex="-1"></a>    <span class="at">globals =</span> <span class="fu">list</span>(<span class="at">dat =</span> data)</span>
+<span id="cb43-402"><a href="#cb43-402" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb43-403"><a href="#cb43-403" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb43-404"><a href="#cb43-404" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-405"><a href="#cb43-405" aria-hidden="true" tabindex="-1"></a>fit_set1 <span class="ot">&lt;-</span> <span class="fu">run_snuts</span>(obj, data, <span class="at">seed =</span> <span class="dv">1</span>, <span class="at">model_name =</span> <span class="st">"selectivity_set1"</span>)</span>
+<span id="cb43-406"><a href="#cb43-406" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb43-407"><a href="#cb43-407" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-408"><a href="#cb43-408" aria-hidden="true" tabindex="-1"></a><span class="in">```{r mcmc-helpers}</span></span>
+<span id="cb43-409"><a href="#cb43-409" aria-hidden="true" tabindex="-1"></a><span class="co">#| include: false</span></span>
+<span id="cb43-410"><a href="#cb43-410" aria-hidden="true" tabindex="-1"></a>mcmc_selectivity_df <span class="ot">&lt;-</span> <span class="cf">function</span>(fit, age) {</span>
+<span id="cb43-411"><a href="#cb43-411" aria-hidden="true" tabindex="-1"></a>  p1 <span class="ot">&lt;-</span> <span class="fu">exp</span>(fit<span class="sc">$</span>samples[, , <span class="dv">1</span>])</span>
+<span id="cb43-412"><a href="#cb43-412" aria-hidden="true" tabindex="-1"></a>  p2 <span class="ot">&lt;-</span> fit<span class="sc">$</span>samples[, , <span class="dv">2</span>]</span>
+<span id="cb43-413"><a href="#cb43-413" aria-hidden="true" tabindex="-1"></a>  p3 <span class="ot">&lt;-</span> <span class="fu">exp</span>(fit<span class="sc">$</span>samples[, , <span class="dv">3</span>])</span>
+<span id="cb43-414"><a href="#cb43-414" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-415"><a href="#cb43-415" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tibble</span>(p1, p2, p3) <span class="sc">%&gt;%</span></span>
+<span id="cb43-416"><a href="#cb43-416" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">set =</span> <span class="fu">factor</span>(<span class="fu">row_number</span>())) <span class="sc">%&gt;%</span></span>
+<span id="cb43-417"><a href="#cb43-417" aria-hidden="true" tabindex="-1"></a>    <span class="fu">crossing</span>(<span class="at">age =</span> age) <span class="sc">%&gt;%</span></span>
+<span id="cb43-418"><a href="#cb43-418" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">sel =</span> <span class="fu">dbl_logistic_sel</span>(age, p1, p2, p3)) <span class="sc">%&gt;%</span></span>
+<span id="cb43-419"><a href="#cb43-419" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">age =</span> <span class="fu">as.numeric</span>(age)) <span class="sc">%&gt;%</span></span>
+<span id="cb43-420"><a href="#cb43-420" aria-hidden="true" tabindex="-1"></a>    <span class="fu">arrange</span>(set, age)</span>
+<span id="cb43-421"><a href="#cb43-421" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb43-422"><a href="#cb43-422" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-423"><a href="#cb43-423" aria-hidden="true" tabindex="-1"></a>plot_mcmc_selectivity <span class="ot">&lt;-</span> <span class="cf">function</span>(df, <span class="at">alpha =</span> <span class="fl">0.1</span>) {</span>
+<span id="cb43-424"><a href="#cb43-424" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(df, <span class="fu">aes</span>(age, sel, <span class="at">group =</span> set)) <span class="sc">+</span></span>
+<span id="cb43-425"><a href="#cb43-425" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_line</span>(<span class="at">alpha =</span> alpha) <span class="sc">+</span></span>
+<span id="cb43-426"><a href="#cb43-426" aria-hidden="true" tabindex="-1"></a>    ggthemes<span class="sc">::</span><span class="fu">theme_few</span>()</span>
+<span id="cb43-427"><a href="#cb43-427" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb43-428"><a href="#cb43-428" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb43-429"><a href="#cb43-429" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-430"><a href="#cb43-430" aria-hidden="true" tabindex="-1"></a><span class="in">```{r plot-marginals}</span></span>
+<span id="cb43-431"><a href="#cb43-431" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fig-dl-marginals</span></span>
+<span id="cb43-432"><a href="#cb43-432" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: "Marginal posterior distributions for selectivity parameters (SparseNUTS, prior set 1)."</span></span>
+<span id="cb43-433"><a href="#cb43-433" aria-hidden="true" tabindex="-1"></a>SparseNUTS<span class="sc">::</span><span class="fu">plot_marginals</span>(fit_set1, <span class="at">pars =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>)</span>
+<span id="cb43-434"><a href="#cb43-434" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb43-435"><a href="#cb43-435" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-436"><a href="#cb43-436" aria-hidden="true" tabindex="-1"></a>The marginal posterior densities in @fig-dl-marginals summarize $(p_1, p_2,</span>
+<span id="cb43-437"><a href="#cb43-437" aria-hidden="true" tabindex="-1"></a>p_3)$ under prior set 1.</span>
+<span id="cb43-438"><a href="#cb43-438" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-439"><a href="#cb43-439" aria-hidden="true" tabindex="-1"></a><span class="in">```{r plot-pairs}</span></span>
+<span id="cb43-440"><a href="#cb43-440" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fig-dl-pairs</span></span>
+<span id="cb43-441"><a href="#cb43-441" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: "Pairwise posterior scatterplots for selectivity parameters."</span></span>
+<span id="cb43-442"><a href="#cb43-442" aria-hidden="true" tabindex="-1"></a><span class="fu">pairs</span>(fit_set1)</span>
+<span id="cb43-443"><a href="#cb43-443" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb43-444"><a href="#cb43-444" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-445"><a href="#cb43-445" aria-hidden="true" tabindex="-1"></a><span class="in">```{r posterior-draws-set1}</span></span>
+<span id="cb43-446"><a href="#cb43-446" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fig-dl-mcmc-set1</span></span>
+<span id="cb43-447"><a href="#cb43-447" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: "MCMC selectivity draws for prior set 1 (p1 median 1.5, p3 median 2.5, p2 sd 1)."</span></span>
+<span id="cb43-448"><a href="#cb43-448" aria-hidden="true" tabindex="-1"></a>df_set1 <span class="ot">&lt;-</span> <span class="fu">mcmc_selectivity_df</span>(fit_set1, age)</span>
+<span id="cb43-449"><a href="#cb43-449" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_mcmc_selectivity</span>(df_set1)</span>
+<span id="cb43-450"><a href="#cb43-450" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb43-451"><a href="#cb43-451" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-452"><a href="#cb43-452" aria-hidden="true" tabindex="-1"></a><span class="fu">### Additional prior sets</span></span>
+<span id="cb43-453"><a href="#cb43-453" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-454"><a href="#cb43-454" aria-hidden="true" tabindex="-1"></a><span class="in">```{r mcmc-prior-sets}</span></span>
+<span id="cb43-455"><a href="#cb43-455" aria-hidden="true" tabindex="-1"></a>p1_prior_set2 <span class="ot">&lt;-</span> <span class="fu">lognorm_from_median_cv</span>(<span class="at">median =</span> <span class="fl">1.5</span>, <span class="at">cv =</span> <span class="fl">0.4</span>)</span>
+<span id="cb43-456"><a href="#cb43-456" aria-hidden="true" tabindex="-1"></a>p3_prior_set2 <span class="ot">&lt;-</span> <span class="fu">lognorm_from_median_cv</span>(<span class="at">median =</span> <span class="dv">8</span>, <span class="at">cv =</span> <span class="fl">0.6</span>)</span>
+<span id="cb43-457"><a href="#cb43-457" aria-hidden="true" tabindex="-1"></a>p2_prior_set2 <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">mu =</span> <span class="dv">4</span>, <span class="at">sigma =</span> <span class="dv">1</span>)</span>
+<span id="cb43-458"><a href="#cb43-458" aria-hidden="true" tabindex="-1"></a>data_set2 <span class="ot">&lt;-</span> <span class="fu">make_prior_data</span>(p1_prior_set2, p2_prior_set2, p3_prior_set2)</span>
+<span id="cb43-459"><a href="#cb43-459" aria-hidden="true" tabindex="-1"></a>obj_set2 <span class="ot">&lt;-</span> <span class="fu">make_obj</span>(data_set2, parameters)</span>
+<span id="cb43-460"><a href="#cb43-460" aria-hidden="true" tabindex="-1"></a>fit_set2 <span class="ot">&lt;-</span> <span class="fu">run_snuts</span>(obj_set2, data_set2, <span class="at">seed =</span> <span class="dv">2</span>, <span class="at">model_name =</span> <span class="st">"selectivity_set2"</span>)</span>
+<span id="cb43-461"><a href="#cb43-461" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-462"><a href="#cb43-462" aria-hidden="true" tabindex="-1"></a>p1_prior_set3 <span class="ot">&lt;-</span> <span class="fu">lognorm_from_median_cv</span>(<span class="at">median =</span> <span class="fl">1.5</span>, <span class="at">cv =</span> <span class="fl">0.4</span>)</span>
+<span id="cb43-463"><a href="#cb43-463" aria-hidden="true" tabindex="-1"></a>p3_prior_set3 <span class="ot">&lt;-</span> <span class="fu">lognorm_from_median_cv</span>(<span class="at">median =</span> <span class="dv">8</span>, <span class="at">cv =</span> <span class="fl">0.6</span>)</span>
+<span id="cb43-464"><a href="#cb43-464" aria-hidden="true" tabindex="-1"></a>p2_prior_set3 <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">mu =</span> <span class="dv">4</span>, <span class="at">sigma =</span> <span class="dv">2</span>)</span>
+<span id="cb43-465"><a href="#cb43-465" aria-hidden="true" tabindex="-1"></a>data_set3 <span class="ot">&lt;-</span> <span class="fu">make_prior_data</span>(p1_prior_set3, p2_prior_set3, p3_prior_set3)</span>
+<span id="cb43-466"><a href="#cb43-466" aria-hidden="true" tabindex="-1"></a>obj_set3 <span class="ot">&lt;-</span> <span class="fu">make_obj</span>(data_set3, parameters)</span>
+<span id="cb43-467"><a href="#cb43-467" aria-hidden="true" tabindex="-1"></a>fit_set3 <span class="ot">&lt;-</span> <span class="fu">run_snuts</span>(obj_set3, data_set3, <span class="at">seed =</span> <span class="dv">3</span>, <span class="at">model_name =</span> <span class="st">"selectivity_set3"</span>)</span>
+<span id="cb43-468"><a href="#cb43-468" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb43-469"><a href="#cb43-469" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-470"><a href="#cb43-470" aria-hidden="true" tabindex="-1"></a><span class="in">```{r posterior-draws-set2}</span></span>
+<span id="cb43-471"><a href="#cb43-471" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fig-dl-mcmc-set2</span></span>
+<span id="cb43-472"><a href="#cb43-472" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: "MCMC selectivity draws for prior set 2 (p1 median 1.5, p3 median 8, p2 sd 1)."</span></span>
+<span id="cb43-473"><a href="#cb43-473" aria-hidden="true" tabindex="-1"></a>df_set2 <span class="ot">&lt;-</span> <span class="fu">mcmc_selectivity_df</span>(fit_set2, age)</span>
+<span id="cb43-474"><a href="#cb43-474" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_mcmc_selectivity</span>(df_set2)</span>
+<span id="cb43-475"><a href="#cb43-475" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb43-476"><a href="#cb43-476" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-477"><a href="#cb43-477" aria-hidden="true" tabindex="-1"></a><span class="in">```{r posterior-draws-set3}</span></span>
+<span id="cb43-478"><a href="#cb43-478" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fig-dl-mcmc-set3</span></span>
+<span id="cb43-479"><a href="#cb43-479" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: "MCMC selectivity draws for prior set 3 (p1 median 1.5, p3 median 8, p2 sd 2)."</span></span>
+<span id="cb43-480"><a href="#cb43-480" aria-hidden="true" tabindex="-1"></a>df_set3 <span class="ot">&lt;-</span> <span class="fu">mcmc_selectivity_df</span>(fit_set3, age)</span>
+<span id="cb43-481"><a href="#cb43-481" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_mcmc_selectivity</span>(df_set3)</span>
+<span id="cb43-482"><a href="#cb43-482" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
+</div></div></div></div></div>  </div> <!-- /content -->  <script>var lightboxQuarto = GLightbox({"closeEffect":"zoom","descPosition":"bottom","loop":false,"openEffect":"zoom","selector":".lightbox"});
 (function() {
   let previousOnload = window.onload;
   window.onload = () => {

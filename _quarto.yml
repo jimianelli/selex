@@ -14,15 +14,20 @@ manuscript:
     - notebook: timevarying_selectivity.qmd
       title: "Time-Varying 2D AR1 Selectivity"
 
+lightbox: true
+
 format:
   html:
     toc: true
     number-sections: true
     theme: cosmo
     css: style.css
+    code-fold: true
+    code-summary: "Show code"
+    code-tools: true
 
 execute:
-  echo: false
+  echo: true
   message: false
   warning: false
   freeze: true

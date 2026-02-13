@@ -1,15 +1,6 @@
 ---
 title: "Time-Varying Selectivity with 2D Autoregressive Structure"
 subtitle: "Separable AR1 processes in year and age via RTMB"
-lightbox: true
-format:
-  html:
-    toc: true
-    number-sections: true
-execute:
-  echo: false
-  message: false
-  warning: false
 ---
 
 ## Overview

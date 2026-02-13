@@ -18,8 +18,8 @@ format:
     theme: cosmo
     css: style.css
     code-fold: true
-    code-summary: "Show code"
-    code-tools: true
+    code-summary: "Show R code"
+    code-tools: false
 
 execute:
   echo: true

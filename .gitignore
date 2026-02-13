@@ -1,0 +1,9 @@
+_manuscript/
+*_files/
+*.html
+*.pdf
+.quarto/
+_freeze/
+.Rhistory
+.RData
+.Rproj.user

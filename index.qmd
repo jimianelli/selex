@@ -1,0 +1,95 @@
+---
+title: "Selectivity Options for Age-Structured Stock Assessments"
+subtitle: "A comparative framework using RTMB"
+author:
+  - name: James Ianelli
+    affiliations:
+      - name: NOAA/NMFS Alaska Fisheries Science Center
+        city: Seattle
+        state: WA
+date: last-modified
+abstract: |
+  Selectivity is a fundamental component of age-structured stock assessment models,
+  governing how fishing mortality and survey catchability vary with age or size. The
+  choice of selectivity parameterization affects estimates of population abundance,
+  fishing mortality, and management reference points. This manuscript compares several
+  selectivity formulations---including standard logistic, double logistic, and
+  spline-based approaches---within a unified RTMB framework. We examine parameter
+  identifiability, prior sensitivity, and the practical consequences of selectivity
+  misspecification using simulation and application to eastern Bering Sea walleye
+  pollock (*Gadus chalcogrammus*). Results highlight trade-offs between flexibility
+  and estimability and provide guidance for practitioners choosing among selectivity
+  options in operational assessments.
+keywords:
+  - selectivity
+  - stock assessment
+  - RTMB
+  - fisheries
+  - walleye pollock
+---
+
+## Introduction {#sec-intro}
+
+Selectivity functions describe the relative vulnerability of fish to capture as a
+function of age (or size) and are among the most influential---yet least
+observable---components of stock assessment models. The assumed shape of the
+selectivity curve directly affects estimates of spawning biomass, recruitment, and
+fishing mortality, and misspecification can propagate into biased reference points
+and management advice [@punt2024; @deriso1996].
+
+Despite its importance, selectivity is often treated as a modelling convenience
+rather than a biological or technological quantity to be estimated carefully. Most
+operational assessments adopt a logistic or double-logistic functional form, chosen
+for parsimony rather than fidelity to the underlying catch process. More flexible
+alternatives---such as penalized splines or non-parametric approaches---can reduce
+structural bias but may introduce identifiability problems, particularly when data
+are sparse or conflicting.
+
+This manuscript develops a comparative framework for evaluating selectivity options
+within the R Template Model Builder (RTMB) environment. RTMB provides automatic
+differentiation, Laplace approximation for random effects, and integration with
+Bayesian sampling via SparseNUTS, making it a natural platform for exploring both
+maximum likelihood and posterior-based inference on selectivity parameters.
+
+We organize the comparison around three selectivity families:
+
+1. **Standard logistic** (@sec-logistic): the two-parameter ascending logistic,
+   widely used for fisheries where retention is assumed to be monotonically
+   increasing with age.
+2. **Double logistic** (@sec-double-logistic): a dome-shaped three-parameter
+   formulation allowing selectivity to decline at older ages, motivated by gear
+   avoidance, ontogenetic habitat shifts, or differential availability.
+3. **Spline-based** (@sec-spline): a penalized B-spline approach offering flexible,
+   data-driven selectivity shapes with smoothness controlled by a penalty parameter.
+
+For each family, we present the mathematical formulation, an RTMB implementation
+with prior specification, parameter sensitivity analysis, and MCMC-based posterior
+evaluation. We then apply all three to eastern Bering Sea walleye pollock data to
+illustrate practical trade-offs.
+
+
+## Standard Logistic Selectivity {#sec-logistic}
+
+{{< embed logistic_selectivity.qmd >}}
+
+
+## Double Logistic Selectivity {#sec-double-logistic}
+
+{{< embed double_logistic_selectivity.qmd >}}
+
+
+## Spline-Based Selectivity {#sec-spline}
+
+{{< embed spline_selectivity.qmd >}}
+
+
+## Comparison and Discussion {#sec-discussion}
+
+*Placeholder: comparative analysis across selectivity families, including AIC/BIC,
+posterior predictive checks, and implications for management quantities.*
+
+
+## References {.unnumbered}
+
+::: {#refs}
+:::

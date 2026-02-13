@@ -1,0 +1,1591 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.8.26">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="James Ianelli">
+<meta name="dcterms.date" content="2026-02-12">
+<meta name="keywords" content="selectivity, stock assessment, RTMB, fisheries, walleye pollock">
+
+<title>Selectivity Options for Age-Structured Stock Assessments</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
+
+
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-587c61ba64f3a5504c4d52d930310e48.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-a74871fe4945b66d259aafc266475145.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script src="site_libs/quarto-contrib/glightbox/glightbox.min.js"></script>
+<link href="site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
+<link href="site_libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet">
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="style.css">
+<meta name="citation_title" content="Selectivity Options for Age-Structured Stock Assessments">
+<meta name="citation_abstract" content="Selectivity is a fundamental component of age-structured stock assessment models,
+governing how fishing mortality and survey catchability vary with age or size. The
+choice of selectivity parameterization affects estimates of population abundance,
+fishing mortality, and management reference points. This manuscript compares several
+selectivity formulations---including standard logistic, double logistic,
+spline-based, and time-varying 2D autoregressive approaches---within a unified
+RTMB framework. We examine parameter
+identifiability, prior sensitivity, and the practical consequences of selectivity
+misspecification using simulation and application to eastern Bering Sea walleye
+pollock (*Gadus chalcogrammus*). Results highlight trade-offs between flexibility
+and estimability and provide guidance for practitioners choosing among selectivity
+options in operational assessments.
+">
+<meta name="citation_keywords" content="selectivity,stock assessment,RTMB,fisheries,walleye pollock">
+<meta name="citation_author" content="James Ianelli">
+<meta name="citation_publication_date" content="2026-02-12">
+<meta name="citation_cover_date" content="2026-02-12">
+<meta name="citation_year" content="2026">
+<meta name="citation_online_date" content="2026-02-12">
+<meta name="citation_language" content="en">
+<meta name="citation_reference" content="citation_title=Towards best practice for specifying selectivity in age-structured integrated stock assessments;,citation_author=Kristin Privitera-Johnson;,citation_author=Richard D. Methot;,citation_author=André E. Punt;,citation_publication_date=2022;,citation_cover_date=2022;,citation_year=2022;,citation_doi=10.1016/j.fishres.2022.106248;,citation_volume=248;,citation_journal_title=Fisheries Research;">
+<meta name="citation_reference" content="citation_title=Model selection for selectivity in fisheries stock assessments;,citation_author=André E. Punt;,citation_author=Felipe Hurtado-Ferro;,citation_author=Athol R. Whitten;,citation_publication_date=2013;,citation_cover_date=2013;,citation_year=2013;,citation_doi=10.1016/j.fishres.2013.02.008;,citation_volume=141;,citation_journal_title=Fisheries Research;">
+<meta name="citation_reference" content="citation_title=Confounding of gear selectivity and the natural mortality rate in cases where the former is a nonmonotone function of age;,citation_author=Grant G. Thompson;,citation_publication_date=1994;,citation_cover_date=1994;,citation_year=1994;,citation_issue=12;,citation_doi=10.1139/f94-265;,citation_volume=51;,citation_journal_title=Canadian Journal of Fisheries and Aquatic Sciences;">
+<meta name="citation_reference" content="citation_title=Harvesting strategies and parameter estimation for an age-structured model;,citation_author=Richard B. Deriso;,citation_publication_date=1980;,citation_cover_date=1980;,citation_year=1980;,citation_doi=10.1139/f80-034;,citation_volume=37;,citation_journal_title=Canadian Journal of Fisheries and Aquatic Sciences;">
+<meta name="citation_reference" content="citation_title=TMB: Automatic differentiation and Laplace approximation;,citation_author=Kasper Kristensen;,citation_author=Anders Nielsen;,citation_author=Casper W. Berg;,citation_author=Hans Skaug;,citation_author=Bradley M. Bell;,citation_publication_date=2016;,citation_cover_date=2016;,citation_year=2016;,citation_issue=5;,citation_doi=10.18637/jss.v070.i05;,citation_volume=70;,citation_journal_title=Journal of Statistical Software;">
+<meta name="citation_reference" content="citation_title=Stock synthesis: A biological and statistical framework for fish stock assessment and fishery management;,citation_author=Richard D. Methot;,citation_author=Chantell R. Wetzel;,citation_publication_date=2013;,citation_cover_date=2013;,citation_year=2013;,citation_doi=10.1016/j.fishres.2012.10.012;,citation_volume=142;,citation_journal_title=Fisheries Research;">
+<meta name="citation_reference" content="citation_title=Quantitative fish dynamics;,citation_author=Terrance J. Quinn;,citation_author=Richard B. Deriso;,citation_publication_date=1999;,citation_cover_date=1999;,citation_year=1999;">
+</head>
+
+<body class="quarto-light">
+
+<header id="title-block-header" class="quarto-title-block default toc-left page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">Selectivity Options for Age-Structured Stock Assessments</h1>
+            <p class="subtitle lead">A comparative framework using RTMB</p>
+          </div>
+
+    
+    <div class="quarto-title-meta-container">
+      <div class="quarto-title-meta-column-start">
+            <div class="quarto-title-meta-author">
+          <div class="quarto-title-meta-heading">Author</div>
+          <div class="quarto-title-meta-heading">Affiliation</div>
+          
+                <div class="quarto-title-meta-contents">
+            <p class="author">James Ianelli </p>
+          </div>
+                <div class="quarto-title-meta-contents">
+                    <p class="affiliation">
+                        NOAA/NMFS Alaska Fisheries Science Center
+                      </p>
+                  </div>
+                    </div>
+        
+        <div class="quarto-title-meta">
+
+                      
+                <div>
+            <div class="quarto-title-meta-heading">Published</div>
+            <div class="quarto-title-meta-contents">
+              <p class="date">February 12, 2026</p>
+            </div>
+          </div>
+          
+                
+              </div>
+      </div>
+      <div class="quarto-title-meta-column-end quarto-other-formats-target">
+      </div>
+    </div>
+
+    <div>
+      <div class="abstract">
+        <div class="block-title">Abstract</div>
+        <p>Selectivity is a fundamental component of age-structured stock assessment models, governing how fishing mortality and survey catchability vary with age or size. The choice of selectivity parameterization affects estimates of population abundance, fishing mortality, and management reference points. This manuscript compares several selectivity formulations—including standard logistic, double logistic, spline-based, and time-varying 2D autoregressive approaches—within a unified RTMB framework. We examine parameter identifiability, prior sensitivity, and the practical consequences of selectivity misspecification using simulation and application to eastern Bering Sea walleye pollock (<em>Gadus chalcogrammus</em>). Results highlight trade-offs between flexibility and estimability and provide guidance for practitioners choosing among selectivity options in operational assessments.</p>
+      </div>
+    </div>
+
+    <div>
+      <div class="keywords">
+        <div class="block-title">Keywords</div>
+        <p>selectivity, stock assessment, RTMB, fisheries, walleye pollock</p>
+      </div>
+    </div>
+
+    <div class="quarto-other-links-text-target">
+    </div>  </div>
+</header><div id="quarto-content" class="page-columns page-rows-contents page-layout-article toc-left">
+<div id="quarto-sidebar-toc-left" class="sidebar toc-left">
+  <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#sec-intro" id="toc-sec-intro" class="nav-link active" data-scroll-target="#sec-intro"><span class="header-section-number">0.1</span> Introduction</a></li>
+  <li><a href="#sec-logistic" id="toc-sec-logistic" class="nav-link" data-scroll-target="#sec-logistic"><span class="header-section-number">0.2</span> Standard Logistic Selectivity</a></li>
+  <li><a href="#standard-logistic-selectivity" id="toc-standard-logistic-selectivity" class="nav-link" data-scroll-target="#standard-logistic-selectivity"><span class="header-section-number">1</span> Standard Logistic Selectivity</a>
+  <ul class="collapse">
+  <li><a href="#overview" id="toc-overview" class="nav-link" data-scroll-target="#overview"><span class="header-section-number">1.1</span> Overview</a></li>
+  <li><a href="#model-definition" id="toc-model-definition" class="nav-link" data-scroll-target="#model-definition"><span class="header-section-number">1.2</span> Model definition</a></li>
+  <li><a href="#scenario-exploration" id="toc-scenario-exploration" class="nav-link" data-scroll-target="#scenario-exploration"><span class="header-section-number">1.3</span> Scenario exploration</a></li>
+  <li><a href="#rtmb-implementation" id="toc-rtmb-implementation" class="nav-link" data-scroll-target="#rtmb-implementation"><span class="header-section-number">1.4</span> RTMB implementation</a></li>
+  </ul></li>
+  <li><a href="#sec-double-logistic" id="toc-sec-double-logistic" class="nav-link" data-scroll-target="#sec-double-logistic"><span class="header-section-number">1.5</span> Double Logistic Selectivity</a></li>
+  <li><a href="#double-logistic-selectivity-3-parameter-formulation" id="toc-double-logistic-selectivity-3-parameter-formulation" class="nav-link" data-scroll-target="#double-logistic-selectivity-3-parameter-formulation"><span class="header-section-number">2</span> Double Logistic Selectivity (3-parameter formulation)</a>
+  <ul class="collapse">
+  <li><a href="#overview-1" id="toc-overview-1" class="nav-link" data-scroll-target="#overview-1"><span class="header-section-number">2.1</span> Overview</a></li>
+  <li><a href="#model-definition-1" id="toc-model-definition-1" class="nav-link" data-scroll-target="#model-definition-1"><span class="header-section-number">2.2</span> Model definition</a>
+  <ul class="collapse">
+  <li><a href="#interpretation" id="toc-interpretation" class="nav-link" data-scroll-target="#interpretation"><span class="header-section-number">2.2.1</span> Interpretation</a></li>
+  </ul></li>
+  <li><a href="#scenarios" id="toc-scenarios" class="nav-link" data-scroll-target="#scenarios"><span class="header-section-number">2.3</span> Scenarios</a></li>
+  <li><a href="#faceted-scenario-curves" id="toc-faceted-scenario-curves" class="nav-link" data-scroll-target="#faceted-scenario-curves"><span class="header-section-number">2.4</span> Faceted scenario curves</a></li>
+  <li><a href="#overlay-comparison" id="toc-overlay-comparison" class="nav-link" data-scroll-target="#overlay-comparison"><span class="header-section-number">2.5</span> Overlay comparison</a></li>
+  <li><a href="#parameter-sensitivity-analysis" id="toc-parameter-sensitivity-analysis" class="nav-link" data-scroll-target="#parameter-sensitivity-analysis"><span class="header-section-number">2.6</span> Parameter sensitivity analysis</a></li>
+  <li><a href="#rtmb-implementation-with-priors" id="toc-rtmb-implementation-with-priors" class="nav-link" data-scroll-target="#rtmb-implementation-with-priors"><span class="header-section-number">2.7</span> RTMB implementation with priors</a></li>
+  <li><a href="#mcmc-evaluation" id="toc-mcmc-evaluation" class="nav-link" data-scroll-target="#mcmc-evaluation"><span class="header-section-number">2.8</span> MCMC evaluation</a>
+  <ul class="collapse">
+  <li><a href="#additional-prior-sets" id="toc-additional-prior-sets" class="nav-link" data-scroll-target="#additional-prior-sets"><span class="header-section-number">2.8.1</span> Additional prior sets</a></li>
+  </ul></li>
+  </ul></li>
+  <li><a href="#sec-spline" id="toc-sec-spline" class="nav-link" data-scroll-target="#sec-spline"><span class="header-section-number">2.9</span> Spline-Based Selectivity</a></li>
+  <li><a href="#spline-based-selectivity" id="toc-spline-based-selectivity" class="nav-link" data-scroll-target="#spline-based-selectivity"><span class="header-section-number">3</span> Spline-Based Selectivity</a>
+  <ul class="collapse">
+  <li><a href="#overview-2" id="toc-overview-2" class="nav-link" data-scroll-target="#overview-2"><span class="header-section-number">3.1</span> Overview</a></li>
+  <li><a href="#model-definition-2" id="toc-model-definition-2" class="nav-link" data-scroll-target="#model-definition-2"><span class="header-section-number">3.2</span> Model definition</a></li>
+  <li><a href="#basis-visualization" id="toc-basis-visualization" class="nav-link" data-scroll-target="#basis-visualization"><span class="header-section-number">3.3</span> Basis visualization</a></li>
+  <li><a href="#example-curves" id="toc-example-curves" class="nav-link" data-scroll-target="#example-curves"><span class="header-section-number">3.4</span> Example curves</a></li>
+  <li><a href="#rtmb-implementation-1" id="toc-rtmb-implementation-1" class="nav-link" data-scroll-target="#rtmb-implementation-1"><span class="header-section-number">3.5</span> RTMB implementation</a></li>
+  </ul></li>
+  <li><a href="#sec-timevarying" id="toc-sec-timevarying" class="nav-link" data-scroll-target="#sec-timevarying"><span class="header-section-number">3.6</span> Time-Varying Selectivity with 2D Autoregressive Structure</a></li>
+  <li><a href="#time-varying-selectivity-with-2d-autoregressive-structure" id="toc-time-varying-selectivity-with-2d-autoregressive-structure" class="nav-link" data-scroll-target="#time-varying-selectivity-with-2d-autoregressive-structure"><span class="header-section-number">4</span> Time-Varying Selectivity with 2D Autoregressive Structure</a>
+  <ul class="collapse">
+  <li><a href="#overview-3" id="toc-overview-3" class="nav-link" data-scroll-target="#overview-3"><span class="header-section-number">4.1</span> Overview</a></li>
+  <li><a href="#model-definition-3" id="toc-model-definition-3" class="nav-link" data-scroll-target="#model-definition-3"><span class="header-section-number">4.2</span> Model definition</a>
+  <ul class="collapse">
+  <li><a href="#selectivity-at-age-by-year" id="toc-selectivity-at-age-by-year" class="nav-link" data-scroll-target="#selectivity-at-age-by-year"><span class="header-section-number">4.2.1</span> Selectivity-at-age by year</a></li>
+  <li><a href="#block-structure-for-change-years" id="toc-block-structure-for-change-years" class="nav-link" data-scroll-target="#block-structure-for-change-years"><span class="header-section-number">4.2.2</span> Block structure for change years</a></li>
+  </ul></li>
+  <li><a href="#separable-2d-ar1-prior" id="toc-separable-2d-ar1-prior" class="nav-link" data-scroll-target="#separable-2d-ar1-prior"><span class="header-section-number">4.3</span> Separable 2D AR1 prior</a>
+  <ul class="collapse">
+  <li><a href="#marginal-ar1-processes" id="toc-marginal-ar1-processes" class="nav-link" data-scroll-target="#marginal-ar1-processes"><span class="header-section-number">4.3.1</span> Marginal AR1 processes</a></li>
+  <li><a href="#kronecker-product-structure" id="toc-kronecker-product-structure" class="nav-link" data-scroll-target="#kronecker-product-structure"><span class="header-section-number">4.3.2</span> Kronecker product structure</a></li>
+  <li><a href="#marginal-scale" id="toc-marginal-scale" class="nav-link" data-scroll-target="#marginal-scale"><span class="header-section-number">4.3.3</span> Marginal scale</a></li>
+  <li><a href="#log-density" id="toc-log-density" class="nav-link" data-scroll-target="#log-density"><span class="header-section-number">4.3.4</span> Log-density</a></li>
+  </ul></li>
+  <li><a href="#rtmb-implementation-2" id="toc-rtmb-implementation-2" class="nav-link" data-scroll-target="#rtmb-implementation-2"><span class="header-section-number">4.4</span> RTMB implementation</a>
+  <ul class="collapse">
+  <li><a href="#dseparable-mechanics" id="toc-dseparable-mechanics" class="nav-link" data-scroll-target="#dseparable-mechanics"><span class="header-section-number">4.4.1</span> <code>dseparable</code> mechanics</a></li>
+  <li><a href="#selectivity-construction" id="toc-selectivity-construction" class="nav-link" data-scroll-target="#selectivity-construction"><span class="header-section-number">4.4.2</span> Selectivity construction</a></li>
+  </ul></li>
+  <li><a href="#visualization" id="toc-visualization" class="nav-link" data-scroll-target="#visualization"><span class="header-section-number">4.5</span> Visualization</a></li>
+  <li><a href="#properties-and-considerations" id="toc-properties-and-considerations" class="nav-link" data-scroll-target="#properties-and-considerations"><span class="header-section-number">4.6</span> Properties and considerations</a></li>
+  </ul></li>
+  <li><a href="#sec-discussion" id="toc-sec-discussion" class="nav-link" data-scroll-target="#sec-discussion"><span class="header-section-number">4.7</span> Comparison and Discussion</a></li>
+  <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references">References</a></li>
+  </ul>
+<div class="quarto-alternate-notebooks"><h2>Notebooks</h2><ul><li><a href="double_logistic_selectivity-preview.html"><i class="bi bi-journal-code"></i>Double Logistic Selectivity</a></li><li><a href="spline_selectivity-preview.html"><i class="bi bi-journal-code"></i>Spline-Based Selectivity</a></li><li><a href="logistic_selectivity-preview.html"><i class="bi bi-journal-code"></i>Standard Logistic Selectivity</a></li><li><a href="timevarying_selectivity-preview.html"><i class="bi bi-journal-code"></i>Time-Varying 2D AR1 Selectivity</a></li></ul></div></nav>
+</div>
+<div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
+</div>
+<main class="content quarto-banner-title-block" id="quarto-document-content">
+
+
+
+  
+
+
+<section id="sec-intro" class="level2" data-number="0.1">
+<h2 data-number="0.1" class="anchored" data-anchor-id="sec-intro"><span class="header-section-number">0.1</span> Introduction</h2>
+<p>Selectivity functions describe the relative vulnerability of fish to capture as a function of age (or size) and are among the most influential—yet least observable—components of stock assessment models. The assumed shape of the selectivity curve directly affects estimates of spawning biomass, recruitment, and fishing mortality, and misspecification can propagate into biased reference points and management advice <span class="citation" data-cites="punt2013 thompson1994">(<a href="#ref-punt2013" role="doc-biblioref">Punt, Hurtado-Ferro, and Whitten 2013</a>; <a href="#ref-thompson1994" role="doc-biblioref">Thompson 1994</a>)</span>.</p>
+<p>Despite its importance, selectivity is often treated as a modelling convenience rather than a biological or technological quantity to be estimated carefully. Most operational assessments adopt a logistic or double-logistic functional form, chosen for parsimony rather than fidelity to the underlying catch process. More flexible alternatives—such as penalized splines or non-parametric approaches—can reduce structural bias but may introduce identifiability problems, particularly when data are sparse or conflicting.</p>
+<p>This manuscript develops a comparative framework for evaluating selectivity options within the R Template Model Builder (RTMB) environment. RTMB provides automatic differentiation, Laplace approximation for random effects, and integration with Bayesian sampling via SparseNUTS, making it a natural platform for exploring both maximum likelihood and posterior-based inference on selectivity parameters.</p>
+<p>We organize the comparison around four selectivity families:</p>
+<ol type="1">
+<li><strong>Standard logistic</strong> (<a href="#sec-logistic" class="quarto-xref">Section&nbsp;0.2</a>): the two-parameter ascending logistic, widely used for fisheries where retention is assumed to be monotonically increasing with age.</li>
+<li><strong>Double logistic</strong> (<a href="#sec-double-logistic" class="quarto-xref">Section&nbsp;1.5</a>): a dome-shaped three-parameter formulation allowing selectivity to decline at older ages, motivated by gear avoidance, ontogenetic habitat shifts, or differential availability.</li>
+<li><strong>Spline-based</strong> (<a href="#sec-spline" class="quarto-xref">Section&nbsp;2.9</a>): a penalized B-spline approach offering flexible, data-driven selectivity shapes with smoothness controlled by a penalty parameter.</li>
+<li><strong>Time-varying 2D AR1</strong> (<a href="#sec-timevarying" class="quarto-xref">Section&nbsp;3.6</a>): a separable autoregressive structure over year and age dimensions, allowing selectivity to evolve smoothly through time while maintaining age-specific coherence via a Kronecker-structured precision matrix.</li>
+</ol>
+<p>For each family, we present the mathematical formulation, an RTMB implementation with prior specification, parameter sensitivity analysis, and MCMC-based posterior evaluation. We then apply all to eastern Bering Sea walleye pollock data to illustrate practical trade-offs.</p>
+</section>
+<section id="sec-logistic" class="level2" data-number="0.2">
+<h2 data-number="0.2" class="anchored" data-anchor-id="sec-logistic"><span class="header-section-number">0.2</span> Standard Logistic Selectivity</h2>
+</section>
+<section id="standard-logistic-selectivity" class="level1 quarto-embed-nb-cell" data-number="1">
+<h1 data-number="1"><span class="header-section-number">1</span> Standard Logistic Selectivity</h1>
+<p>Two-parameter ascending logistic formulation</p>
+<section id="overview" class="level2" data-number="1.1">
+<h2 data-number="1.1" class="anchored" data-anchor-id="overview"><span class="header-section-number">1.1</span> Overview</h2>
+<p>The standard (ascending) logistic selectivity is the simplest and most commonly used parameterization in age-structured stock assessments. It assumes that selectivity increases monotonically with age and asymptotes at full selectivity.</p>
+</section>
+<section id="model-definition" class="level2" data-number="1.2">
+<h2 data-number="1.2" class="anchored" data-anchor-id="model-definition"><span class="header-section-number">1.2</span> Model definition</h2>
+<p>With parameters <span class="math inline">\(a_{50}\)</span> (age at 50% selectivity) and <span class="math inline">\(\delta\)</span> (slope width from 50% to 95% selectivity):</p>
+<p><span class="math display">\[
+\text{sel}(a) = \frac{1}{1 + \exp\left[-\log(19)\,\frac{a - a_{50}}{\delta}\right]}
+\]</span></p>
+<p>where <span class="math inline">\(\delta &gt; 0\)</span> controls how quickly selectivity transitions from low to high values.</p>
+</section>
+<section id="scenario-exploration" class="level2" data-number="1.3">
+<h2 data-number="1.3" class="anchored" data-anchor-id="scenario-exploration"><span class="header-section-number">1.3</span> Scenario exploration</h2>
+<div id="cell-fig-logistic-scenarios" class="cell">
+<div class="cell-output cell-output-display">
+<div id="fig-logistic-scenarios" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-logistic-scenarios-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="index_files/figure-html/logistic_selectivity-fig-logistic-scenarios-output-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-1" title="Figure&nbsp;1: Standard logistic selectivity under different parameterizations."><img src="index_files/figure-html/logistic_selectivity-fig-logistic-scenarios-output-1.png" class="img-fluid figure-img"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-logistic-scenarios-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1: Standard logistic selectivity under different parameterizations.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="rtmb-implementation" class="level2" data-number="1.4">
+<h2 data-number="1.4" class="anchored" data-anchor-id="rtmb-implementation"><span class="header-section-number">1.4</span> RTMB implementation</h2>
+<p><em>Placeholder: RTMB objective function with priors on <span class="math inline">\(a_{50}\)</span> and <span class="math inline">\(\delta\)</span>, optimization, and MCMC sampling.</em></p>
+<div id="31a194fc-c103-4e62-a8b8-3ed0061c01b1" class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>library(RTMB)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Objective function skeleton</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>f <span class="op">&lt;-</span> function(parms) {</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>  getAll(data, parms, warn <span class="op">=</span> FALSE)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>  a50 <span class="op">&lt;-</span> exp(log_a50)</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>  delta <span class="op">&lt;-</span> exp(log_delta)</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>  sel_hat <span class="op">&lt;-</span> logistic_sel(age, a50, delta)</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>  nll <span class="op">&lt;-</span> <span class="dv">0</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Priors</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>  nll <span class="op">&lt;-</span> nll <span class="op">-</span> dnorm(log_a50, mu_log_a50, sd_log_a50, log <span class="op">=</span> TRUE)</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>  nll <span class="op">&lt;-</span> nll <span class="op">-</span> dnorm(log_delta, mu_log_delta, sd_log_delta, log <span class="op">=</span> TRUE)</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>  ADREPORT(c(a50 <span class="op">=</span> a50, delta <span class="op">=</span> delta))</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>  nll</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+</section>
+<section id="sec-double-logistic" class="level2" data-number="1.5">
+<h2 data-number="1.5" class="anchored" data-anchor-id="sec-double-logistic"><span class="header-section-number">1.5</span> Double Logistic Selectivity</h2>
+</section>
+<section id="double-logistic-selectivity-3-parameter-formulation" class="level1 quarto-embed-nb-cell" data-number="2">
+<h1 data-number="2"><span class="header-section-number">2</span> Double Logistic Selectivity (3-parameter formulation)</h1>
+<p>Parameterization, sensitivity, and prior elicitation via RTMB</p>
+<section id="overview-1" class="level2" data-number="2.1">
+<h2 data-number="2.1" class="anchored" data-anchor-id="overview-1"><span class="header-section-number">2.1</span> Overview</h2>
+<p>This notebook documents the 3-parameter double logistic selectivity curve used for prior elicitation in the EBS pollock assessment workflow. The formulation allows dome-shaped selectivity, where vulnerability increases with age to a peak and then declines. This behavior is motivated by gear avoidance at older ages, ontogenetic habitat shifts, or differential availability between age classes.</p>
+</section>
+<section id="model-definition-1" class="level2" data-number="2.2">
+<h2 data-number="2.2" class="anchored" data-anchor-id="model-definition-1"><span class="header-section-number">2.2</span> Model definition</h2>
+<p>Let age be <span class="math inline">\(a\)</span>, with parameters <span class="math inline">\(p_1\)</span>, <span class="math inline">\(p_2\)</span>, and <span class="math inline">\(p_3\)</span> and derived inflection points <span class="math inline">\(\gamma_1\)</span> and <span class="math inline">\(\gamma_2\)</span>:</p>
+<p><span class="math display">\[
+\gamma_1 = p_1 + p_2, \qquad
+\gamma_2 = 2p_1 + p_2 + p_3.
+\]</span></p>
+<p>The ascending limb is a standard logistic and the descending limb is one minus a logistic:</p>
+<p><span class="math display">\[
+\text{asc}(a) = \frac{1}{1 + \exp\left[-\log(19)\,\frac{a - \gamma_1}{p_1}\right]},
+\]</span></p>
+<p><span class="math display">\[
+\text{desc}(a) = 1 - \frac{1}{1 + \exp\left[-\log(19)\,\frac{a - \gamma_2}{p_3}\right]}.
+\]</span></p>
+<p>The full double logistic selectivity is</p>
+<p><span class="math display">\[
+\text{sel}(a) = \min\left(1,\ \frac{\text{asc}(a)\,\text{desc}(a)}{0.95^2}\right).
+\]</span></p>
+<section id="interpretation" class="level3" data-number="2.2.1">
+<h3 data-number="2.2.1" class="anchored" data-anchor-id="interpretation"><span class="header-section-number">2.2.1</span> Interpretation</h3>
+<ul>
+<li><span class="math inline">\(p_1 &gt; 0\)</span> controls the ascending slope and is the distance from <span class="math inline">\(\gamma_1\)</span> (50% selectivity) to the 95% point.</li>
+<li><span class="math inline">\(p_2\)</span> shifts the ascending limb through <span class="math inline">\(\gamma_1 = p_1 + p_2\)</span>.</li>
+<li><span class="math inline">\(p_3 &gt; 0\)</span> controls the descending slope and is the distance from <span class="math inline">\(\gamma_2\)</span> (50% on the descending limb) to the 5% point.</li>
+<li>The dome width is <span class="math inline">\(\gamma_2 - \gamma_1 = p_1 + p_3\)</span>.</li>
+<li>The factor <span class="math inline">\(0.95^{-2}\)</span> normalizes the curve so that when both limbs are at 0.95 the product is near 1 (then capped at 1.0).</li>
+</ul>
+</section>
+</section>
+<section id="scenarios" class="level2" data-number="2.3">
+<h2 data-number="2.3" class="anchored" data-anchor-id="scenarios"><span class="header-section-number">2.3</span> Scenarios</h2>
+<div class="cell">
+<div id="tbl-dl-scenarios" class="cell quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-dl-scenarios-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;1: Scenario parameters and derived inflection points
+</figcaption>
+<div aria-describedby="tbl-dl-scenarios-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output cell-output-display cell-output-markdown">
+<table class="do-not-create-environment cell caption-top table table-sm table-striped small">
+<colgroup>
+<col style="width: 41%">
+<col style="width: 6%">
+<col style="width: 5%">
+<col style="width: 6%">
+<col style="width: 10%">
+<col style="width: 10%">
+<col style="width: 15%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">scenario</th>
+<th style="text-align: right;">p1</th>
+<th style="text-align: right;">p2</th>
+<th style="text-align: right;">p3</th>
+<th style="text-align: right;">gamma1</th>
+<th style="text-align: right;">gamma2</th>
+<th style="text-align: right;">dome_width</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Wide dome</td>
+<td style="text-align: right;">2.0</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">2.5</td>
+<td style="text-align: right;">6.0</td>
+<td style="text-align: right;">10.5</td>
+<td style="text-align: right;">4.5</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Asymmetric</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">(fast rise, slow decline)</td>
+<td style="text-align: right;">0.8</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">3.0</td>
+<td style="text-align: right;">4.8</td>
+<td style="text-align: right;">8.6</td>
+<td style="text-align: right;">3.8</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Asymmetric</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">(slow rise, fast decline)</td>
+<td style="text-align: right;">2.0</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">0.8</td>
+<td style="text-align: right;">5.0</td>
+<td style="text-align: right;">7.8</td>
+<td style="text-align: right;">2.8</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Nearly asymptotic</td>
+<td style="text-align: right;">1.5</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">8.0</td>
+<td style="text-align: right;">5.5</td>
+<td style="text-align: right;">15.0</td>
+<td style="text-align: right;">9.5</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</figure>
+</div>
+</div>
+<p>The scenario summary in <a href="#tbl-dl-scenarios" class="quarto-xref">Table&nbsp;1</a> lists the four parameter sets and the derived inflection points (<span class="math inline">\(\gamma_1\)</span>, <span class="math inline">\(\gamma_2\)</span>) used in the selectivity scenarios.</p>
+</section>
+<section id="faceted-scenario-curves" class="level2" data-number="2.4">
+<h2 data-number="2.4" class="anchored" data-anchor-id="faceted-scenario-curves"><span class="header-section-number">2.4</span> Faceted scenario curves</h2>
+<p>Each scenario appears on its own panel in <a href="#fig-dl-faceted" class="quarto-xref">Figure&nbsp;2</a> so the ascent, descent, and dome width can be compared against the 50% and 95% reference lines.</p>
+<div id="cell-fig-dl-faceted" class="cell">
+<div class="cell-output cell-output-display">
+<div id="fig-dl-faceted" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-dl-faceted-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="index_files/figure-html/double_logistic_selectivity-fig-dl-faceted-output-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-2" title="Figure&nbsp;2: Double logistic selectivity for each parameter scenario."><img src="index_files/figure-html/double_logistic_selectivity-fig-dl-faceted-output-1.png" class="img-fluid figure-img"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-dl-faceted-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;2: Double logistic selectivity for each parameter scenario.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="overlay-comparison" class="level2" data-number="2.5">
+<h2 data-number="2.5" class="anchored" data-anchor-id="overlay-comparison"><span class="header-section-number">2.5</span> Overlay comparison</h2>
+<p>All scenarios are overlaid in <a href="#fig-dl-overlay" class="quarto-xref">Figure&nbsp;3</a> to highlight differences in peak age and decline shape when the curves are viewed on a common axis.</p>
+<div id="cell-fig-dl-overlay" class="cell">
+<div class="cell-output cell-output-display">
+<div id="fig-dl-overlay" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-dl-overlay-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="index_files/figure-html/double_logistic_selectivity-fig-dl-overlay-output-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-3" title="Figure&nbsp;3: All scenarios overlaid for direct comparison."><img src="index_files/figure-html/double_logistic_selectivity-fig-dl-overlay-output-1.png" class="img-fluid figure-img"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-dl-overlay-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;3: All scenarios overlaid for direct comparison.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="parameter-sensitivity-analysis" class="level2" data-number="2.6">
+<h2 data-number="2.6" class="anchored" data-anchor-id="parameter-sensitivity-analysis"><span class="header-section-number">2.6</span> Parameter sensitivity analysis</h2>
+<p>The three panels in <a href="#fig-dl-sensitivity" class="quarto-xref">Figure&nbsp;4</a> show how each parameter changes the curve when the other two are held fixed.</p>
+<div id="cell-fig-dl-sensitivity" class="cell" data-fig-width="8" data-fig-height="8">
+<div class="cell-output cell-output-display">
+<div id="fig-dl-sensitivity" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-dl-sensitivity-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="index_files/figure-html/double_logistic_selectivity-fig-dl-sensitivity-output-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-4" title="Figure&nbsp;4: Sensitivity to p1, p2, and p3 with other parameters fixed."><img src="index_files/figure-html/double_logistic_selectivity-fig-dl-sensitivity-output-1.png" class="img-fluid figure-img"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-dl-sensitivity-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;4: Sensitivity to p1, p2, and p3 with other parameters fixed.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="rtmb-implementation-with-priors" class="level2" data-number="2.7">
+<h2 data-number="2.7" class="anchored" data-anchor-id="rtmb-implementation-with-priors"><span class="header-section-number">2.7</span> RTMB implementation with priors</h2>
+<p>A common approach is to estimate on the log scale for the positive parameters and apply lognormal priors on <span class="math inline">\(p_1\)</span> and <span class="math inline">\(p_3\)</span>:</p>
+<p><span class="math display">\[
+\log(p_k) \sim \mathcal{N}(\mu_k, \sigma_k^2), \qquad k \in \{1, 3\}.
+\]</span></p>
+<p>If using a lognormal prior specified by median <span class="math inline">\(m\)</span> and coefficient of variation <span class="math inline">\(\text{CV}\)</span> on the natural scale, a convenient conversion is</p>
+<p><span class="math display">\[
+\mu = \log(m), \qquad \sigma = \sqrt{\log(\text{CV}^2 + 1)}.
+\]</span></p>
+<p>Parameter <span class="math inline">\(p_2\)</span> can remain unconstrained (normal prior) or be modeled on the log scale if you want to enforce <span class="math inline">\(p_2 &gt; 0\)</span>.</p>
+<div id="598499c5-93b3-4bc0-991c-f7d322d14c68" class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>library(RTMB)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>dbl_logistic_sel <span class="op">&lt;-</span> function(age, p1, p2, p3) {</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  gamma1 <span class="op">&lt;-</span> p1 <span class="op">+</span> p2</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>  gamma2 <span class="op">&lt;-</span> <span class="dv">2</span> <span class="op">*</span> p1 <span class="op">+</span> p2 <span class="op">+</span> p3</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>  asc <span class="op">&lt;-</span> <span class="dv">1</span> <span class="op">/</span> (<span class="dv">1</span> <span class="op">+</span> exp(<span class="op">-</span>log(<span class="dv">19</span>) <span class="op">*</span> (age <span class="op">-</span> gamma1) <span class="op">/</span> p1))</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>  desc <span class="op">&lt;-</span> <span class="dv">1</span> <span class="op">-</span> <span class="dv">1</span> <span class="op">/</span> (<span class="dv">1</span> <span class="op">+</span> exp(<span class="op">-</span>log(<span class="dv">19</span>) <span class="op">*</span> (age <span class="op">-</span> gamma2) <span class="op">/</span> p3))</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>  (asc <span class="op">*</span> desc <span class="op">*</span> <span class="fl">0.95</span><span class="op">^</span>(<span class="op">-</span><span class="dv">2</span>))</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>lognorm_from_median_cv <span class="op">&lt;-</span> function(median, cv) {</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>  sigma <span class="op">&lt;-</span> sqrt(log(cv<span class="op">^</span><span class="dv">2</span> <span class="op">+</span> <span class="dv">1</span>))</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>  mu <span class="op">&lt;-</span> log(median)</span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>  <span class="bu">list</span>(mu <span class="op">=</span> mu, sigma <span class="op">=</span> sigma)</span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>age <span class="op">&lt;-</span> seq(<span class="dv">1</span>, <span class="dv">15</span>, by <span class="op">=</span> <span class="fl">0.25</span>)</span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>sel_obs <span class="op">&lt;-</span> c(</span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>  <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="fl">0.01</span>, <span class="fl">0.01</span>, <span class="fl">0.037142857</span>, <span class="fl">0.064285714</span>, <span class="fl">0.091428571</span>,</span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>  <span class="fl">0.118571429</span>, <span class="fl">0.145714286</span>, <span class="fl">0.172857143</span>, <span class="fl">0.2</span>, <span class="fl">0.205882353</span>, <span class="fl">0.211764706</span>,</span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>  <span class="fl">0.217647059</span>, <span class="fl">0.223529412</span>, <span class="fl">0.229411765</span>, <span class="fl">0.235294118</span>, <span class="fl">0.241176471</span>,</span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>  <span class="fl">0.247058824</span>, <span class="fl">0.252941176</span>, <span class="fl">0.258823529</span>, <span class="fl">0.264705882</span>, <span class="fl">0.270588235</span>,</span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a>  <span class="fl">0.276470588</span>, <span class="fl">0.282352941</span>, <span class="fl">0.288235294</span>, <span class="fl">0.294117647</span>, <span class="fl">0.3</span>, <span class="fl">0.31</span>, <span class="fl">0.32</span>,</span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a>  <span class="fl">0.33</span>, <span class="fl">0.34</span>, <span class="fl">0.35</span>, <span class="fl">0.36</span>, <span class="fl">0.37</span>, <span class="fl">0.38</span>, <span class="fl">0.39</span>, <span class="fl">0.4</span>, <span class="fl">0.41</span>, <span class="fl">0.42</span>, <span class="fl">0.43</span>,</span>
+<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a>  <span class="fl">0.44</span>, <span class="fl">0.45</span>, <span class="fl">0.46</span>, <span class="fl">0.47</span>, <span class="fl">0.48</span>, <span class="fl">0.49</span>, <span class="fl">0.5</span>, <span class="fl">0.5125</span>, <span class="fl">0.525</span>, <span class="fl">0.5375</span>, <span class="fl">0.55</span>,</span>
+<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a>  <span class="fl">0.5625</span>, <span class="fl">0.575</span>, <span class="fl">0.5875</span>, <span class="fl">0.6</span>, <span class="fl">0.6125</span>, <span class="fl">0.625</span>, <span class="fl">0.6375</span>, <span class="fl">0.65</span>, <span class="fl">0.6625</span>,</span>
+<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a>  <span class="fl">0.675</span>, <span class="fl">0.6875</span>, <span class="fl">0.7</span>, <span class="fl">0.7125</span>, <span class="fl">0.725</span>, <span class="fl">0.7375</span>, <span class="fl">0.75</span>, <span class="fl">0.7625</span>, <span class="fl">0.775</span>,</span>
+<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a>  <span class="fl">0.7875</span>, <span class="fl">0.8</span>, <span class="fl">0.807894737</span>, <span class="fl">0.815789474</span>, <span class="fl">0.823684211</span>, <span class="fl">0.831578947</span>,</span>
+<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a>  <span class="fl">0.839473684</span>, <span class="fl">0.847368421</span>, <span class="fl">0.855263158</span>, <span class="fl">0.863157895</span>, <span class="fl">0.871052632</span>,</span>
+<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a>  <span class="fl">0.878947368</span>, <span class="fl">0.886842105</span>, <span class="fl">0.894736842</span>, <span class="fl">0.902631579</span>, <span class="fl">0.910526316</span>,</span>
+<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a>  <span class="fl">0.918421053</span>, <span class="fl">0.926315789</span>, <span class="fl">0.934210526</span>, <span class="fl">0.942105263</span>, <span class="fl">0.95</span>, <span class="fl">0.954545455</span>,</span>
+<span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a>  <span class="fl">0.959090909</span>, <span class="fl">0.963636364</span>, <span class="fl">0.968181818</span>, <span class="fl">0.972727273</span>, <span class="fl">0.977272727</span>,</span>
+<span id="cb2-33"><a href="#cb2-33" aria-hidden="true" tabindex="-1"></a>  <span class="fl">0.981818182</span>, <span class="fl">0.986363636</span>, <span class="fl">0.990909091</span>, <span class="fl">0.995454545</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>,</span>
+<span id="cb2-34"><a href="#cb2-34" aria-hidden="true" tabindex="-1"></a>  <span class="dv">1</span>, <span class="fl">0.989285714</span>, <span class="fl">0.978571429</span>, <span class="fl">0.967857143</span>, <span class="fl">0.957142857</span>, <span class="fl">0.946428571</span>,</span>
+<span id="cb2-35"><a href="#cb2-35" aria-hidden="true" tabindex="-1"></a>  <span class="fl">0.935714286</span>, <span class="fl">0.925</span>, <span class="fl">0.914285714</span>, <span class="fl">0.903571429</span>, <span class="fl">0.892857143</span>, <span class="fl">0.882142857</span>,</span>
+<span id="cb2-36"><a href="#cb2-36" aria-hidden="true" tabindex="-1"></a>  <span class="fl">0.871428571</span>, <span class="fl">0.860714286</span>, <span class="fl">0.85</span>, <span class="fl">0.839285714</span>, <span class="fl">0.828571429</span>, <span class="fl">0.817857143</span>,</span>
+<span id="cb2-37"><a href="#cb2-37" aria-hidden="true" tabindex="-1"></a>  <span class="fl">0.807142857</span>, <span class="fl">0.796428571</span>, <span class="fl">0.785714286</span>, <span class="fl">0.775</span>, <span class="fl">0.764285714</span>, <span class="fl">0.753571429</span>,</span>
+<span id="cb2-38"><a href="#cb2-38" aria-hidden="true" tabindex="-1"></a>  <span class="fl">0.742857143</span>, <span class="fl">0.732142857</span>, <span class="fl">0.721428571</span>, <span class="fl">0.710714286</span>, <span class="fl">0.7</span></span>
+<span id="cb2-39"><a href="#cb2-39" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb2-40"><a href="#cb2-40" aria-hidden="true" tabindex="-1"></a>sel_sd <span class="op">&lt;-</span> rep(<span class="fl">0.05</span>, length(age))</span>
+<span id="cb2-41"><a href="#cb2-41" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-42"><a href="#cb2-42" aria-hidden="true" tabindex="-1"></a>p1_prior <span class="op">&lt;-</span> lognorm_from_median_cv(median <span class="op">=</span> <span class="fl">1.5</span>, cv <span class="op">=</span> <span class="fl">0.4</span>)</span>
+<span id="cb2-43"><a href="#cb2-43" aria-hidden="true" tabindex="-1"></a>p3_prior <span class="op">&lt;-</span> lognorm_from_median_cv(median <span class="op">=</span> <span class="fl">2.5</span>, cv <span class="op">=</span> <span class="fl">0.6</span>)</span>
+<span id="cb2-44"><a href="#cb2-44" aria-hidden="true" tabindex="-1"></a>p2_prior <span class="op">&lt;-</span> <span class="bu">list</span>(mu <span class="op">=</span> <span class="dv">4</span>, sigma <span class="op">=</span> <span class="dv">1</span>)</span>
+<span id="cb2-45"><a href="#cb2-45" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-46"><a href="#cb2-46" aria-hidden="true" tabindex="-1"></a>make_prior_data <span class="op">&lt;-</span> function(p1_prior, p2_prior, p3_prior) {</span>
+<span id="cb2-47"><a href="#cb2-47" aria-hidden="true" tabindex="-1"></a>  <span class="bu">list</span>(</span>
+<span id="cb2-48"><a href="#cb2-48" aria-hidden="true" tabindex="-1"></a>    age <span class="op">=</span> age,</span>
+<span id="cb2-49"><a href="#cb2-49" aria-hidden="true" tabindex="-1"></a>    sel_obs <span class="op">=</span> sel_obs,</span>
+<span id="cb2-50"><a href="#cb2-50" aria-hidden="true" tabindex="-1"></a>    sel_sd <span class="op">=</span> sel_sd,</span>
+<span id="cb2-51"><a href="#cb2-51" aria-hidden="true" tabindex="-1"></a>    mu_log_p1 <span class="op">=</span> p1_prior$mu,</span>
+<span id="cb2-52"><a href="#cb2-52" aria-hidden="true" tabindex="-1"></a>    sd_log_p1 <span class="op">=</span> p1_prior$sigma,</span>
+<span id="cb2-53"><a href="#cb2-53" aria-hidden="true" tabindex="-1"></a>    mu_p2 <span class="op">=</span> p2_prior$mu,</span>
+<span id="cb2-54"><a href="#cb2-54" aria-hidden="true" tabindex="-1"></a>    sd_p2 <span class="op">=</span> p2_prior$sigma,</span>
+<span id="cb2-55"><a href="#cb2-55" aria-hidden="true" tabindex="-1"></a>    mu_log_p3 <span class="op">=</span> p3_prior$mu,</span>
+<span id="cb2-56"><a href="#cb2-56" aria-hidden="true" tabindex="-1"></a>    sd_log_p3 <span class="op">=</span> p3_prior$sigma</span>
+<span id="cb2-57"><a href="#cb2-57" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb2-58"><a href="#cb2-58" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb2-59"><a href="#cb2-59" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-60"><a href="#cb2-60" aria-hidden="true" tabindex="-1"></a>data <span class="op">&lt;-</span> make_prior_data(p1_prior, p2_prior, p3_prior)</span>
+<span id="cb2-61"><a href="#cb2-61" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-62"><a href="#cb2-62" aria-hidden="true" tabindex="-1"></a>parameters <span class="op">&lt;-</span> <span class="bu">list</span>(</span>
+<span id="cb2-63"><a href="#cb2-63" aria-hidden="true" tabindex="-1"></a>  log_p1 <span class="op">=</span> log(<span class="fl">1.5</span>),</span>
+<span id="cb2-64"><a href="#cb2-64" aria-hidden="true" tabindex="-1"></a>  p2 <span class="op">=</span> <span class="dv">4</span>,</span>
+<span id="cb2-65"><a href="#cb2-65" aria-hidden="true" tabindex="-1"></a>  log_p3 <span class="op">=</span> log(<span class="fl">2.5</span>)</span>
+<span id="cb2-66"><a href="#cb2-66" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb2-67"><a href="#cb2-67" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-68"><a href="#cb2-68" aria-hidden="true" tabindex="-1"></a>make_obj <span class="op">&lt;-</span> function(data, parameters) {</span>
+<span id="cb2-69"><a href="#cb2-69" aria-hidden="true" tabindex="-1"></a>  f <span class="op">&lt;-</span> function(parms) {</span>
+<span id="cb2-70"><a href="#cb2-70" aria-hidden="true" tabindex="-1"></a>    getAll(data, parms, warn <span class="op">=</span> FALSE)</span>
+<span id="cb2-71"><a href="#cb2-71" aria-hidden="true" tabindex="-1"></a>    p1 <span class="op">&lt;-</span> exp(log_p1)</span>
+<span id="cb2-72"><a href="#cb2-72" aria-hidden="true" tabindex="-1"></a>    p3 <span class="op">&lt;-</span> exp(log_p3)</span>
+<span id="cb2-73"><a href="#cb2-73" aria-hidden="true" tabindex="-1"></a>    sel_hat <span class="op">&lt;-</span> dbl_logistic_sel(age, p1, p2, p3)</span>
+<span id="cb2-74"><a href="#cb2-74" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-75"><a href="#cb2-75" aria-hidden="true" tabindex="-1"></a>    nll <span class="op">&lt;-</span> <span class="dv">0</span></span>
+<span id="cb2-76"><a href="#cb2-76" aria-hidden="true" tabindex="-1"></a>    nll <span class="op">&lt;-</span> nll <span class="op">-</span> dnorm(log_p1, mu_log_p1, sd_log_p1, log <span class="op">=</span> TRUE)</span>
+<span id="cb2-77"><a href="#cb2-77" aria-hidden="true" tabindex="-1"></a>    nll <span class="op">&lt;-</span> nll <span class="op">-</span> dnorm(p2, mu_p2, sd_p2, log <span class="op">=</span> TRUE)</span>
+<span id="cb2-78"><a href="#cb2-78" aria-hidden="true" tabindex="-1"></a>    nll <span class="op">&lt;-</span> nll <span class="op">-</span> dnorm(log_p3, mu_log_p3, sd_log_p3, log <span class="op">=</span> TRUE)</span>
+<span id="cb2-79"><a href="#cb2-79" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-80"><a href="#cb2-80" aria-hidden="true" tabindex="-1"></a>    ADREPORT(c(p1 <span class="op">=</span> p1, p2 <span class="op">=</span> p2, p3 <span class="op">=</span> p3))</span>
+<span id="cb2-81"><a href="#cb2-81" aria-hidden="true" tabindex="-1"></a>    nll</span>
+<span id="cb2-82"><a href="#cb2-82" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb2-83"><a href="#cb2-83" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-84"><a href="#cb2-84" aria-hidden="true" tabindex="-1"></a>  MakeADFun(f, parameters)</span>
+<span id="cb2-85"><a href="#cb2-85" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb2-86"><a href="#cb2-86" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-87"><a href="#cb2-87" aria-hidden="true" tabindex="-1"></a>obj <span class="op">&lt;-</span> make_obj(data, parameters)</span>
+<span id="cb2-88"><a href="#cb2-88" aria-hidden="true" tabindex="-1"></a>opt <span class="op">&lt;-</span> nlminb(obj$par, obj$fn, obj$gr)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>outer mgc:  0 outer mgc:  0 
+outer mgc:  0.006737636 
+outer mgc:  0.006737636 
+outer mgc:  0.001 
+outer mgc:  0.001 
+outer mgc:  0.003252194 
+outer mgc:  0.003252194 
+outer mgc:  2.5 </code></pre>
+</div>
+</div>
+</section>
+<section id="mcmc-evaluation" class="level2" data-number="2.8">
+<h2 data-number="2.8" class="anchored" data-anchor-id="mcmc-evaluation"><span class="header-section-number">2.8</span> MCMC evaluation</h2>
+<div id="56455f33-e2a9-4aa0-9928-fcc8bf05c804" class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>library(SparseNUTS)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+
+Gradient evaluation took 3.4e-05 seconds
+1000 transitions using 10 leapfrog steps per transition would take 0.34 seconds.
+Adjust your expectations accordingly!
+
+
+
+ Elapsed Time: 0.018 seconds (Warm-up)
+               0.197 seconds (Sampling)
+               0.215 seconds (Total)
+
+
+
+Model 'selectivity_set1' has 3 pars, and was fit using NUTS with a 'diag' metric
+1 chain(s) of 1300 total iterations (150 warmup) were used
+Average run time per chain was 0.22 seconds 
+Minimum ESS=360.7 (31.37%), and maximum Rhat=1.015
+There were 0 divergences after warmup</code></pre>
+</div>
+</div>
+<div id="cell-fig-dl-marginals" class="cell">
+<div class="cell-output cell-output-display">
+<div id="fig-dl-marginals" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-dl-marginals-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="index_files/figure-html/double_logistic_selectivity-fig-dl-marginals-output-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-5" title="Figure&nbsp;5: Marginal posterior distributions for selectivity parameters (SparseNUTS, prior set 1)."><img src="index_files/figure-html/double_logistic_selectivity-fig-dl-marginals-output-1.png" class="img-fluid figure-img"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-dl-marginals-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;5: Marginal posterior distributions for selectivity parameters (SparseNUTS, prior set 1).
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>The marginal posterior densities in <a href="#fig-dl-marginals" class="quarto-xref">Figure&nbsp;5</a> summarize <span class="math inline">\((p_1, p_2,
+p_3)\)</span> under prior set 1.</p>
+<div id="cell-fig-dl-pairs" class="cell">
+<div class="cell-output cell-output-display">
+<div id="fig-dl-pairs" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-dl-pairs-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="index_files/figure-html/double_logistic_selectivity-fig-dl-pairs-output-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-6" title="Figure&nbsp;6: Pairwise posterior scatterplots for selectivity parameters."><img src="index_files/figure-html/double_logistic_selectivity-fig-dl-pairs-output-1.png" class="img-fluid figure-img"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-dl-pairs-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;6: Pairwise posterior scatterplots for selectivity parameters.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<div id="cell-fig-dl-mcmc-set1" class="cell">
+<div class="cell-output cell-output-display">
+<div id="fig-dl-mcmc-set1" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-dl-mcmc-set1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="index_files/figure-html/double_logistic_selectivity-fig-dl-mcmc-set1-output-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-7" title="Figure&nbsp;7: MCMC selectivity draws for prior set 1 (p1 median 1.5, p3 median 2.5, p2 sd 1)."><img src="index_files/figure-html/double_logistic_selectivity-fig-dl-mcmc-set1-output-1.png" class="img-fluid figure-img"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-dl-mcmc-set1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;7: MCMC selectivity draws for prior set 1 (p1 median 1.5, p3 median 2.5, p2 sd 1).
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<section id="additional-prior-sets" class="level3" data-number="2.8.1">
+<h3 data-number="2.8.1" class="anchored" data-anchor-id="additional-prior-sets"><span class="header-section-number">2.8.1</span> Additional prior sets</h3>
+<div id="743caf16-1a5a-43a4-82d2-1e507d725318" class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>
+
+Gradient evaluation took 2.8e-05 seconds
+1000 transitions using 10 leapfrog steps per transition would take 0.28 seconds.
+Adjust your expectations accordingly!
+
+
+
+ Elapsed Time: 0.018 seconds (Warm-up)
+               0.116 seconds (Sampling)
+               0.134 seconds (Total)
+
+
+
+Model 'selectivity_set2' has 3 pars, and was fit using NUTS with a 'diag' metric
+1 chain(s) of 1300 total iterations (150 warmup) were used
+Average run time per chain was 0.13 seconds 
+Minimum ESS=393.8 (34.24%), and maximum Rhat=1.003
+There were 0 divergences after warmup</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+
+Gradient evaluation took 2.2e-05 seconds
+1000 transitions using 10 leapfrog steps per transition would take 0.22 seconds.
+Adjust your expectations accordingly!
+
+
+
+ Elapsed Time: 0.017 seconds (Warm-up)
+               0.121 seconds (Sampling)
+               0.138 seconds (Total)
+
+
+
+Model 'selectivity_set3' has 3 pars, and was fit using NUTS with a 'diag' metric
+1 chain(s) of 1300 total iterations (150 warmup) were used
+Average run time per chain was 0.14 seconds 
+Minimum ESS=427 (37.13%), and maximum Rhat=1.005
+There were 0 divergences after warmup</code></pre>
+</div>
+</div>
+<div id="cell-fig-dl-mcmc-set2" class="cell">
+<div class="cell-output cell-output-display">
+<div id="fig-dl-mcmc-set2" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-dl-mcmc-set2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="index_files/figure-html/double_logistic_selectivity-fig-dl-mcmc-set2-output-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-8" title="Figure&nbsp;8: MCMC selectivity draws for prior set 2 (p1 median 1.5, p3 median 8, p2 sd 1)."><img src="index_files/figure-html/double_logistic_selectivity-fig-dl-mcmc-set2-output-1.png" class="img-fluid figure-img"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-dl-mcmc-set2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;8: MCMC selectivity draws for prior set 2 (p1 median 1.5, p3 median 8, p2 sd 1).
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<div id="cell-fig-dl-mcmc-set3" class="cell">
+<div class="cell-output cell-output-display">
+<div id="fig-dl-mcmc-set3" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-dl-mcmc-set3-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="index_files/figure-html/double_logistic_selectivity-fig-dl-mcmc-set3-output-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-9" title="Figure&nbsp;9: MCMC selectivity draws for prior set 3 (p1 median 1.5, p3 median 8, p2 sd 2)."><img src="index_files/figure-html/double_logistic_selectivity-fig-dl-mcmc-set3-output-1.png" class="img-fluid figure-img"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-dl-mcmc-set3-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;9: MCMC selectivity draws for prior set 3 (p1 median 1.5, p3 median 8, p2 sd 2).
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</section>
+</section>
+</section>
+<section id="sec-spline" class="level2" data-number="2.9">
+<h2 data-number="2.9" class="anchored" data-anchor-id="sec-spline"><span class="header-section-number">2.9</span> Spline-Based Selectivity</h2>
+</section>
+<section id="spline-based-selectivity" class="level1 quarto-embed-nb-cell" data-number="3">
+<h1 data-number="3"><span class="header-section-number">3</span> Spline-Based Selectivity</h1>
+<p>Penalized B-spline selectivity with smoothness control</p>
+<section id="overview-2" class="level2" data-number="3.1">
+<h2 data-number="3.1" class="anchored" data-anchor-id="overview-2"><span class="header-section-number">3.1</span> Overview</h2>
+<p>Spline-based selectivity provides a flexible, semi-parametric alternative to logistic functional forms. Rather than imposing a specific shape (monotone or dome-shaped), a B-spline basis is used to represent selectivity as a smooth function of age, with the degree of smoothness controlled by a penalty on the second differences of the spline coefficients.</p>
+</section>
+<section id="model-definition-2" class="level2" data-number="3.2">
+<h2 data-number="3.2" class="anchored" data-anchor-id="model-definition-2"><span class="header-section-number">3.2</span> Model definition</h2>
+<p>Let <span class="math inline">\(\mathbf{B}(a)\)</span> be a B-spline basis matrix evaluated at ages <span class="math inline">\(a\)</span>, with <span class="math inline">\(K\)</span> basis functions and coefficient vector <span class="math inline">\(\boldsymbol{\beta}\)</span>. The log-selectivity is</p>
+<p><span class="math display">\[
+\log\,\text{sel}(a) = \mathbf{B}(a)\,\boldsymbol{\beta}
+\]</span></p>
+<p>with selectivity normalized so the maximum equals 1:</p>
+<p><span class="math display">\[
+\text{sel}(a) = \frac{\exp(\mathbf{B}(a)\,\boldsymbol{\beta})}
+{\max_a \exp(\mathbf{B}(a)\,\boldsymbol{\beta})}.
+\]</span></p>
+<p>Smoothness is enforced via a penalty on second differences:</p>
+<p><span class="math display">\[
+\text{penalty} = \frac{\lambda}{2} \sum_{k=3}^{K} (\beta_k - 2\beta_{k-1} + \beta_{k-2})^2
+\]</span></p>
+<p>where <span class="math inline">\(\lambda\)</span> controls the trade-off between fit and smoothness.</p>
+</section>
+<section id="basis-visualization" class="level2" data-number="3.3">
+<h2 data-number="3.3" class="anchored" data-anchor-id="basis-visualization"><span class="header-section-number">3.3</span> Basis visualization</h2>
+<div id="cell-fig-spline-basis" class="cell">
+<div class="cell-output cell-output-display">
+<div id="fig-spline-basis" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-spline-basis-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="index_files/figure-html/spline_selectivity-fig-spline-basis-output-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-10" title="Figure&nbsp;10: B-spline basis functions for selectivity modeling (K = 6 knots)."><img src="index_files/figure-html/spline_selectivity-fig-spline-basis-output-1.png" class="img-fluid figure-img"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-spline-basis-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;10: B-spline basis functions for selectivity modeling (K = 6 knots).
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="example-curves" class="level2" data-number="3.4">
+<h2 data-number="3.4" class="anchored" data-anchor-id="example-curves"><span class="header-section-number">3.4</span> Example curves</h2>
+<div id="cell-fig-spline-examples" class="cell">
+<div class="cell-output cell-output-display">
+<div id="fig-spline-examples" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-spline-examples-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="index_files/figure-html/spline_selectivity-fig-spline-examples-output-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-11" title="Figure&nbsp;11: Example spline selectivity curves with different coefficient vectors."><img src="index_files/figure-html/spline_selectivity-fig-spline-examples-output-1.png" class="img-fluid figure-img"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-spline-examples-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;11: Example spline selectivity curves with different coefficient vectors.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="rtmb-implementation-1" class="level2" data-number="3.5">
+<h2 data-number="3.5" class="anchored" data-anchor-id="rtmb-implementation-1"><span class="header-section-number">3.5</span> RTMB implementation</h2>
+<p><em>Placeholder: RTMB objective with spline coefficients as parameters, smoothness penalty as a tuning parameter or estimated, and MCMC sampling.</em></p>
+<div id="4f2bf687-7212-45da-8928-1a5ae42fb2bb" class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>library(RTMB)</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Objective function skeleton</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>f <span class="op">&lt;-</span> function(parms) {</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>  getAll(data, parms, warn <span class="op">=</span> FALSE)</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>  log_sel <span class="op">&lt;-</span> B <span class="op">%*%</span> beta</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>  sel_hat <span class="op">&lt;-</span> exp(log_sel <span class="op">-</span> <span class="bu">max</span>(log_sel))</span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Second-difference penalty</span></span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>  K <span class="op">&lt;-</span> length(beta)</span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>  d2 <span class="op">&lt;-</span> beta[<span class="dv">3</span>:K] <span class="op">-</span> <span class="dv">2</span> <span class="op">*</span> beta[<span class="dv">2</span>:(K<span class="op">-</span><span class="dv">1</span>)] <span class="op">+</span> beta[<span class="dv">1</span>:(K<span class="op">-</span><span class="dv">2</span>)]</span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>  penalty <span class="op">&lt;-</span> <span class="fl">0.5</span> <span class="op">*</span> exp(log_lambda) <span class="op">*</span> <span class="bu">sum</span>(d2<span class="op">^</span><span class="dv">2</span>)</span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a>  nll <span class="op">&lt;-</span> penalty</span>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Add data likelihood here</span></span>
+<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a>  <span class="co"># nll &lt;- nll - sum(dnorm(sel_obs, sel_hat, sel_sd, log = TRUE))</span></span>
+<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a>  ADREPORT(sel_hat)</span>
+<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a>  nll</span>
+<span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+</section>
+<section id="sec-timevarying" class="level2" data-number="3.6">
+<h2 data-number="3.6" class="anchored" data-anchor-id="sec-timevarying"><span class="header-section-number">3.6</span> Time-Varying Selectivity with 2D Autoregressive Structure</h2>
+</section>
+<section id="time-varying-selectivity-with-2d-autoregressive-structure" class="level1 quarto-embed-nb-cell" data-number="4">
+<h1 data-number="4"><span class="header-section-number">4</span> Time-Varying Selectivity with 2D Autoregressive Structure</h1>
+<p>Separable AR1 processes in year and age via RTMB</p>
+<section id="overview-3" class="level2" data-number="4.1">
+<h2 data-number="4.1" class="anchored" data-anchor-id="overview-3"><span class="header-section-number">4.1</span> Overview</h2>
+<p>In many fisheries, selectivity is not constant over time. Changes in fishing gear, spatial effort allocation, and fish distribution can all shift the age-specific vulnerability pattern across years. A time-varying selectivity model captures these dynamics by allowing log-selectivity deviations to vary over a year <span class="math inline">\(\times\)</span> age matrix, with temporal and ontogenetic smoothness enforced through a separable two-dimensional autoregressive prior.</p>
+<p>This formulation uses RTMB’s <code>dautoreg</code> and <code>dseparable</code> functions to construct a Kronecker-structured precision matrix, providing a computationally efficient and differentiable prior for the year–age deviation surface.</p>
+</section>
+<section id="model-definition-3" class="level2" data-number="4.2">
+<h2 data-number="4.2" class="anchored" data-anchor-id="model-definition-3"><span class="header-section-number">4.2</span> Model definition</h2>
+<section id="selectivity-at-age-by-year" class="level3" data-number="4.2.1">
+<h3 data-number="4.2.1" class="anchored" data-anchor-id="selectivity-at-age-by-year"><span class="header-section-number">4.2.1</span> Selectivity-at-age by year</h3>
+<p>Let <span class="math inline">\(f\)</span> index fishery, <span class="math inline">\(y\)</span> index year, and <span class="math inline">\(a\)</span> index age. For each fishery, a matrix of log-selectivity deviations <span class="math inline">\(\boldsymbol{\epsilon}_f\)</span> is defined over years <span class="math inline">\(y = 1, \ldots, Y\)</span> and estimated ages <span class="math inline">\(a = a_{\min}, \ldots, a_{\max}\)</span>:</p>
+<p><span class="math display">\[
+\log s_{f,y,a} = \epsilon_{f,y,a}
+\]</span></p>
+<p>The realized selectivity is obtained by exponentiating and normalizing so that the mean across ages within each year equals 1:</p>
+<p><span class="math display">\[
+s_{f,y,a} = \frac{\exp(\epsilon_{f,y,a})}
+{\frac{1}{a_{\max} - a_{\min} + 1}\sum_{a'=a_{\min}}^{a_{\max}}
+\exp(\epsilon_{f,y,a'})}
+\]</span> For ages beyond <span class="math inline">\(a_{\max}\)</span>, selectivity may be held constant at the value for <span class="math inline">\(a_{\max}\)</span> (a “plus-group” extension):</p>
+<p><span class="math display">\[
+s_{f,y,a} = s_{f,y,a_{\max}}, \qquad a &gt; a_{\max}.
+\]</span></p>
+</section>
+<section id="block-structure-for-change-years" class="level3" data-number="4.2.2">
+<h3 data-number="4.2.2" class="anchored" data-anchor-id="block-structure-for-change-years"><span class="header-section-number">4.2.2</span> Block structure for change years</h3>
+<p>In practice, selectivity is not re-estimated in every year. Instead, <strong>change years</strong> define blocks within which selectivity is constant. Let <span class="math inline">\(\mathbf{C}_f\)</span> be a binary indicator matrix where <span class="math inline">\(C_{f,y} = 1\)</span> if year <span class="math inline">\(y\)</span> starts a new selectivity block for fishery <span class="math inline">\(f\)</span>. Within a block, selectivity repeats the values from the block’s initial year:</p>
+<p><span class="math display">\[
+s_{f,y,a} =
+\begin{cases}
+s_{f,y,a} &amp; \text{if } C_{f,y} = 1 \\
+s_{f,y-1,a} &amp; \text{if } C_{f,y} = 0
+\end{cases}
+\]</span></p>
+<p>This reduces the number of free parameters from <span class="math inline">\(Y \times (a_{\max} - a_{\min} + 1)\)</span> to <span class="math inline">\(B_f \times (a_{\max} - a_{\min} + 1)\)</span> where <span class="math inline">\(B_f\)</span> is the number of selectivity blocks for fishery <span class="math inline">\(f\)</span>.</p>
+</section>
+</section>
+<section id="separable-2d-ar1-prior" class="level2" data-number="4.3">
+<h2 data-number="4.3" class="anchored" data-anchor-id="separable-2d-ar1-prior"><span class="header-section-number">4.3</span> Separable 2D AR1 prior</h2>
+<section id="marginal-ar1-processes" class="level3" data-number="4.3.1">
+<h3 data-number="4.3.1" class="anchored" data-anchor-id="marginal-ar1-processes"><span class="header-section-number">4.3.1</span> Marginal AR1 processes</h3>
+<p>The log-selectivity deviations for each fishery are assumed to follow a separable two-dimensional Gaussian Markov random field (GMRF). The key idea is that temporal (year) and ontogenetic (age) correlation structures are modeled independently, and their joint distribution is constructed via a Kronecker product.</p>
+<p>Define two stationary AR1 processes:</p>
+<p><strong>Year dimension.</strong> For a sequence <span class="math inline">\(x_1, \ldots, x_Y\)</span>:</p>
+<p><span class="math display">\[
+x_y = \rho_y\, x_{y-1} + \sigma_y\,\eta_y, \qquad \eta_y \sim \mathcal{N}(0,1)
+\]</span></p>
+<p>where <span class="math inline">\(\rho_y \in (-1, 1)\)</span> is the year-to-year autocorrelation. The marginal variance is <span class="math inline">\(\sigma_y^2 / (1 - \rho_y^2)\)</span> and the precision (inverse covariance) matrix for a length-<span class="math inline">\(Y\)</span> sequence is the tridiagonal matrix <span class="math inline">\(\mathbf{Q}_y\)</span> with:</p>
+<p><span class="math display">\[
+[\mathbf{Q}_y]_{ij} =
+\begin{cases}
+1 + \rho_y^2 &amp; i = j,\ 1 &lt; i &lt; Y \\
+1 &amp; i = j = 1 \text{ or } i = j = Y \\
+-\rho_y &amp; |i - j| = 1 \\
+0 &amp; \text{otherwise}
+\end{cases}
+\]</span></p>
+<p>scaled by <span class="math inline">\(1 / \sigma_y^2\)</span>.</p>
+<p><strong>Age dimension.</strong> Analogously, for ages <span class="math inline">\(a_{\min}, \ldots, a_{\max}\)</span>:</p>
+<p><span class="math display">\[
+z_a = \rho_a\, z_{a-1} + \sigma_a\,\nu_a, \qquad \nu_a \sim \mathcal{N}(0,1)
+\]</span></p>
+<p>with autocorrelation <span class="math inline">\(\rho_a\)</span> and precision matrix <span class="math inline">\(\mathbf{Q}_a\)</span> of the same tridiagonal form.</p>
+</section>
+<section id="kronecker-product-structure" class="level3" data-number="4.3.2">
+<h3 data-number="4.3.2" class="anchored" data-anchor-id="kronecker-product-structure"><span class="header-section-number">4.3.2</span> Kronecker product structure</h3>
+<p>The joint precision matrix for the vectorized year–age deviation <span class="math inline">\(\text{vec}(\boldsymbol{\epsilon}_f)\)</span> is the Kronecker product:</p>
+<p><span class="math display">\[
+\mathbf{Q} = \mathbf{Q}_y \otimes \mathbf{Q}_a
+\]</span></p>
+<p>This encodes the assumption that the year and age correlation structures are <strong>separable</strong>: the correlation between <span class="math inline">\(\epsilon_{y,a}\)</span> and <span class="math inline">\(\epsilon_{y',a'}\)</span> factorizes as</p>
+<p><span class="math display">\[
+\text{Cor}(\epsilon_{y,a},\, \epsilon_{y',a'}) = \rho_y^{|y - y'|}\,\rho_a^{|a - a'|}
+\]</span></p>
+<p>The corresponding joint covariance matrix is:</p>
+<p><span class="math display">\[
+\boldsymbol{\Sigma} = \boldsymbol{\Sigma}_y \otimes \boldsymbol{\Sigma}_a
+\]</span></p>
+<p>where <span class="math inline">\(\boldsymbol{\Sigma}_y\)</span> and <span class="math inline">\(\boldsymbol{\Sigma}_a\)</span> are the marginal AR1 covariance matrices for year and age, respectively.</p>
+</section>
+<section id="marginal-scale" class="level3" data-number="4.3.3">
+<h3 data-number="4.3.3" class="anchored" data-anchor-id="marginal-scale"><span class="header-section-number">4.3.3</span> Marginal scale</h3>
+<p>The overall marginal standard deviation of any single element <span class="math inline">\(\epsilon_{f,y,a}\)</span> is</p>
+<p><span class="math display">\[
+\text{SD}(\epsilon_{f,y,a}) = \frac{\sigma_f}
+{\sqrt{1 - \rho_{y,f}^2}\;\sqrt{1 - \rho_{a,f}^2}}
+\]</span></p>
+<p>where <span class="math inline">\(\sigma_f\)</span> is the innovation scale for fishery <span class="math inline">\(f\)</span>. This quantity (<code>scale</code> in the RTMB code) ensures that the specified <span class="math inline">\(\sigma_f\)</span> represents the innovation standard deviation while the marginal variance accounts for both autocorrelation parameters.</p>
+</section>
+<section id="log-density" class="level3" data-number="4.3.4">
+<h3 data-number="4.3.4" class="anchored" data-anchor-id="log-density"><span class="header-section-number">4.3.4</span> Log-density</h3>
+<p>The log-density of the separable GMRF, evaluated by RTMB’s <code>dseparable</code>, is:</p>
+<p><span class="math display">\[
+\log p(\boldsymbol{\epsilon}_f \mid \rho_y, \rho_a, \sigma) =
+-\frac{YA}{2}\log(2\pi)
++ \frac{A}{2}\log|\mathbf{Q}_y|
++ \frac{Y}{2}\log|\mathbf{Q}_a|
+- \frac{1}{2}\,\text{vec}(\boldsymbol{\epsilon}_f)^\top
+\left(\mathbf{Q}_y \otimes \mathbf{Q}_a\right)
+\text{vec}(\boldsymbol{\epsilon}_f)
+\]</span></p>
+<p>where <span class="math inline">\(A = a_{\max} - a_{\min} + 1\)</span> is the number of estimated ages. The Kronecker structure means the log-determinant decomposes as a sum of the individual log-determinants (scaled by dimension), and the quadratic form can be evaluated without materializing the full <span class="math inline">\(YA \times YA\)</span> precision matrix.</p>
+</section>
+</section>
+<section id="rtmb-implementation-2" class="level2" data-number="4.4">
+<h2 data-number="4.4" class="anchored" data-anchor-id="rtmb-implementation-2"><span class="header-section-number">4.4</span> RTMB implementation</h2>
+<p>The implementation uses <code>dseparable</code> to compose two <code>dautoreg</code> densities. The <code>dautoreg(x, phi)</code> function evaluates the log-density of an AR1 process with autocorrelation <code>phi</code>, and <code>dseparable(f1, f2)</code> constructs their Kronecker product density.</p>
+<div id="74586935-35b3-4923-bffa-5dd19b7c4e60" class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>library(RTMB)</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>get_selectivity_prior <span class="op">&lt;-</span> function(rho_y, rho_a, log_sigma, par_log_sel_fya) {</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>  n_sel <span class="op">&lt;-</span> length(par_log_sel_fya)</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>  lp_sel <span class="op">&lt;-</span> numeric(n_sel)</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> (f <span class="kw">in</span> seq_len(n_sel)) {</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Marginal scale: sigma / sqrt((1-rho_y^2)(1-rho_a^2))</span></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>    scale <span class="op">&lt;-</span> exp(log_sigma[f]) <span class="op">/</span></span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>      sqrt(<span class="dv">1</span> <span class="op">-</span> rho_y[f]<span class="op">^</span><span class="dv">2</span>) <span class="op">/</span></span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>      sqrt(<span class="dv">1</span> <span class="op">-</span> rho_a[f]<span class="op">^</span><span class="dv">2</span>)</span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>    <span class="co"># AR1 density in year dimension</span></span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>    f1 <span class="op">&lt;-</span> function(x) dautoreg(x, phi <span class="op">=</span> rho_y[f], log <span class="op">=</span> TRUE)</span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>    <span class="co"># AR1 density in age dimension</span></span>
+<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a>    f2 <span class="op">&lt;-</span> function(x) dautoreg(x, phi <span class="op">=</span> rho_a[f], log <span class="op">=</span> TRUE)</span>
+<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Separable 2D density via Kronecker product</span></span>
+<span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a>    lp_sel[f] <span class="op">&lt;-</span> <span class="op">-</span>dseparable(f1, f2)(</span>
+<span id="cb9-19"><a href="#cb9-19" aria-hidden="true" tabindex="-1"></a>      par_log_sel_fya[[f]],</span>
+<span id="cb9-20"><a href="#cb9-20" aria-hidden="true" tabindex="-1"></a>      scale <span class="op">=</span> scale</span>
+<span id="cb9-21"><a href="#cb9-21" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb9-22"><a href="#cb9-22" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb9-23"><a href="#cb9-23" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span>(lp_sel)</span>
+<span id="cb9-24"><a href="#cb9-24" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<section id="dseparable-mechanics" class="level3" data-number="4.4.1">
+<h3 data-number="4.4.1" class="anchored" data-anchor-id="dseparable-mechanics"><span class="header-section-number">4.4.1</span> <code>dseparable</code> mechanics</h3>
+<p>The call <code>dseparable(f1, f2)(X, scale)</code> performs the following:</p>
+<ol type="1">
+<li>Treats the matrix <code>X</code> (dimension <span class="math inline">\(B_f \times A\)</span>) as a 2D random field.</li>
+<li>Evaluates <code>f1</code> along each row (year marginal) and <code>f2</code> along each column (age marginal).</li>
+<li>Combines them via the Kronecker identity to compute the joint log-density without forming the full <span class="math inline">\(B_f A \times B_f A\)</span> precision matrix.</li>
+<li>The <code>scale</code> parameter rescales the entire field so that the marginal standard deviation matches the specified value.</li>
+</ol>
+<p>This is efficient because the computational cost scales as <span class="math inline">\(\mathcal{O}(B_f \cdot A)\)</span> rather than <span class="math inline">\(\mathcal{O}((B_f \cdot A)^3)\)</span>.</p>
+</section>
+<section id="selectivity-construction" class="level3" data-number="4.4.2">
+<h3 data-number="4.4.2" class="anchored" data-anchor-id="selectivity-construction"><span class="header-section-number">4.4.2</span> Selectivity construction</h3>
+<p>The <code>get_selectivity</code> function builds the full 3D array (fishery <span class="math inline">\(\times\)</span> year <span class="math inline">\(\times\)</span> age) from the estimated log-selectivity blocks:</p>
+<div id="f936f877-4b39-4528-97fb-e278337a94bd" class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>get_selectivity <span class="op">&lt;-</span> function(n_age, max_age, first_yr, first_yr_catch,</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>                            sel_min_age_f, sel_max_age_f, sel_end_f,</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>                            sel_change_year_fy, par_log_sel) {</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>  n_sel  <span class="op">&lt;-</span> nrow(sel_change_year_fy)</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>  n_year <span class="op">&lt;-</span> ncol(sel_change_year_fy)</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>  ymin   <span class="op">&lt;-</span> first_yr_catch <span class="op">-</span> first_yr <span class="op">+</span> <span class="dv">1</span></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>  sel_fya <span class="op">&lt;-</span> array(<span class="dv">0</span>, dim <span class="op">=</span> c(n_sel, n_year, n_age))</span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> (f <span class="kw">in</span> seq_len(n_sel)) {</span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>    amin <span class="op">&lt;-</span> sel_min_age_f[f] <span class="op">+</span> <span class="dv">1</span></span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>    amax <span class="op">&lt;-</span> sel_max_age_f[f] <span class="op">+</span> <span class="dv">1</span></span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>    ipar <span class="op">&lt;-</span> <span class="dv">1</span></span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> (y <span class="kw">in</span> ymin:n_year) {</span>
+<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a>      <span class="cf">if</span> (sel_change_year_fy[f, y] <span class="op">!=</span> <span class="dv">0</span>) {</span>
+<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a>        <span class="co"># New selectivity block: exponentiate and mean-normalize</span></span>
+<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a>        sel_tmp <span class="op">&lt;-</span> exp(par_log_sel[[f]][ipar, ])</span>
+<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a>        ipar <span class="op">&lt;-</span> ipar <span class="op">+</span> <span class="dv">1</span></span>
+<span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a>        sel_fya[f, y, amin:amax] <span class="op">&lt;-</span> sel_tmp <span class="op">/</span> mean(sel_tmp)</span>
+<span id="cb10-19"><a href="#cb10-19" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Extend to plus group if needed</span></span>
+<span id="cb10-20"><a href="#cb10-20" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> (<span class="im">as</span>.logical(sel_end_f[f]) <span class="op">&amp;&amp;</span> amax <span class="op">&lt;</span> max_age) {</span>
+<span id="cb10-21"><a href="#cb10-21" aria-hidden="true" tabindex="-1"></a>          <span class="cf">for</span> (a <span class="kw">in</span> (amax <span class="op">+</span> <span class="dv">1</span>):n_age) {</span>
+<span id="cb10-22"><a href="#cb10-22" aria-hidden="true" tabindex="-1"></a>            sel_fya[f, y, a] <span class="op">&lt;-</span> sel_fya[f, y, amax]</span>
+<span id="cb10-23"><a href="#cb10-23" aria-hidden="true" tabindex="-1"></a>          }</span>
+<span id="cb10-24"><a href="#cb10-24" aria-hidden="true" tabindex="-1"></a>        }</span>
+<span id="cb10-25"><a href="#cb10-25" aria-hidden="true" tabindex="-1"></a>      } <span class="cf">else</span> {</span>
+<span id="cb10-26"><a href="#cb10-26" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Carry forward previous block</span></span>
+<span id="cb10-27"><a href="#cb10-27" aria-hidden="true" tabindex="-1"></a>        sel_fya[f, y, ] <span class="op">&lt;-</span> sel_fya[f, y <span class="op">-</span> <span class="dv">1</span>, ]</span>
+<span id="cb10-28"><a href="#cb10-28" aria-hidden="true" tabindex="-1"></a>      }</span>
+<span id="cb10-29"><a href="#cb10-29" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb10-30"><a href="#cb10-30" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb10-31"><a href="#cb10-31" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span>(sel_fya)</span>
+<span id="cb10-32"><a href="#cb10-32" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+</section>
+<section id="visualization" class="level2" data-number="4.5">
+<h2 data-number="4.5" class="anchored" data-anchor-id="visualization"><span class="header-section-number">4.5</span> Visualization</h2>
+<div id="cell-fig-tv-sim" class="cell">
+<div class="cell-output cell-output-display">
+<div id="fig-tv-sim" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-tv-sim-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="index_files/figure-html/timevarying_selectivity-fig-tv-sim-output-2.png" class="lightbox" data-gallery="quarto-lightbox-gallery-12" title="Figure&nbsp;12: Simulated 2D AR1 selectivity surfaces under different autocorrelation settings."><img src="index_files/figure-html/timevarying_selectivity-fig-tv-sim-output-2.png" class="img-fluid figure-img"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-tv-sim-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;12: Simulated 2D AR1 selectivity surfaces under different autocorrelation settings.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<div id="cell-fig-tv-lines" class="cell">
+<div class="cell-output cell-output-display">
+<div id="fig-tv-lines" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-tv-lines-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="index_files/figure-html/timevarying_selectivity-fig-tv-lines-output-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-13" title="Figure&nbsp;13: Time-varying selectivity curves at selected years (high autocorrelation scenario)."><img src="index_files/figure-html/timevarying_selectivity-fig-tv-lines-output-1.png" class="img-fluid figure-img"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-tv-lines-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;13: Time-varying selectivity curves at selected years (high autocorrelation scenario).
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="properties-and-considerations" class="level2" data-number="4.6">
+<h2 data-number="4.6" class="anchored" data-anchor-id="properties-and-considerations"><span class="header-section-number">4.6</span> Properties and considerations</h2>
+<p>The separable 2D AR1 formulation has several properties that make it attractive for operational stock assessments:</p>
+<p><strong>Parsimony.</strong> Three hyperparameters per fishery (<span class="math inline">\(\rho_y\)</span>, <span class="math inline">\(\rho_a\)</span>, <span class="math inline">\(\sigma\)</span>) control the smoothness of an arbitrarily large year–age surface. The autocorrelation parameters shrink the effective number of free parameters well below the nominal <span class="math inline">\(B_f \times A\)</span>.</p>
+<p><strong>Computational efficiency.</strong> The Kronecker structure avoids forming or factorizing the full joint precision matrix. Combined with RTMB’s automatic differentiation, gradients of the log-prior are computed at the same <span class="math inline">\(\mathcal{O}(B_f \cdot A)\)</span> cost as the density itself.</p>
+<p><strong>Interpretability.</strong> The parameter <span class="math inline">\(\rho_y\)</span> directly controls how quickly selectivity can change between years (high values produce slow drift, low values allow abrupt shifts), while <span class="math inline">\(\rho_a\)</span> controls the smoothness of the selectivity curve within any single year.</p>
+<p><strong>Integration with block structure.</strong> The change-year mechanism can be layered on top: the 2D AR1 prior applies to the matrix of block-specific selectivity patterns, not to every individual year. This reduces dimensionality further while still allowing the prior to borrow strength across blocks.</p>
+</section>
+</section>
+<section id="sec-discussion" class="level2" data-number="4.7">
+<h2 data-number="4.7" class="anchored" data-anchor-id="sec-discussion"><span class="header-section-number">4.7</span> Comparison and Discussion</h2>
+<p><em>Placeholder: comparative analysis across selectivity families, including AIC/BIC, posterior predictive checks, and implications for management quantities.</em></p>
+</section>
+<section id="references" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="references">References</h2>
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
+<div id="ref-punt2013" class="csl-entry" role="listitem">
+Punt, André E., Felipe Hurtado-Ferro, and Athol R. Whitten. 2013. <span>“Model Selection for Selectivity in Fisheries Stock Assessments.”</span> <em>Fisheries Research</em> 141: 1–12. <a href="https://doi.org/10.1016/j.fishres.2013.02.008">https://doi.org/10.1016/j.fishres.2013.02.008</a>.
+</div>
+<div id="ref-thompson1994" class="csl-entry" role="listitem">
+Thompson, Grant G. 1994. <span>“Confounding of Gear Selectivity and the Natural Mortality Rate in Cases Where the Former Is a Nonmonotone Function of Age.”</span> <em>Canadian Journal of Fisheries and Aquatic Sciences</em> 51 (12): 2654–65. <a href="https://doi.org/10.1139/f94-265">https://doi.org/10.1139/f94-265</a>.
+</div>
+</div>
+</section>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+<script>var lightboxQuarto = GLightbox({"closeEffect":"zoom","descPosition":"bottom","loop":false,"openEffect":"zoom","selector":".lightbox"});
+(function() {
+  let previousOnload = window.onload;
+  window.onload = () => {
+    if (previousOnload) {
+      previousOnload();
+    }
+    lightboxQuarto.on('slide_before_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      const href = trigger.getAttribute('href');
+      if (href !== null) {
+        const imgEl = window.document.querySelector(`a[href="${href}"] img`);
+        if (imgEl !== null) {
+          const srcAttr = imgEl.getAttribute("src");
+          if (srcAttr && srcAttr.startsWith("data:")) {
+            slideConfig.href = srcAttr;
+          }
+        }
+      } 
+    });
+  
+    lightboxQuarto.on('slide_after_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(slideNode);
+      }
+    });
+  
+  };
+  
+})();
+          </script>
+
+
+
+
+</body></html>

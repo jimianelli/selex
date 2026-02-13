@@ -1,12 +1,8 @@
-_manuscript/
 *_files/
-*.html
 *.pdf
 .quarto/
-# _freeze/ must be committed for freeze: true to work in CI
 .Rhistory
 .RData
 .Rproj.user
-
 /.quarto/
 **/*.quarto_ipynb

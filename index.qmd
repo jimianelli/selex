@@ -13,8 +13,9 @@ abstract: |
   governing how fishing mortality and survey catchability vary with age or size. The
   choice of selectivity parameterization affects estimates of population abundance,
   fishing mortality, and management reference points. This manuscript compares several
-  selectivity formulations---including standard logistic, double logistic, and
-  spline-based approaches---within a unified RTMB framework. We examine parameter
+  selectivity formulations---including standard logistic, double logistic,
+  spline-based, and time-varying 2D autoregressive approaches---within a unified
+  RTMB framework. We examine parameter
   identifiability, prior sensitivity, and the practical consequences of selectivity
   misspecification using simulation and application to eastern Bering Sea walleye
   pollock (*Gadus chalcogrammus*). Results highlight trade-offs between flexibility
@@ -51,7 +52,7 @@ differentiation, Laplace approximation for random effects, and integration with
 Bayesian sampling via SparseNUTS, making it a natural platform for exploring both
 maximum likelihood and posterior-based inference on selectivity parameters.
 
-We organize the comparison around three selectivity families:
+We organize the comparison around four selectivity families:
 
 1. **Standard logistic** (@sec-logistic): the two-parameter ascending logistic,
    widely used for fisheries where retention is assumed to be monotonically
@@ -61,10 +62,14 @@ We organize the comparison around three selectivity families:
    avoidance, ontogenetic habitat shifts, or differential availability.
 3. **Spline-based** (@sec-spline): a penalized B-spline approach offering flexible,
    data-driven selectivity shapes with smoothness controlled by a penalty parameter.
+4. **Time-varying 2D AR1** (@sec-timevarying): a separable autoregressive structure
+   over year and age dimensions, allowing selectivity to evolve smoothly through
+   time while maintaining age-specific coherence via a Kronecker-structured
+   precision matrix.
 
 For each family, we present the mathematical formulation, an RTMB implementation
 with prior specification, parameter sensitivity analysis, and MCMC-based posterior
-evaluation. We then apply all three to eastern Bering Sea walleye pollock data to
+evaluation. We then apply all to eastern Bering Sea walleye pollock data to
 illustrate practical trade-offs.
 
 
@@ -81,6 +86,11 @@ illustrate practical trade-offs.
 ## Spline-Based Selectivity {#sec-spline}
 
 {{< embed spline_selectivity.qmd >}}
+
+
+## Time-Varying Selectivity with 2D Autoregressive Structure {#sec-timevarying}
+
+{{< embed timevarying_selectivity.qmd >}}
 
 
 ## Comparison and Discussion {#sec-discussion}

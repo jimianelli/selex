@@ -11,6 +11,8 @@ manuscript:
       title: "Standard Logistic Selectivity"
     - notebook: spline_selectivity.qmd
       title: "Spline-Based Selectivity"
+    - notebook: timevarying_selectivity.qmd
+      title: "Time-Varying 2D AR1 Selectivity"
 
 format:
   html:

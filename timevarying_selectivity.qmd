@@ -12,6 +12,14 @@ model captures these dynamics by allowing log-selectivity deviations to vary
 over a year $\times$ age matrix, with temporal and ontogenetic smoothness
 enforced through a separable two-dimensional autoregressive prior.
 
+Simulation and applied studies show that assumptions about time-varying
+selectivity can strongly influence stock-status inference, particularly when the
+estimation model cannot represent the data-generating dynamics
+[@linton2011_timevarying; @martell2014_good_practices_tvselex]. Recent
+semi-parametric methods have therefore emphasized autocorrelation across both age
+and year dimensions, directly motivating separable latent-process formulations
+[@xu2019_semiparam_ar_selex].
+
 This formulation uses RTMB's `dautoreg` and `dseparable` functions to construct
 a Kronecker-structured precision matrix, providing a computationally efficient
 and differentiable prior for the year--age deviation surface.

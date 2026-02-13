@@ -11,6 +11,12 @@ allows dome-shaped selectivity, where vulnerability increases with age to a peak
 and then declines. This behavior is motivated by gear avoidance at older ages,
 ontogenetic habitat shifts, or differential availability between age classes.
 
+Within integrated assessments, double-logistic forms are often a practical
+extension of monotone logistic selectivity because they can represent declining
+vulnerability at older ages while remaining low-dimensional [@punt2013].
+Interpretation still requires care: dome shape can be confounded with natural
+mortality and cohort processes if independent information is weak [@thompson1994].
+
 ## Model definition
 
 Let age be $a$, with parameters $p_1$, $p_2$, and $p_3$ and derived inflection

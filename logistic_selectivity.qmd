@@ -8,6 +8,13 @@ subtitle: "Two-parameter ascending logistic formulation"
 The standard (ascending) logistic selectivity is the simplest and most commonly
 used parameterization in age-structured stock assessments. It assumes that
 selectivity increases monotonically with age and asymptotes at full selectivity.
+Its main advantage is parsimony: a small number of parameters can often stabilize
+inference when composition data are limited [@methot2013; @punt2013].
+
+As a consequence, logistic selectivity is frequently used as a baseline candidate
+in model-comparison workflows. However, when older fish exhibit reduced
+vulnerability, strict monotonicity can induce structural bias and shift variation
+into other parameters [@thompson1994].
 
 ## Model definition
 

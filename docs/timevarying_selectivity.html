@@ -54,7 +54,27 @@ div.sourceCode
 @media screen {
 pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
-</style>
+
+div.csl-bib-body { }
+div.csl-entry {
+clear: both;
+margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+margin-left:2em;
+text-indent:-2em;
+}
+div.csl-left-margin {
+min-width:2em;
+float:left;
+}
+div.csl-right-inline {
+margin-left:2em;
+padding-left:1em;
+}
+div.csl-indent {
+margin-left: 2em;
+}</style>
 
 
 <script>/*!
@@ -2400,6 +2420,7 @@ margin: 0 auto;
 <section id="overview" class="level2" data-number="1">
 <h2 data-number="1" class="anchored" data-anchor-id="overview"><span class="header-section-number">1</span> Overview</h2>
 <p>In many fisheries, selectivity is not constant over time. Changes in fishing gear, spatial effort allocation, and fish distribution can all shift the age-specific vulnerability pattern across years. A time-varying selectivity model captures these dynamics by allowing log-selectivity deviations to vary over a year <span class="math inline">\(\times\)</span> age matrix, with temporal and ontogenetic smoothness enforced through a separable two-dimensional autoregressive prior.</p>
+<p>Simulation and applied studies show that assumptions about time-varying selectivity can strongly influence stock-status inference, particularly when the estimation model cannot represent the data-generating dynamics <span class="citation" data-cites="linton2011_timevarying martell2014_good_practices_tvselex">(<a href="#ref-linton2011_timevarying" role="doc-biblioref">Linton and Bence 2011</a>; <a href="#ref-martell2014_good_practices_tvselex" role="doc-biblioref">Martell and Stewart 2014</a>)</span>. Recent semi-parametric methods have therefore emphasized autocorrelation across both age and year dimensions, directly motivating separable latent-process formulations <span class="citation" data-cites="xu2019_semiparam_ar_selex">(<a href="#ref-xu2019_semiparam_ar_selex" role="doc-biblioref">Xu et al. 2019</a>)</span>.</p>
 <p>This formulation uses RTMB’s <code>dautoreg</code> and <code>dseparable</code> functions to construct a Kronecker-structured precision matrix, providing a computationally efficient and differentiable prior for the year–age deviation surface.</p>
 </section>
 <section id="model-definition" class="level2" data-number="2">
@@ -2506,32 +2527,30 @@ z_a = \rho_a\, z_{a-1} + \sigma_a\,\nu_a, \qquad \nu_a \sim \mathcal{N}(0,1)
 <div class="cell">
 <details class="code-fold">
 <summary>Show R code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: true</span></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(RTMB)</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>get_selectivity_prior <span class="ot">&lt;-</span> <span class="cf">function</span>(rho_y, rho_a, log_sigma, par_log_sel_fya) {</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>  n_sel <span class="ot">&lt;-</span> <span class="fu">length</span>(par_log_sel_fya)</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>  lp_sel <span class="ot">&lt;-</span> <span class="fu">numeric</span>(n_sel)</span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> (f <span class="cf">in</span> <span class="fu">seq_len</span>(n_sel)) {</span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Marginal scale: sigma / sqrt((1-rho_y^2)(1-rho_a^2))</span></span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>    scale <span class="ot">&lt;-</span> <span class="fu">exp</span>(log_sigma[f]) <span class="sc">/</span></span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>      <span class="fu">sqrt</span>(<span class="dv">1</span> <span class="sc">-</span> rho_y[f]<span class="sc">^</span><span class="dv">2</span>) <span class="sc">/</span></span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>      <span class="fu">sqrt</span>(<span class="dv">1</span> <span class="sc">-</span> rho_a[f]<span class="sc">^</span><span class="dv">2</span>)</span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>    <span class="co"># AR1 density in year dimension</span></span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>    f1 <span class="ot">&lt;-</span> <span class="cf">function</span>(x) <span class="fu">dautoreg</span>(x, <span class="at">phi =</span> rho_y[f], <span class="at">log =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>    <span class="co"># AR1 density in age dimension</span></span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>    f2 <span class="ot">&lt;-</span> <span class="cf">function</span>(x) <span class="fu">dautoreg</span>(x, <span class="at">phi =</span> rho_a[f], <span class="at">log =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Separable 2D density via Kronecker product</span></span>
-<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>    lp_sel[f] <span class="ot">&lt;-</span> <span class="sc">-</span><span class="fu">dseparable</span>(f1, f2)(</span>
-<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>      par_log_sel_fya[[f]],</span>
-<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>      <span class="at">scale =</span> scale</span>
-<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(lp_sel)</span>
-<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(RTMB)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>get_selectivity_prior <span class="ot">&lt;-</span> <span class="cf">function</span>(rho_y, rho_a, log_sigma, par_log_sel_fya) {</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>  n_sel <span class="ot">&lt;-</span> <span class="fu">length</span>(par_log_sel_fya)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>  lp_sel <span class="ot">&lt;-</span> <span class="fu">numeric</span>(n_sel)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> (f <span class="cf">in</span> <span class="fu">seq_len</span>(n_sel)) {</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Marginal scale: sigma / sqrt((1-rho_y^2)(1-rho_a^2))</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>    scale <span class="ot">&lt;-</span> <span class="fu">exp</span>(log_sigma[f]) <span class="sc">/</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>      <span class="fu">sqrt</span>(<span class="dv">1</span> <span class="sc">-</span> rho_y[f]<span class="sc">^</span><span class="dv">2</span>) <span class="sc">/</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>      <span class="fu">sqrt</span>(<span class="dv">1</span> <span class="sc">-</span> rho_a[f]<span class="sc">^</span><span class="dv">2</span>)</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>    <span class="co"># AR1 density in year dimension</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>    f1 <span class="ot">&lt;-</span> <span class="cf">function</span>(x) <span class="fu">dautoreg</span>(x, <span class="at">phi =</span> rho_y[f], <span class="at">log =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>    <span class="co"># AR1 density in age dimension</span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>    f2 <span class="ot">&lt;-</span> <span class="cf">function</span>(x) <span class="fu">dautoreg</span>(x, <span class="at">phi =</span> rho_a[f], <span class="at">log =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Separable 2D density via Kronecker product</span></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>    lp_sel[f] <span class="ot">&lt;-</span> <span class="sc">-</span><span class="fu">dseparable</span>(f1, f2)(</span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>      par_log_sel_fya[[f]],</span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>      <span class="at">scale =</span> scale</span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(lp_sel)</span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
 <section id="dseparable-mechanics" class="level3" data-number="4.1">
@@ -2551,136 +2570,113 @@ z_a = \rho_a\, z_{a-1} + \sigma_a\,\nu_a, \qquad \nu_a \sim \mathcal{N}(0,1)
 <div class="cell">
 <details class="code-fold">
 <summary>Show R code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: true</span></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>get_selectivity <span class="ot">&lt;-</span> <span class="cf">function</span>(n_age, max_age, first_yr, first_yr_catch,</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>                            sel_min_age_f, sel_max_age_f, sel_end_f,</span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>                            sel_change_year_fy, par_log_sel) {</span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>  n_sel  <span class="ot">&lt;-</span> <span class="fu">nrow</span>(sel_change_year_fy)</span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>  n_year <span class="ot">&lt;-</span> <span class="fu">ncol</span>(sel_change_year_fy)</span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>  ymin   <span class="ot">&lt;-</span> first_yr_catch <span class="sc">-</span> first_yr <span class="sc">+</span> <span class="dv">1</span></span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>  sel_fya <span class="ot">&lt;-</span> <span class="fu">array</span>(<span class="dv">0</span>, <span class="at">dim =</span> <span class="fu">c</span>(n_sel, n_year, n_age))</span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> (f <span class="cf">in</span> <span class="fu">seq_len</span>(n_sel)) {</span>
-<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>    amin <span class="ot">&lt;-</span> sel_min_age_f[f] <span class="sc">+</span> <span class="dv">1</span></span>
-<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>    amax <span class="ot">&lt;-</span> sel_max_age_f[f] <span class="sc">+</span> <span class="dv">1</span></span>
-<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>    ipar <span class="ot">&lt;-</span> <span class="dv">1</span></span>
-<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> (y <span class="cf">in</span> ymin<span class="sc">:</span>n_year) {</span>
-<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>      <span class="cf">if</span> (sel_change_year_fy[f, y] <span class="sc">!=</span> <span class="dv">0</span>) {</span>
-<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>        <span class="co"># New selectivity block: exponentiate and mean-normalize</span></span>
-<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>        sel_tmp <span class="ot">&lt;-</span> <span class="fu">exp</span>(par_log_sel[[f]][ipar, ])</span>
-<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>        ipar <span class="ot">&lt;-</span> ipar <span class="sc">+</span> <span class="dv">1</span></span>
-<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>        sel_fya[f, y, amin<span class="sc">:</span>amax] <span class="ot">&lt;-</span> sel_tmp <span class="sc">/</span> <span class="fu">mean</span>(sel_tmp)</span>
-<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Extend to plus group if needed</span></span>
-<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> (<span class="fu">as.logical</span>(sel_end_f[f]) <span class="sc">&amp;&amp;</span> amax <span class="sc">&lt;</span> max_age) {</span>
-<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a>          <span class="cf">for</span> (a <span class="cf">in</span> (amax <span class="sc">+</span> <span class="dv">1</span>)<span class="sc">:</span>n_age) {</span>
-<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a>            sel_fya[f, y, a] <span class="ot">&lt;-</span> sel_fya[f, y, amax]</span>
-<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a>          }</span>
-<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a>        }</span>
-<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a>      } <span class="cf">else</span> {</span>
-<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Carry forward previous block</span></span>
-<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a>        sel_fya[f, y, ] <span class="ot">&lt;-</span> sel_fya[f, y <span class="sc">-</span> <span class="dv">1</span>, ]</span>
-<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a>      }</span>
-<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a>    }</span>
-<span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb2-33"><a href="#cb2-33" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(sel_fya)</span>
-<span id="cb2-34"><a href="#cb2-34" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>get_selectivity <span class="ot">&lt;-</span> <span class="cf">function</span>(n_age, max_age, first_yr, first_yr_catch,</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>                            sel_min_age_f, sel_max_age_f, sel_end_f,</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>                            sel_change_year_fy, par_log_sel) {</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  n_sel  <span class="ot">&lt;-</span> <span class="fu">nrow</span>(sel_change_year_fy)</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>  n_year <span class="ot">&lt;-</span> <span class="fu">ncol</span>(sel_change_year_fy)</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>  ymin   <span class="ot">&lt;-</span> first_yr_catch <span class="sc">-</span> first_yr <span class="sc">+</span> <span class="dv">1</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>  sel_fya <span class="ot">&lt;-</span> <span class="fu">array</span>(<span class="dv">0</span>, <span class="at">dim =</span> <span class="fu">c</span>(n_sel, n_year, n_age))</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> (f <span class="cf">in</span> <span class="fu">seq_len</span>(n_sel)) {</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>    amin <span class="ot">&lt;-</span> sel_min_age_f[f] <span class="sc">+</span> <span class="dv">1</span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>    amax <span class="ot">&lt;-</span> sel_max_age_f[f] <span class="sc">+</span> <span class="dv">1</span></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>    ipar <span class="ot">&lt;-</span> <span class="dv">1</span></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> (y <span class="cf">in</span> ymin<span class="sc">:</span>n_year) {</span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>      <span class="cf">if</span> (sel_change_year_fy[f, y] <span class="sc">!=</span> <span class="dv">0</span>) {</span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>        <span class="co"># New selectivity block: exponentiate and mean-normalize</span></span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>        sel_tmp <span class="ot">&lt;-</span> <span class="fu">exp</span>(par_log_sel[[f]][ipar, ])</span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>        ipar <span class="ot">&lt;-</span> ipar <span class="sc">+</span> <span class="dv">1</span></span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>        sel_fya[f, y, amin<span class="sc">:</span>amax] <span class="ot">&lt;-</span> sel_tmp <span class="sc">/</span> <span class="fu">mean</span>(sel_tmp)</span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Extend to plus group if needed</span></span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> (<span class="fu">as.logical</span>(sel_end_f[f]) <span class="sc">&amp;&amp;</span> amax <span class="sc">&lt;</span> max_age) {</span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>          <span class="cf">for</span> (a <span class="cf">in</span> (amax <span class="sc">+</span> <span class="dv">1</span>)<span class="sc">:</span>n_age) {</span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>            sel_fya[f, y, a] <span class="ot">&lt;-</span> sel_fya[f, y, amax]</span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a>          }</span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a>        }</span>
+<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a>      } <span class="cf">else</span> {</span>
+<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Carry forward previous block</span></span>
+<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a>        sel_fya[f, y, ] <span class="ot">&lt;-</span> sel_fya[f, y <span class="sc">-</span> <span class="dv">1</span>, ]</span>
+<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a>      }</span>
+<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(sel_fya)</span>
+<span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
 </section>
 </section>
 <section id="visualization" class="level2" data-number="5">
 <h2 data-number="5" class="anchored" data-anchor-id="visualization"><span class="header-section-number">5</span> Visualization</h2>
-<div id="cell-fig-tv-sim" class="cell">
-<details class="code-fold hidden">
+<div class="cell">
+<details class="code-fold">
 <summary>Show R code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fig-tv-sim</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: &quot;Simulated 2D AR1 selectivity surfaces under different autocorrelation settings.&quot;</span></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</details>
-<div class="cell-output cell-output-stderr hidden">
-<pre><code>
-Attaching package: &#39;dplyr&#39;</code></pre>
-</div>
-<div class="cell-output cell-output-stderr hidden">
-<pre><code>The following objects are masked from &#39;package:stats&#39;:
-
-    filter, lag</code></pre>
-</div>
-<div class="cell-output cell-output-stderr hidden">
-<pre><code>The following objects are masked from &#39;package:base&#39;:
-
-    intersect, setdiff, setequal, union</code></pre>
-</div>
-<details class="code-fold hidden">
-<summary>Show R code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fig-tv-sim</span></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: &quot;Simulated 2D AR1 selectivity surfaces under different autocorrelation settings.&quot;</span></span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyr)</span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>sim_ar1_2d <span class="ot">&lt;-</span> <span class="cf">function</span>(n_year, n_age, rho_y, rho_a, sigma, <span class="at">seed =</span> <span class="dv">42</span>) {</span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set.seed</span>(seed)</span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Simulate AR1 in year</span></span>
-<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>  y_proc <span class="ot">&lt;-</span> <span class="fu">numeric</span>(n_year)</span>
-<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>  y_proc[<span class="dv">1</span>] <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">1</span>, <span class="dv">0</span>, sigma <span class="sc">/</span> <span class="fu">sqrt</span>(<span class="dv">1</span> <span class="sc">-</span> rho_y<span class="sc">^</span><span class="dv">2</span>))</span>
-<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> (t <span class="cf">in</span> <span class="dv">2</span><span class="sc">:</span>n_year) {</span>
-<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>    y_proc[t] <span class="ot">&lt;-</span> rho_y <span class="sc">*</span> y_proc[t <span class="sc">-</span> <span class="dv">1</span>] <span class="sc">+</span> <span class="fu">rnorm</span>(<span class="dv">1</span>, <span class="dv">0</span>, sigma)</span>
-<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Simulate AR1 in age</span></span>
-<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>  a_proc <span class="ot">&lt;-</span> <span class="fu">numeric</span>(n_age)</span>
-<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>  a_proc[<span class="dv">1</span>] <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">1</span>, <span class="dv">0</span>, sigma <span class="sc">/</span> <span class="fu">sqrt</span>(<span class="dv">1</span> <span class="sc">-</span> rho_a<span class="sc">^</span><span class="dv">2</span>))</span>
-<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> (a <span class="cf">in</span> <span class="dv">2</span><span class="sc">:</span>n_age) {</span>
-<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a>    a_proc[a] <span class="ot">&lt;-</span> rho_a <span class="sc">*</span> a_proc[a <span class="sc">-</span> <span class="dv">1</span>] <span class="sc">+</span> <span class="fu">rnorm</span>(<span class="dv">1</span>, <span class="dv">0</span>, sigma)</span>
-<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Separable: outer product + noise</span></span>
-<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a>  eps <span class="ot">&lt;-</span> <span class="fu">outer</span>(y_proc, a_proc) <span class="sc">+</span></span>
-<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a>    <span class="fu">matrix</span>(<span class="fu">rnorm</span>(n_year <span class="sc">*</span> n_age, <span class="dv">0</span>, sigma <span class="sc">*</span> <span class="fl">0.3</span>), n_year, n_age)</span>
-<span id="cb7-22"><a href="#cb7-22" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Normalize each year</span></span>
-<span id="cb7-23"><a href="#cb7-23" aria-hidden="true" tabindex="-1"></a>  sel <span class="ot">&lt;-</span> <span class="fu">t</span>(<span class="fu">apply</span>(eps, <span class="dv">1</span>, <span class="cf">function</span>(x) {</span>
-<span id="cb7-24"><a href="#cb7-24" aria-hidden="true" tabindex="-1"></a>    ex <span class="ot">&lt;-</span> <span class="fu">exp</span>(x)</span>
-<span id="cb7-25"><a href="#cb7-25" aria-hidden="true" tabindex="-1"></a>    ex <span class="sc">/</span> <span class="fu">mean</span>(ex)</span>
-<span id="cb7-26"><a href="#cb7-26" aria-hidden="true" tabindex="-1"></a>  }))</span>
-<span id="cb7-27"><a href="#cb7-27" aria-hidden="true" tabindex="-1"></a>  sel</span>
-<span id="cb7-28"><a href="#cb7-28" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb7-29"><a href="#cb7-29" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-30"><a href="#cb7-30" aria-hidden="true" tabindex="-1"></a>scenarios <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
-<span id="cb7-31"><a href="#cb7-31" aria-hidden="true" tabindex="-1"></a>  <span class="fu">list</span>(<span class="at">label =</span> <span class="st">&quot;High year, high age</span><span class="sc">\n</span><span class="st">(rho_y=0.9, rho_a=0.8)&quot;</span>,</span>
-<span id="cb7-32"><a href="#cb7-32" aria-hidden="true" tabindex="-1"></a>       <span class="at">rho_y =</span> <span class="fl">0.9</span>, <span class="at">rho_a =</span> <span class="fl">0.8</span>, <span class="at">sigma =</span> <span class="fl">0.3</span>),</span>
-<span id="cb7-33"><a href="#cb7-33" aria-hidden="true" tabindex="-1"></a>  <span class="fu">list</span>(<span class="at">label =</span> <span class="st">&quot;High year, low age</span><span class="sc">\n</span><span class="st">(rho_y=0.9, rho_a=0.2)&quot;</span>,</span>
-<span id="cb7-34"><a href="#cb7-34" aria-hidden="true" tabindex="-1"></a>       <span class="at">rho_y =</span> <span class="fl">0.9</span>, <span class="at">rho_a =</span> <span class="fl">0.2</span>, <span class="at">sigma =</span> <span class="fl">0.3</span>),</span>
-<span id="cb7-35"><a href="#cb7-35" aria-hidden="true" tabindex="-1"></a>  <span class="fu">list</span>(<span class="at">label =</span> <span class="st">&quot;Low year, high age</span><span class="sc">\n</span><span class="st">(rho_y=0.2, rho_a=0.8)&quot;</span>,</span>
-<span id="cb7-36"><a href="#cb7-36" aria-hidden="true" tabindex="-1"></a>       <span class="at">rho_y =</span> <span class="fl">0.2</span>, <span class="at">rho_a =</span> <span class="fl">0.8</span>, <span class="at">sigma =</span> <span class="fl">0.3</span>),</span>
-<span id="cb7-37"><a href="#cb7-37" aria-hidden="true" tabindex="-1"></a>  <span class="fu">list</span>(<span class="at">label =</span> <span class="st">&quot;Low year, low age</span><span class="sc">\n</span><span class="st">(rho_y=0.2, rho_a=0.2)&quot;</span>,</span>
-<span id="cb7-38"><a href="#cb7-38" aria-hidden="true" tabindex="-1"></a>       <span class="at">rho_y =</span> <span class="fl">0.2</span>, <span class="at">rho_a =</span> <span class="fl">0.2</span>, <span class="at">sigma =</span> <span class="fl">0.3</span>)</span>
-<span id="cb7-39"><a href="#cb7-39" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb7-40"><a href="#cb7-40" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-41"><a href="#cb7-41" aria-hidden="true" tabindex="-1"></a>n_year <span class="ot">&lt;-</span> <span class="dv">30</span></span>
-<span id="cb7-42"><a href="#cb7-42" aria-hidden="true" tabindex="-1"></a>n_age <span class="ot">&lt;-</span> <span class="dv">10</span></span>
-<span id="cb7-43"><a href="#cb7-43" aria-hidden="true" tabindex="-1"></a>ages <span class="ot">&lt;-</span> <span class="dv">3</span><span class="sc">:</span><span class="dv">12</span></span>
-<span id="cb7-44"><a href="#cb7-44" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-45"><a href="#cb7-45" aria-hidden="true" tabindex="-1"></a>all_data <span class="ot">&lt;-</span> <span class="fu">bind_rows</span>(<span class="fu">lapply</span>(<span class="fu">seq_along</span>(scenarios), <span class="cf">function</span>(i) {</span>
-<span id="cb7-46"><a href="#cb7-46" aria-hidden="true" tabindex="-1"></a>  sc <span class="ot">&lt;-</span> scenarios[[i]]</span>
-<span id="cb7-47"><a href="#cb7-47" aria-hidden="true" tabindex="-1"></a>  sel <span class="ot">&lt;-</span> <span class="fu">sim_ar1_2d</span>(n_year, n_age, sc<span class="sc">$</span>rho_y, sc<span class="sc">$</span>rho_a, sc<span class="sc">$</span>sigma, <span class="at">seed =</span> i)</span>
-<span id="cb7-48"><a href="#cb7-48" aria-hidden="true" tabindex="-1"></a>  <span class="fu">expand_grid</span>(<span class="at">year =</span> <span class="dv">1</span><span class="sc">:</span>n_year, <span class="at">age_idx =</span> <span class="dv">1</span><span class="sc">:</span>n_age) <span class="sc">%&gt;%</span></span>
-<span id="cb7-49"><a href="#cb7-49" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(</span>
-<span id="cb7-50"><a href="#cb7-50" aria-hidden="true" tabindex="-1"></a>      <span class="at">age =</span> ages[age_idx],</span>
-<span id="cb7-51"><a href="#cb7-51" aria-hidden="true" tabindex="-1"></a>      <span class="at">selectivity =</span> <span class="fu">as.vector</span>(sel),</span>
-<span id="cb7-52"><a href="#cb7-52" aria-hidden="true" tabindex="-1"></a>      <span class="at">scenario =</span> sc<span class="sc">$</span>label</span>
-<span id="cb7-53"><a href="#cb7-53" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb7-54"><a href="#cb7-54" aria-hidden="true" tabindex="-1"></a>}))</span>
-<span id="cb7-55"><a href="#cb7-55" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-56"><a href="#cb7-56" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(all_data, <span class="fu">aes</span>(<span class="at">x =</span> age, <span class="at">y =</span> year, <span class="at">fill =</span> selectivity)) <span class="sc">+</span></span>
-<span id="cb7-57"><a href="#cb7-57" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_tile</span>() <span class="sc">+</span></span>
-<span id="cb7-58"><a href="#cb7-58" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>scenario, <span class="at">ncol =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
-<span id="cb7-59"><a href="#cb7-59" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_viridis_c</span>(<span class="at">name =</span> <span class="st">&quot;Selectivity&quot;</span>, <span class="at">option =</span> <span class="st">&quot;C&quot;</span>) <span class="sc">+</span></span>
-<span id="cb7-60"><a href="#cb7-60" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_reverse</span>() <span class="sc">+</span></span>
-<span id="cb7-61"><a href="#cb7-61" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;Age&quot;</span>, <span class="at">y =</span> <span class="st">&quot;Year&quot;</span>,</span>
-<span id="cb7-62"><a href="#cb7-62" aria-hidden="true" tabindex="-1"></a>       <span class="at">title =</span> <span class="st">&quot;Simulated time-varying selectivity surfaces&quot;</span>,</span>
-<span id="cb7-63"><a href="#cb7-63" aria-hidden="true" tabindex="-1"></a>       <span class="at">subtitle =</span> <span class="st">&quot;Separable AR1 in year and age dimensions&quot;</span>) <span class="sc">+</span></span>
-<span id="cb7-64"><a href="#cb7-64" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>(<span class="at">base_size =</span> <span class="dv">11</span>) <span class="sc">+</span></span>
-<span id="cb7-65"><a href="#cb7-65" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">panel.grid =</span> <span class="fu">element_blank</span>(),</span>
-<span id="cb7-66"><a href="#cb7-66" aria-hidden="true" tabindex="-1"></a>        <span class="at">strip.text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">9</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyr)</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>sim_ar1_2d <span class="ot">&lt;-</span> <span class="cf">function</span>(n_year, n_age, rho_y, rho_a, sigma, <span class="at">seed =</span> <span class="dv">42</span>) {</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set.seed</span>(seed)</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Simulate AR1 in year</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>  y_proc <span class="ot">&lt;-</span> <span class="fu">numeric</span>(n_year)</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>  y_proc[<span class="dv">1</span>] <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">1</span>, <span class="dv">0</span>, sigma <span class="sc">/</span> <span class="fu">sqrt</span>(<span class="dv">1</span> <span class="sc">-</span> rho_y<span class="sc">^</span><span class="dv">2</span>))</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> (t <span class="cf">in</span> <span class="dv">2</span><span class="sc">:</span>n_year) {</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>    y_proc[t] <span class="ot">&lt;-</span> rho_y <span class="sc">*</span> y_proc[t <span class="sc">-</span> <span class="dv">1</span>] <span class="sc">+</span> <span class="fu">rnorm</span>(<span class="dv">1</span>, <span class="dv">0</span>, sigma)</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Simulate AR1 in age</span></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>  a_proc <span class="ot">&lt;-</span> <span class="fu">numeric</span>(n_age)</span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>  a_proc[<span class="dv">1</span>] <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">1</span>, <span class="dv">0</span>, sigma <span class="sc">/</span> <span class="fu">sqrt</span>(<span class="dv">1</span> <span class="sc">-</span> rho_a<span class="sc">^</span><span class="dv">2</span>))</span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> (a <span class="cf">in</span> <span class="dv">2</span><span class="sc">:</span>n_age) {</span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>    a_proc[a] <span class="ot">&lt;-</span> rho_a <span class="sc">*</span> a_proc[a <span class="sc">-</span> <span class="dv">1</span>] <span class="sc">+</span> <span class="fu">rnorm</span>(<span class="dv">1</span>, <span class="dv">0</span>, sigma)</span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Separable: outer product + noise</span></span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>  eps <span class="ot">&lt;-</span> <span class="fu">outer</span>(y_proc, a_proc) <span class="sc">+</span></span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>    <span class="fu">matrix</span>(<span class="fu">rnorm</span>(n_year <span class="sc">*</span> n_age, <span class="dv">0</span>, sigma <span class="sc">*</span> <span class="fl">0.3</span>), n_year, n_age)</span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Normalize each year</span></span>
+<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a>  sel <span class="ot">&lt;-</span> <span class="fu">t</span>(<span class="fu">apply</span>(eps, <span class="dv">1</span>, <span class="cf">function</span>(x) {</span>
+<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a>    ex <span class="ot">&lt;-</span> <span class="fu">exp</span>(x)</span>
+<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a>    ex <span class="sc">/</span> <span class="fu">mean</span>(ex)</span>
+<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a>  }))</span>
+<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a>  sel</span>
+<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb3-29"><a href="#cb3-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-30"><a href="#cb3-30" aria-hidden="true" tabindex="-1"></a>scenarios <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
+<span id="cb3-31"><a href="#cb3-31" aria-hidden="true" tabindex="-1"></a>  <span class="fu">list</span>(<span class="at">label =</span> <span class="st">&quot;High year, high age</span><span class="sc">\n</span><span class="st">(rho_y=0.9, rho_a=0.8)&quot;</span>,</span>
+<span id="cb3-32"><a href="#cb3-32" aria-hidden="true" tabindex="-1"></a>       <span class="at">rho_y =</span> <span class="fl">0.9</span>, <span class="at">rho_a =</span> <span class="fl">0.8</span>, <span class="at">sigma =</span> <span class="fl">0.3</span>),</span>
+<span id="cb3-33"><a href="#cb3-33" aria-hidden="true" tabindex="-1"></a>  <span class="fu">list</span>(<span class="at">label =</span> <span class="st">&quot;High year, low age</span><span class="sc">\n</span><span class="st">(rho_y=0.9, rho_a=0.2)&quot;</span>,</span>
+<span id="cb3-34"><a href="#cb3-34" aria-hidden="true" tabindex="-1"></a>       <span class="at">rho_y =</span> <span class="fl">0.9</span>, <span class="at">rho_a =</span> <span class="fl">0.2</span>, <span class="at">sigma =</span> <span class="fl">0.3</span>),</span>
+<span id="cb3-35"><a href="#cb3-35" aria-hidden="true" tabindex="-1"></a>  <span class="fu">list</span>(<span class="at">label =</span> <span class="st">&quot;Low year, high age</span><span class="sc">\n</span><span class="st">(rho_y=0.2, rho_a=0.8)&quot;</span>,</span>
+<span id="cb3-36"><a href="#cb3-36" aria-hidden="true" tabindex="-1"></a>       <span class="at">rho_y =</span> <span class="fl">0.2</span>, <span class="at">rho_a =</span> <span class="fl">0.8</span>, <span class="at">sigma =</span> <span class="fl">0.3</span>),</span>
+<span id="cb3-37"><a href="#cb3-37" aria-hidden="true" tabindex="-1"></a>  <span class="fu">list</span>(<span class="at">label =</span> <span class="st">&quot;Low year, low age</span><span class="sc">\n</span><span class="st">(rho_y=0.2, rho_a=0.2)&quot;</span>,</span>
+<span id="cb3-38"><a href="#cb3-38" aria-hidden="true" tabindex="-1"></a>       <span class="at">rho_y =</span> <span class="fl">0.2</span>, <span class="at">rho_a =</span> <span class="fl">0.2</span>, <span class="at">sigma =</span> <span class="fl">0.3</span>)</span>
+<span id="cb3-39"><a href="#cb3-39" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb3-40"><a href="#cb3-40" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-41"><a href="#cb3-41" aria-hidden="true" tabindex="-1"></a>n_year <span class="ot">&lt;-</span> <span class="dv">30</span></span>
+<span id="cb3-42"><a href="#cb3-42" aria-hidden="true" tabindex="-1"></a>n_age <span class="ot">&lt;-</span> <span class="dv">10</span></span>
+<span id="cb3-43"><a href="#cb3-43" aria-hidden="true" tabindex="-1"></a>ages <span class="ot">&lt;-</span> <span class="dv">3</span><span class="sc">:</span><span class="dv">12</span></span>
+<span id="cb3-44"><a href="#cb3-44" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-45"><a href="#cb3-45" aria-hidden="true" tabindex="-1"></a>all_data <span class="ot">&lt;-</span> <span class="fu">bind_rows</span>(<span class="fu">lapply</span>(<span class="fu">seq_along</span>(scenarios), <span class="cf">function</span>(i) {</span>
+<span id="cb3-46"><a href="#cb3-46" aria-hidden="true" tabindex="-1"></a>  sc <span class="ot">&lt;-</span> scenarios[[i]]</span>
+<span id="cb3-47"><a href="#cb3-47" aria-hidden="true" tabindex="-1"></a>  sel <span class="ot">&lt;-</span> <span class="fu">sim_ar1_2d</span>(n_year, n_age, sc<span class="sc">$</span>rho_y, sc<span class="sc">$</span>rho_a, sc<span class="sc">$</span>sigma, <span class="at">seed =</span> i)</span>
+<span id="cb3-48"><a href="#cb3-48" aria-hidden="true" tabindex="-1"></a>  <span class="fu">expand_grid</span>(<span class="at">year =</span> <span class="dv">1</span><span class="sc">:</span>n_year, <span class="at">age_idx =</span> <span class="dv">1</span><span class="sc">:</span>n_age) <span class="sc">%&gt;%</span></span>
+<span id="cb3-49"><a href="#cb3-49" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(</span>
+<span id="cb3-50"><a href="#cb3-50" aria-hidden="true" tabindex="-1"></a>      <span class="at">age =</span> ages[age_idx],</span>
+<span id="cb3-51"><a href="#cb3-51" aria-hidden="true" tabindex="-1"></a>      <span class="at">selectivity =</span> <span class="fu">as.vector</span>(sel),</span>
+<span id="cb3-52"><a href="#cb3-52" aria-hidden="true" tabindex="-1"></a>      <span class="at">scenario =</span> sc<span class="sc">$</span>label</span>
+<span id="cb3-53"><a href="#cb3-53" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb3-54"><a href="#cb3-54" aria-hidden="true" tabindex="-1"></a>}))</span>
+<span id="cb3-55"><a href="#cb3-55" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-56"><a href="#cb3-56" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(all_data, <span class="fu">aes</span>(<span class="at">x =</span> age, <span class="at">y =</span> year, <span class="at">fill =</span> selectivity)) <span class="sc">+</span></span>
+<span id="cb3-57"><a href="#cb3-57" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_tile</span>() <span class="sc">+</span></span>
+<span id="cb3-58"><a href="#cb3-58" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>scenario, <span class="at">ncol =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb3-59"><a href="#cb3-59" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_viridis_c</span>(<span class="at">name =</span> <span class="st">&quot;Selectivity&quot;</span>, <span class="at">option =</span> <span class="st">&quot;C&quot;</span>) <span class="sc">+</span></span>
+<span id="cb3-60"><a href="#cb3-60" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_reverse</span>() <span class="sc">+</span></span>
+<span id="cb3-61"><a href="#cb3-61" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;Age&quot;</span>, <span class="at">y =</span> <span class="st">&quot;Year&quot;</span>,</span>
+<span id="cb3-62"><a href="#cb3-62" aria-hidden="true" tabindex="-1"></a>       <span class="at">title =</span> <span class="st">&quot;Simulated time-varying selectivity surfaces&quot;</span>,</span>
+<span id="cb3-63"><a href="#cb3-63" aria-hidden="true" tabindex="-1"></a>       <span class="at">subtitle =</span> <span class="st">&quot;Separable AR1 in year and age dimensions&quot;</span>) <span class="sc">+</span></span>
+<span id="cb3-64"><a href="#cb3-64" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>(<span class="at">base_size =</span> <span class="dv">11</span>) <span class="sc">+</span></span>
+<span id="cb3-65"><a href="#cb3-65" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">panel.grid =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb3-66"><a href="#cb3-66" aria-hidden="true" tabindex="-1"></a>        <span class="at">strip.text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">9</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output-display">
 <div id="fig-tv-sim" class="quarto-float quarto-figure quarto-figure-center anchored">
@@ -2695,27 +2691,25 @@ Figure 1: Simulated 2D AR1 selectivity surfaces under different autocorrelation
 </div>
 </div>
 </div>
-<div id="cell-fig-tv-lines" class="cell">
-<details class="code-fold hidden">
+<div class="cell">
+<details class="code-fold">
 <summary>Show R code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fig-tv-lines</span></span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: &quot;Time-varying selectivity curves at selected years (high autocorrelation scenario).&quot;</span></span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>sel_mat <span class="ot">&lt;-</span> <span class="fu">sim_ar1_2d</span>(n_year, n_age, <span class="at">rho_y =</span> <span class="fl">0.9</span>, <span class="at">rho_a =</span> <span class="fl">0.8</span>, <span class="at">sigma =</span> <span class="fl">0.3</span>)</span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>sel_df <span class="ot">&lt;-</span> <span class="fu">expand_grid</span>(<span class="at">year =</span> <span class="dv">1</span><span class="sc">:</span>n_year, <span class="at">age_idx =</span> <span class="dv">1</span><span class="sc">:</span>n_age) <span class="sc">%&gt;%</span></span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">age =</span> ages[age_idx],</span>
-<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">selectivity =</span> <span class="fu">as.vector</span>(sel_mat)</span>
-<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
-<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(year <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">5</span>, <span class="dv">10</span>, <span class="dv">15</span>, <span class="dv">20</span>, <span class="dv">25</span>, <span class="dv">30</span>))</span>
-<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(sel_df, <span class="fu">aes</span>(<span class="at">x =</span> age, <span class="at">y =</span> selectivity, <span class="at">color =</span> <span class="fu">factor</span>(year))) <span class="sc">+</span></span>
-<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">linewidth =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
-<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_viridis_d</span>(<span class="at">name =</span> <span class="st">&quot;Year&quot;</span>, <span class="at">option =</span> <span class="st">&quot;D&quot;</span>) <span class="sc">+</span></span>
-<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="cn">NA</span>)) <span class="sc">+</span></span>
-<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;Age&quot;</span>, <span class="at">y =</span> <span class="st">&quot;Selectivity (mean-normalized)&quot;</span>,</span>
-<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a>       <span class="at">title =</span> <span class="st">&quot;Selectivity-at-age for selected years&quot;</span>) <span class="sc">+</span></span>
-<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>(<span class="at">base_size =</span> <span class="dv">11</span>) <span class="sc">+</span></span>
-<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">panel.grid.minor =</span> <span class="fu">element_blank</span>())</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>sel_mat <span class="ot">&lt;-</span> <span class="fu">sim_ar1_2d</span>(n_year, n_age, <span class="at">rho_y =</span> <span class="fl">0.9</span>, <span class="at">rho_a =</span> <span class="fl">0.8</span>, <span class="at">sigma =</span> <span class="fl">0.3</span>)</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>sel_df <span class="ot">&lt;-</span> <span class="fu">expand_grid</span>(<span class="at">year =</span> <span class="dv">1</span><span class="sc">:</span>n_year, <span class="at">age_idx =</span> <span class="dv">1</span><span class="sc">:</span>n_age) <span class="sc">%&gt;%</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">age =</span> ages[age_idx],</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">selectivity =</span> <span class="fu">as.vector</span>(sel_mat)</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(year <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">5</span>, <span class="dv">10</span>, <span class="dv">15</span>, <span class="dv">20</span>, <span class="dv">25</span>, <span class="dv">30</span>))</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(sel_df, <span class="fu">aes</span>(<span class="at">x =</span> age, <span class="at">y =</span> selectivity, <span class="at">color =</span> <span class="fu">factor</span>(year))) <span class="sc">+</span></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">linewidth =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_viridis_d</span>(<span class="at">name =</span> <span class="st">&quot;Year&quot;</span>, <span class="at">option =</span> <span class="st">&quot;D&quot;</span>) <span class="sc">+</span></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="cn">NA</span>)) <span class="sc">+</span></span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;Age&quot;</span>, <span class="at">y =</span> <span class="st">&quot;Selectivity (mean-normalized)&quot;</span>,</span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>       <span class="at">title =</span> <span class="st">&quot;Selectivity-at-age for selected years&quot;</span>) <span class="sc">+</span></span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>(<span class="at">base_size =</span> <span class="dv">11</span>) <span class="sc">+</span></span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">panel.grid.minor =</span> <span class="fu">element_blank</span>())</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output-display">
 <div id="fig-tv-lines" class="quarto-float quarto-figure quarto-figure-center anchored">
@@ -2738,9 +2732,20 @@ Figure 2: Time-varying selectivity curves at selected years (high autocorrelati
 <p><strong>Computational efficiency.</strong> The Kronecker structure avoids forming or factorizing the full joint precision matrix. Combined with RTMB’s automatic differentiation, gradients of the log-prior are computed at the same <span class="math inline">\(\mathcal{O}(B_f \cdot A)\)</span> cost as the density itself.</p>
 <p><strong>Interpretability.</strong> The parameter <span class="math inline">\(\rho_y\)</span> directly controls how quickly selectivity can change between years (high values produce slow drift, low values allow abrupt shifts), while <span class="math inline">\(\rho_a\)</span> controls the smoothness of the selectivity curve within any single year.</p>
 <p><strong>Integration with block structure.</strong> The change-year mechanism can be layered on top: the 2D AR1 prior applies to the matrix of block-specific selectivity patterns, not to every individual year. This reduces dimensionality further while still allowing the prior to borrow strength across blocks.</p>
+
 </section>
 
-</main>
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
+<div id="ref-linton2011_timevarying" class="csl-entry" role="listitem">
+Linton, Brenden C., and James R. Bence. 2011. <span>“Catch-at-Age Assessment in the Face of Time-Varying Selectivity.”</span> <em>ICES Journal of Marine Science</em> 68 (3): 611–25. <a href="https://doi.org/10.1093/icesjms/fsq173">https://doi.org/10.1093/icesjms/fsq173</a>.
+</div>
+<div id="ref-martell2014_good_practices_tvselex" class="csl-entry" role="listitem">
+Martell, Steven J. D., and Ian J. Stewart. 2014. <span>“Towards Defining Good Practices for Modeling Time-Varying Selectivity.”</span> <em>Fisheries Research</em> 158: 84–95. <a href="https://doi.org/10.1016/j.fishres.2013.11.001">https://doi.org/10.1016/j.fishres.2013.11.001</a>.
+</div>
+<div id="ref-xu2019_semiparam_ar_selex" class="csl-entry" role="listitem">
+Xu, Haikun, James T. Thorson, Richard D. Methot, and Ian G. Taylor. 2019. <span>“A New Semi-Parametric Method for Autocorrelated Age- and Time-Varying Selectivity in Age-Structured Assessment Models.”</span> <em>Canadian Journal of Fisheries and Aquatic Sciences</em> 76: 268–85. <a href="https://doi.org/10.1139/cjfas-2017-0446">https://doi.org/10.1139/cjfas-2017-0446</a>.
+</div>
+</div></section></div></main>
 <!-- /main column -->
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {

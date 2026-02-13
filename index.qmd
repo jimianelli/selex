@@ -72,6 +72,75 @@ with prior specification, parameter sensitivity analysis, and MCMC-based posteri
 evaluation. We then apply all to eastern Bering Sea walleye pollock data to
 illustrate practical trade-offs.
 
+## Review Scope and Literature Context {#sec-scope}
+
+This review focuses on methodological literature that is directly relevant to
+three practical assessment decisions: (i) choice of selectivity functional form,
+(ii) model selection among competing selectivity hypotheses, and (iii)
+construction of time-varying selectivity processes with explicit regularization.
+
+### Selectivity form choice in integrated assessments
+
+Operationally, selectivity in integrated assessments is best interpreted as the
+combined effect of gear contact/retention and fish availability, not as a purely
+mechanistic gear curve [@punt2013; @priviterajohnson2022]. In that setting, the
+choice of selectivity parameterization is consequential because it changes
+inference on spawning biomass, recruitment, and fishing mortality.
+
+Selectivity-form selection therefore requires both statistical and biological
+diagnostics, including residual pattern checks, sensitivity analyses, and
+information-based comparisons among plausible alternatives [@punt2013]. A key
+warning is that non-monotone selectivity can be strongly confounded with natural
+mortality, particularly when older ages are weakly informed by composition data
+[@thompson1994].
+
+### Gear-selectivity estimation foundations
+
+Classical selectivity-estimation literature remains important for assessment
+modeling because it clarifies what selectivity data can identify and where latent
+availability effects remain unresolved [@millar1999_size_selection;
+@wileman1996_ices_selectivity_manual]. This evidence base supports explicit
+regularization whenever flexible age-specific selectivity surfaces are estimated.
+
+### Time-varying selectivity literature
+
+Simulation studies show that time-varying selectivity can materially improve or
+degrade assessment performance depending on how process flexibility matches the
+data-generating mechanism [@linton2011_timevarying]. Practitioner guidance also
+emphasizes that subjective choices such as block boundaries, smoothing penalties,
+and process assumptions can dominate outcomes [@martell2014_good_practices_tvselex].
+
+Recent semi-parametric approaches formalize autocorrelation across both age and
+time, motivating separable latent-process structures that can be estimated within
+modern AD frameworks [@xu2019_semiparam_ar_selex]. Broader SCA model-selection and
+time-varying process work reinforces the same bias-variance trade-off
+[@wilberg2006_timevarying_q; @wilberg2008_dic_sca].
+
+## Statistical Framing as a Latent Process {#sec-latent}
+
+Although selectivity is often presented as a deterministic curve, it is more
+usefully viewed as a latent process that allocates fishing intensity over age and
+time. Under this framing, selecting a functional form is equivalent to selecting a
+prior precision structure on an unobserved selectivity surface.
+
+Low-dimensional parametric forms (for example, logistic and double logistic)
+impose strong structural priors and are robust when data are sparse. Flexible
+forms (for example, spline and time-varying AR structures) reduce structural bias
+risk, but require explicit regularization to prevent confounding and overfitting
+[@martell2014_good_practices_tvselex; @xu2019_semiparam_ar_selex].
+
+This perspective motivates three principles for applied assessments:
+
+1. Match effective selectivity complexity to data information content.
+2. Treat regularization (penalties/priors/precision structures) as essential, not optional.
+3. Use model-selection tools (AIC, DIC, cross-validation, posterior predictive checks)
+   to evaluate bias-variance trade-offs under explicit prior structure
+   [@punt2013; @wilberg2008_dic_sca].
+
+Within this unifying view, logistic, dome-shaped, spline, blocked, and AR(1)
+approaches differ primarily in the precision matrix implied for latent
+selectivity deviations, rather than only in curve geometry.
+
 
 ## Standard Logistic Selectivity {#sec-logistic}
 
@@ -95,8 +164,40 @@ illustrate practical trade-offs.
 
 ## Comparison and Discussion {#sec-discussion}
 
-*Placeholder: comparative analysis across selectivity families, including AIC/BIC,
-posterior predictive checks, and implications for management quantities.*
+The four selectivity families evaluated here span a practical gradient from
+low-dimensional structural assumptions to high-dimensional latent-process
+flexibility. The logistic model (@sec-logistic; @fig-logistic-scenarios) provides
+an interpretable baseline with strong monotonicity assumptions and minimal
+parameter burden. The double-logistic model (@sec-double-logistic;
+@tbl-dl-scenarios, @fig-dl-faceted, @fig-dl-sensitivity) adds biologically
+plausible dome-shape behavior, but also increases confounding risk with natural
+mortality and cohort effects when data support is limited [@thompson1994].
+
+Spline selectivity (@sec-spline; @fig-spline-basis; @fig-spline-examples) offers
+useful middle ground: flexible shape estimation with transparent control of
+roughness via penalization. In review terms, this is a semi-parametric compromise
+between rigid parametric forms and fully dynamic latent surfaces. The time-varying
+2D AR1 approach (@sec-timevarying; @fig-tv-sim; @fig-tv-lines) further extends
+flexibility by allowing coherent year-by-age evolution with explicit process
+structure, aligning with recent recommendations for autocorrelated selectivity
+deviations [@linton2011_timevarying; @xu2019_semiparam_ar_selex].
+
+For scientific review and operational assessment use, a defensible workflow is:
+
+1. Start with a parsimonious baseline (logistic or double logistic) and diagnose
+   fit deficiencies in composition residuals and retrospective patterns.
+2. Introduce additional flexibility (spline or time-varying structures) only when
+   diagnostics indicate systematic lack of fit and data support richer structure.
+3. Compare candidate models with complementary evidence, including information
+   criteria, predictive checks, and sensitivity of management quantities
+   [@punt2013; @wilberg2008_dic_sca].
+4. Report regularization choices and identifiability diagnostics explicitly,
+   because inferred selectivity dynamics are conditional on prior/penalty
+   assumptions [@martell2014_good_practices_tvselex; @priviterajohnson2022].
+
+Overall, the central trade-off is not whether one curve family is universally
+"best", but whether the assumed latent structure is commensurate with the
+available information and management objectives.
 
 
 ## References {.unnumbered}

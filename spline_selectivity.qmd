@@ -11,6 +11,12 @@ dome-shaped), a B-spline basis is used to represent selectivity as a smooth
 function of age, with the degree of smoothness controlled by a penalty on the
 second differences of the spline coefficients.
 
+This formulation is consistent with a broader selectivity-estimation literature
+that emphasizes flexible shape representation together with explicit
+regularization [@millar1999_size_selection; @wileman1996_ices_selectivity_manual].
+In assessment applications, spline penalties act as the key control on effective
+complexity and therefore on bias-variance trade-offs [@martell2014_good_practices_tvselex].
+
 ## Model definition
 
 Let $\mathbf{B}(a)$ be a B-spline basis matrix evaluated at ages $a$, with $K$

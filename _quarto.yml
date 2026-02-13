@@ -1,23 +1,18 @@
 project:
-  type: manuscript
+  type: default
   output-dir: docs
-
-manuscript:
-  article: index.qmd
-  notebooks:
-    - notebook: double_logistic_selectivity.qmd
-      title: "Double Logistic Selectivity"
-    - notebook: logistic_selectivity.qmd
-      title: "Standard Logistic Selectivity"
-    - notebook: spline_selectivity.qmd
-      title: "Spline-Based Selectivity"
-    - notebook: timevarying_selectivity.qmd
-      title: "Time-Varying 2D AR1 Selectivity"
-
-lightbox: true
+  render:
+    - index.qmd
+    - logistic_selectivity.qmd
+    - double_logistic_selectivity.qmd
+    - spline_selectivity.qmd
+    - timevarying_selectivity.qmd
 
 format:
   html:
+    lightbox: false
+    fig-link: false
+    embed-resources: true
     toc: true
     number-sections: true
     theme: cosmo

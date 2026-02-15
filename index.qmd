@@ -112,9 +112,12 @@ and process assumptions can dominate outcomes [@martell2014_good_practices_tvsel
 
 Recent semi-parametric approaches formalize autocorrelation across both age and
 time, motivating separable latent-process structures that can be estimated within
-modern AD frameworks [@xu2019_semiparam_ar_selex]. Broader SCA model-selection and
-time-varying process work reinforces the same bias-variance trade-off
-[@wilberg2006_timevarying_q; @wilberg2008_dic_sca].
+modern AD frameworks [@xu2019_semiparam_ar_selex]. A foundational applied example
+is the likelihood-based Southern Bluefin Tuna assessment of Butterworth et al.
+(2003), which allows temporally structured selectivity changes and treats
+catch-at-age data as error-prone rather than fixed [@butterworth2003_sbt_selectivity].
+Broader SCA model-selection and time-varying process work reinforces the same
+bias-variance trade-off [@wilberg2006_timevarying_q; @wilberg2008_dic_sca].
 
 ## Statistical Framing as a Latent Process {#sec-latent}
 
@@ -136,6 +139,12 @@ This perspective motivates three principles for applied assessments:
 3. Use model-selection tools (AIC, DIC, cross-validation, posterior predictive checks)
    to evaluate bias-variance trade-offs under explicit prior structure
    [@punt2013; @wilberg2008_dic_sca].
+
+Regularization can also be framed as numerical stabilization: penalties such as
+ridge/Tikhonov terms or spline roughness controls impose smoothness that improves
+conditioning and mitigates overfitting, echoing the numerical recipes literature
+on stabilization and controlled flexibility in nonlinear optimization
+[@press1992_numerical_recipes_c].
 
 Within this unifying view, logistic, dome-shaped, spline, blocked, and AR(1)
 approaches differ primarily in the precision matrix implied for latent
@@ -161,6 +170,37 @@ selectivity deviations, rather than only in curve geometry.
 
 {{< embed timevarying_selectivity.qmd >}}
 
+### Comparison of time-varying selectivity approaches
+
+```{r}
+#| label: tbl-timevarying-compare
+#| tbl-cap: "Comparison of time‑varying selectivity approaches in applied assessments."
+compare_tv <- data.frame(
+  Approach = c(
+    "Structured temporal selectivity (Butterworth et al. 2003)",
+    "Separable AR1 surface (this manuscript)",
+    "Block/time‑period selectivity"
+  ),
+  Structure = c(
+    "Pre‑specified temporal structure on selectivity changes",
+    "Autocorrelated deviations across age and time",
+    "Piecewise‑constant selectivity blocks"
+  ),
+  Strengths = c(
+    "Historical applied example; likelihood‑based CAA with error",
+    "Smooth evolution; explicit regularization",
+    "Transparent and easy to communicate"
+  ),
+  Risks = c(
+    "Potential confounding if structure is too rigid",
+    "Over‑flexibility if penalties are weak",
+    "Arbitrary block boundaries"
+  ),
+  check.names = FALSE
+)
+
+knitr::kable(compare_tv)
+```
 
 ## Comparison and Discussion {#sec-discussion}
 

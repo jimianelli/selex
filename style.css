@@ -3,3 +3,7 @@ body {
   max-width: 900px;
   margin: 0 auto;
 }
+/* Hide parent shell headings used only for cross-reference anchors around embeds. */
+h2.embed-shell {
+  display: none;
+}

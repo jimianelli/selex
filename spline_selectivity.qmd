@@ -26,12 +26,18 @@ $$
 \log\,\text{sel}(a) = \mathbf{B}(a)\,\boldsymbol{\beta}
 $$
 
-with selectivity normalized so the maximum equals 1:
+with selectivity normalized so the mean over a reference age range equals 1:
 
 $$
 \text{sel}(a) = \frac{\exp(\mathbf{B}(a)\,\boldsymbol{\beta})}
-{\max_a \exp(\mathbf{B}(a)\,\boldsymbol{\beta})}.
+{\frac{1}{|\mathcal{A}_{\text{ref}}|}\sum_{a' \in \mathcal{A}_{\text{ref}}}
+\exp(\mathbf{B}(a')\,\boldsymbol{\beta})}.
 $$
+
+Here, $\mathcal{A}_{\text{ref}}$ is a user-specified reference age range
+(typically ages expected to be most highly selected). This normalization keeps
+the objective smooth and differentiable, avoiding the non-differentiability
+introduced by a $\max(\cdot)$ denominator.
 
 Smoothness is enforced via a penalty on second differences:
 
@@ -73,9 +79,14 @@ ggplot(basis_df, aes(x = age, y = value, color = basis)) +
 ```{r example-curves}
 #| label: fig-spline-examples
 #| fig-cap: "Example spline selectivity curves with different coefficient vectors."
+ref_age_min <- 8
+ref_age_max <- 12
+
 spline_sel <- function(age, beta, B) {
-  log_sel <- B %*% beta
-  sel <- exp(log_sel - max(log_sel))
+  log_sel <- as.numeric(B %*% beta)
+  sel_raw <- exp(log_sel)
+  ref_idx <- age >= ref_age_min & age <= ref_age_max
+  sel <- sel_raw / mean(sel_raw[ref_idx])
   as.numeric(sel)
 }
 
@@ -105,9 +116,9 @@ curve_data <- examples %>%
 
 ggplot(curve_data, aes(x = age, y = selectivity, color = name)) +
   geom_line(linewidth = 1.2) +
-  scale_y_continuous(limits = c(0, 1.05)) +
+  scale_y_continuous(limits = c(0, NA)) +
   scale_color_brewer(palette = "Set2", name = "Shape") +
-  labs(x = "Age", y = "Selectivity",
+  labs(x = "Age", y = "Relative selectivity (reference-age mean = 1)",
        title = "Spline selectivity: example shapes") +
   theme_bw(base_size = 11) +
   theme(panel.grid.minor = element_blank())
@@ -123,11 +134,16 @@ penalty as a tuning parameter or estimated, and MCMC sampling.*
 #| echo: true
 library(RTMB)
 
+sel_ref_min <- 8
+sel_ref_max <- 12
+
 # Objective function skeleton
 f <- function(parms) {
   getAll(data, parms, warn = FALSE)
   log_sel <- B %*% beta
-  sel_hat <- exp(log_sel - max(log_sel))
+  sel_raw <- exp(log_sel)
+  ref_idx <- age >= sel_ref_min & age <= sel_ref_max
+  sel_hat <- sel_raw / mean(sel_raw[ref_idx])
 
   # Second-difference penalty
   K <- length(beta)

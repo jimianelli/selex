@@ -123,13 +123,13 @@ knitr::kable(
 )
 ```
 
-The scenario summary in @tbl-dl-scenarios lists the four parameter sets and the
+The scenario summary in [Table](#tbl-dl-scenarios) lists the four parameter sets and the
 derived inflection points ($\gamma_1$, $\gamma_2$) used in the selectivity
 scenarios.
 
 ## Faceted scenario curves
 
-Each scenario appears on its own panel in @fig-dl-faceted so the ascent,
+Each scenario appears on its own panel in [Figure](#fig-dl-faceted) so the ascent,
 descent, and dome width can be compared against the 50% and 95% reference
 lines.
 
@@ -166,7 +166,7 @@ p1_plot
 
 ## Overlay comparison
 
-All scenarios are overlaid in @fig-dl-overlay to highlight differences in peak
+All scenarios are overlaid in [Figure](#fig-dl-overlay) to highlight differences in peak
 age and decline shape when the curves are viewed on a common axis.
 
 ```{r plot-overlay}
@@ -197,7 +197,7 @@ p2_plot
 
 ## Parameter sensitivity analysis
 
-The three panels in @fig-dl-sensitivity show how each parameter changes the
+The three panels in [Figure](#fig-dl-sensitivity) show how each parameter changes the
 curve when the other two are held fixed.
 
 ```{r plot-sensitivity}
@@ -441,7 +441,7 @@ plot_mcmc_selectivity <- function(df, alpha = 0.1) {
 SparseNUTS::plot_marginals(fit_set1, pars = 1:3)
 ```
 
-The marginal posterior densities in @fig-dl-marginals summarize $(p_1, p_2,
+The marginal posterior densities in [Figure](#fig-dl-marginals) summarize $(p_1, p_2,
 p_3)$ under prior set 1.
 
 ```{r plot-pairs}

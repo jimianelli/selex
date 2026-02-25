@@ -54,15 +54,15 @@ maximum likelihood and posterior-based inference on selectivity parameters.
 
 We organize the comparison around four selectivity families:
 
-1. **Standard logistic** (@sec-logistic): the two-parameter ascending logistic,
+1. **Standard logistic** ([Section](#standard-logistic-selectivity)): the two-parameter ascending logistic,
    widely used for fisheries where retention is assumed to be monotonically
    increasing with age.
-2. **Double logistic** (@sec-double-logistic): a dome-shaped three-parameter
+2. **Double logistic** ([Section](#double-logistic-selectivity-3-parameter-formulation)): a dome-shaped three-parameter
    formulation allowing selectivity to decline at older ages, motivated by gear
    avoidance, ontogenetic habitat shifts, or differential availability.
-3. **Spline-based** (@sec-spline): a penalized B-spline approach offering flexible,
+3. **Spline-based** ([Section](#spline-based-selectivity)): a penalized B-spline approach offering flexible,
    data-driven selectivity shapes with smoothness controlled by a penalty parameter.
-4. **Time-varying 2D AR1** (@sec-timevarying): a separable autoregressive structure
+4. **Time-varying 2D AR1** ([Section](#time-varying-selectivity-with-2d-autoregressive-structure)): a separable autoregressive structure
    over year and age dimensions, allowing selectivity to evolve smoothly through
    time while maintaining age-specific coherence via a Kronecker-structured
    precision matrix.
@@ -151,22 +151,22 @@ approaches differ primarily in the precision matrix implied for latent
 selectivity deviations, rather than only in curve geometry.
 
 
-## Standard Logistic Selectivity {#sec-logistic}
+## Standard Logistic Selectivity {#sec-logistic .unnumbered .unlisted .embed-shell}
 
 {{< embed logistic_selectivity.qmd >}}
 
 
-## Double Logistic Selectivity {#sec-double-logistic}
+## Double Logistic Selectivity {#sec-double-logistic .unnumbered .unlisted .embed-shell}
 
 {{< embed double_logistic_selectivity.qmd >}}
 
 
-## Spline-Based Selectivity {#sec-spline}
+## Spline-Based Selectivity {#sec-spline .unnumbered .unlisted .embed-shell}
 
 {{< embed spline_selectivity.qmd >}}
 
 
-## Time-Varying Selectivity with 2D Autoregressive Structure {#sec-timevarying}
+## Time-Varying Selectivity with 2D Autoregressive Structure {#sec-timevarying .unnumbered .unlisted .embed-shell}
 
 {{< embed timevarying_selectivity.qmd >}}
 
@@ -206,18 +206,18 @@ knitr::kable(compare_tv)
 
 The four selectivity families evaluated here span a practical gradient from
 low-dimensional structural assumptions to high-dimensional latent-process
-flexibility. The logistic model (@sec-logistic; @fig-logistic-scenarios) provides
+flexibility. The logistic model ([Section](#standard-logistic-selectivity); [Figure](#fig-logistic-scenarios)) provides
 an interpretable baseline with strong monotonicity assumptions and minimal
-parameter burden. The double-logistic model (@sec-double-logistic;
-@tbl-dl-scenarios, @fig-dl-faceted, @fig-dl-sensitivity) adds biologically
+parameter burden. The double-logistic model ([Section](#double-logistic-selectivity-3-parameter-formulation);
+[Table](#tbl-dl-scenarios), [Figure](#fig-dl-faceted), [Figure](#fig-dl-sensitivity)) adds biologically
 plausible dome-shape behavior, but also increases confounding risk with natural
 mortality and cohort effects when data support is limited [@thompson1994].
 
-Spline selectivity (@sec-spline; @fig-spline-basis; @fig-spline-examples) offers
+Spline selectivity ([Section](#spline-based-selectivity); [Figure](#fig-spline-basis); [Figure](#fig-spline-examples)) offers
 useful middle ground: flexible shape estimation with transparent control of
 roughness via penalization. In review terms, this is a semi-parametric compromise
 between rigid parametric forms and fully dynamic latent surfaces. The time-varying
-2D AR1 approach (@sec-timevarying; @fig-tv-sim; @fig-tv-lines) further extends
+2D AR1 approach ([Section](#time-varying-selectivity-with-2d-autoregressive-structure); [Figure](#fig-tv-sim); [Figure](#fig-tv-lines)) further extends
 flexibility by allowing coherent year-by-age evolution with explicit process
 structure, aligning with recent recommendations for autocorrelated selectivity
 deviations [@linton2011_timevarying; @xu2019_semiparam_ar_selex].

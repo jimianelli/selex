@@ -1,0 +1,85 @@
+---
+title: "Selectivity Forms in Fisheries Stock Assessment: Annotated Starter Bibliography"
+author: "Jim Ianelli"
+format:
+  html:
+    toc: true
+    toc-depth: 2
+    number-sections: true
+bibliography: selectivity_refs.bib
+csl: https://www.zotero.org/styles/fisheries-research
+---
+
+## Scope
+
+This short annotated bibliography focuses on papers that are directly useful for discussing (i) **functional forms** for selectivity (e.g., logistic, dome-shaped, spline/semi-parametric), (ii) **model selection** among forms, and (iii) **time-varying / autocorrelated** selectivity structures and their consequences for estimability and bias.
+
+## Core papers for selectivity form choice in integrated assessments
+
+### Punt, Hurtado-Ferro & Whitten (2014): model selection for selectivity
+Punt et al. provide one of the clearest integrated-assessment-focused discussions of *why selectivity form matters* and *how to choose among competing forms*. Key contributions include:
+- framing selectivity in assessments as “gear selectivity + availability” (operationally),
+- practical selection tools (residual patterns, information criteria),
+- simulation-based synthesis on when you can (and cannot) reliably recover the “right” selectivity form.  
+[@punt2014_modelselect_selex]
+
+### Thompson (1994): confounding with natural mortality
+Thompson is the classic warning label: **non-monotone selectivity** can be confounded with **natural mortality** (and other processes), producing identifiability pathologies unless you have strong information elsewhere. This is foundational when motivating priors/constraints and when interpreting dome-shaped selectivity fits.  
+[@thompson1994_confounding]
+
+## Gear/selectivity-curve estimation foundations (useful for "what selectivity is")
+
+### Millar & Fryer (1999): estimating size-selection curves across gears
+A foundational review/tutorial for estimating selectivity curves (trawls, traps, nets, hooks), including model structures and inference approaches. It’s especially useful for clearly distinguishing:
+- *contact/retention vs availability* ideas,
+- what experimental designs identify (and what they don’t),
+- why flexible shapes need regularization.  
+[@millar1999_size_selection]
+
+### Wileman et al. (1996): ICES manual on measuring selectivity
+A practical methods manual (and heavily cited) that details experimental approaches for estimating gear selectivity (esp. towed gears), including study designs and common pitfalls. Handy for grounding the “data reality” behind the selectivity curves we estimate inside assessments.  
+[@wileman1996_ices_selectivity_manual]
+
+## Time-varying selectivity: consequences and "good practice"
+
+### Linton & Bence (2011): catch-at-age performance under time-varying selectivity
+Uses simulation-style comparisons to show how different time-varying selectivity parameterizations can lead to very different performance (including extreme biomass errors) when the estimation model mismatches the data-generating process. Great motivation for your “trade-off between flexibility and estimability” storyline.  
+[@linton2011_timevarying]
+
+### Martell & Stewart (2014): good practices for time-varying selectivity
+A practitioner-oriented paper on common time-varying approaches (time blocks vs penalized/random-walk type structures) and how subjective choices (block boundaries, penalties) influence outcomes. Useful both as guidance and as a springboard into more principled AR/precision-matrix approaches.  
+[@martell2014_good_practices_tvselex]
+
+### Xu, Thorson, Methot & Taylor (2019): semi-parametric autocorrelated age–year selectivity
+Directly relevant to your AR/2D structure interest: introduces a **semi-parametric** approach with an autocorrelated deviation component that can estimate both among-age and among-year autocorrelation in selectivity deviations, with simulation evaluation and a real case study.  
+[@xu2019_semiparam_ar_selex]
+
+## Optional “methods ecology” around time-varying components
+
+### Wilberg & Bence (2006): time-varying catchability estimators in SCA
+While focused on catchability rather than selectivity per se, it’s conceptually adjacent: it evaluates time-varying latent-process estimators and their performance, which is useful for framing random-walk/AR components and the bias–variance trade-offs.  
+[@wilberg2006_timevarying_q]
+
+### Wilberg & Bence (2008): DIC model selection in statistical catch-at-age
+A simulation-based look at DIC-based model selection/averaging in SCA contexts. Useful when you want to connect selectivity-form choice to broader model selection practice in age-structured frameworks.  
+[@wilberg2008_dic_sca]
+
+## Statistical Framing of Selectivity as a Latent Process
+
+In integrated age-structured models, selectivity is often presented as a deterministic curve (e.g., logistic or dome-shaped). Statistically, however, it is more usefully viewed as a latent process that governs how fishing mortality is distributed across ages. Under this framing, the choice of selectivity form is equivalent to imposing a prior structure on an unobserved age-specific fishing intensity surface.
+
+A standard parametric curve (e.g., logistic) implies a very strong structural prior: monotonicity and smoothness are enforced through a small set of parameters. Dome-shaped forms relax monotonicity but still impose low dimensionality. Spline or semi-parametric approaches increase flexibility by expanding the basis, but they require regularization to avoid overfitting. Penalized splines, random walks, or autoregressive (AR) structures can be interpreted as Gaussian Markov random fields (GMRFs), where smoothness and temporal coherence arise from the precision matrix rather than from a fixed curve shape.
+
+Time-varying selectivity extends this idea into two dimensions (age × year). Blocked approaches implicitly assume piecewise constancy, while random-walk or AR structures impose local smoothness in time. In a state-space interpretation, selectivity deviations evolve as a stochastic process, and the penalty term corresponds to an assumption about process variance. Thus, flexibility is controlled by the prior precision: too strong a penalty yields bias under real change; too weak a penalty produces confounding with recruitment, natural mortality, or catchability.
+
+This perspective clarifies several well-known pathologies. Confounding between dome-shaped selectivity and natural mortality arises because both can generate declining abundance at older ages. Similarly, poorly identified time-varying selectivity can absorb signals that might otherwise be attributed to cohort strength or effort dynamics. In each case, the issue is not merely curve choice but identifiability under limited information.
+
+Framing selectivity as a latent process emphasizes three practical principles:
+
+1. The effective complexity of selectivity should be matched to the information content of the data.
+2. Regularization (penalties, priors, precision structures) is not optional when flexibility increases.
+3. Model selection criteria (AIC, DIC, cross-validation) evaluate trade-offs between bias and variance under the assumed prior structure.
+
+Under this unifying view, logistic, dome-shaped, spline, block, and AR(1) approaches differ primarily in the structure of their implied precision matrices. This makes the connection to RTMB and similar frameworks explicit: selectivity form choice is fundamentally a choice about latent structure and prior precision, not simply about curve geometry.
+
+

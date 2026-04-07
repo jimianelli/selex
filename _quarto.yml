@@ -25,6 +25,7 @@ format:
     code-fold: true
     code-summary: "Show R code"
     code-tools: false
+    notebook-links: false
 
 execute:
   echo: true

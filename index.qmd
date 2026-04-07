@@ -114,10 +114,8 @@ Recent semi-parametric approaches formalize autocorrelation across both age and
 time, motivating separable latent-process structures that can be estimated within
 modern AD frameworks [@xu2019_semiparam_ar_selex]. A foundational applied example
 is the likelihood-based Southern Bluefin Tuna assessment of [@butterworth2003_sbt_selectivity].
-(2003), which allows temporally structured selectivity changes and treats
-catch-at-age data as error-prone rather than fixed. 
-Broader SCA model-selection and time-varying process work reinforces the same
-bias-variance trade-off [@wilberg2006_timevarying_q; @wilberg2008_dic_sca].
+This method allows temporally structured selectivity changes and treats
+catch-at-age data as error-prone rather than fixed. Broader SCA model-selection and time-varying process work reinforces the same bias-variance trade-off [@wilberg2006_timevarying_q; @wilberg2008_dic_sca].
 
 ## Statistical Framing as a Latent Process {#sec-latent}
 

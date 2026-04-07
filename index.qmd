@@ -166,10 +166,116 @@ selectivity deviations, rather than only in curve geometry.
 The generalized logistic (Richards) form is a practical extension of the standard
 and double logistic families when additional curvature is required, particularly
 for asymmetric transitions and near-plateau behavior. The interactive tool linked
-from Maunder's selectivity page ("Fitting Double Richards to Double Normal
-Selectivity") shows that a double generalized logistic can closely approximate a
-split-normal-with-plateau target while preserving smooth derivatives useful for
-optimization.
+from Maunder's selectivity page ([Fitting Double Richards to Double Normal
+Selectivity](https://capam.shinyapps.io/DoubleGeneralizedLogistic/)) shows that a
+double generalized logistic can closely approximate a split-normal-with-plateau
+target while preserving smooth derivatives useful for optimization.
+
+### Model definition
+
+For an ascending Richards curve at age $a$:
+
+$$
+\text{Richards}_{\uparrow}(a;\,a_{50},k,\nu)=
+\left(1+\exp\left[-k(a-a_{50})\right]\right)^{-1/\nu},
+$$
+
+where $a_{50}$ is an inflection-location parameter, $k>0$ controls transition
+rate, and $\nu>0$ controls asymmetry (shape).
+
+A descending limb can be written as:
+
+$$
+\text{Richards}_{\downarrow}(a;\,a_{50},k,\nu)=
+1-\left(1+\exp\left[-k(a-a_{50})\right]\right)^{-1/\nu}.
+$$
+
+A convenient double-Richards selectivity is then:
+
+$$
+\text{sel}(a)=
+\frac{
+\text{Richards}_{\uparrow}(a;\,a_{50,1},k_1,\nu_1)\,
+\text{Richards}_{\downarrow}(a;\,a_{50,2},k_2,\nu_2)
+}{
+\max_a\left[
+\text{Richards}_{\uparrow}(a;\,a_{50,1},k_1,\nu_1)\,
+\text{Richards}_{\downarrow}(a;\,a_{50,2},k_2,\nu_2)
+\right]
+},
+$$
+
+which scales peak selectivity to 1.0.
+
+### Optional parameter settings
+
+```{r richards-scenario-table}
+#| label: tbl-richards-scenarios
+#| tbl-cap: "Optional parameter settings for double-Richards selectivity examples."
+richards_scenarios <- tibble::tibble(
+  scenario = c(
+    "Near-symmetric dome",
+    "Fast rise, slow decline",
+    "Slow rise, fast decline",
+    "Broad plateau-like dome"
+  ),
+  a50_up = c(4.5, 4.0, 5.2, 4.8),
+  k_up = c(1.2, 2.0, 0.8, 1.1),
+  nu_up = c(1.0, 0.7, 1.4, 0.8),
+  a50_down = c(9.8, 10.5, 9.5, 11.0),
+  k_down = c(1.1, 0.8, 1.9, 0.7),
+  nu_down = c(1.0, 1.4, 0.7, 1.3)
+)
+
+knitr::kable(richards_scenarios, digits = 2)
+```
+
+```{r richards-scenario-figure}
+#| label: fig-richards-scenarios
+#| fig-cap: "Example double-Richards selectivity curves under optional parameter settings."
+richards_up <- function(age, a50, k, nu) {
+  (1 + exp(-k * (age - a50)))^(-1 / nu)
+}
+
+richards_down <- function(age, a50, k, nu) {
+  1 - richards_up(age, a50, k, nu)
+}
+
+double_richards_sel <- function(age, a50_up, k_up, nu_up, a50_down, k_down, nu_down) {
+  raw <- richards_up(age, a50_up, k_up, nu_up) *
+    richards_down(age, a50_down, k_down, nu_down)
+  raw / max(raw)
+}
+
+ages <- seq(1, 15, by = 0.1)
+
+richards_df <- richards_scenarios |>
+  dplyr::rowwise() |>
+  dplyr::do({
+    s <- .
+    tibble::tibble(
+      scenario = s$scenario,
+      age = ages,
+      selectivity = double_richards_sel(
+        age = ages,
+        a50_up = s$a50_up, k_up = s$k_up, nu_up = s$nu_up,
+        a50_down = s$a50_down, k_down = s$k_down, nu_down = s$nu_down
+      )
+    )
+  }) |>
+  dplyr::ungroup()
+
+ggplot2::ggplot(richards_df, ggplot2::aes(x = age, y = selectivity, color = scenario)) +
+  ggplot2::geom_line(linewidth = 1.1) +
+  ggplot2::scale_y_continuous(limits = c(0, 1.05), breaks = seq(0, 1, by = 0.25)) +
+  ggplot2::labs(
+    x = "Age",
+    y = "Selectivity",
+    color = "Scenario"
+  ) +
+  ggplot2::theme_bw(base_size = 11) +
+  ggplot2::theme(panel.grid.minor = ggplot2::element_blank())
+```
 
 In assessment practice, this flexibility can reduce structural bias relative to
 overly rigid parametric shapes, but it also introduces additional parameters and

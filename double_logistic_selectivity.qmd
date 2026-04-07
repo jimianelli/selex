@@ -388,6 +388,10 @@ sdrep <- sdreport(obj)
 
 ## MCMC evaluation
 
+The MCMC chunks in this notebook are currently set with `eval: false`, so these
+figures and posterior summaries are not rendered by default. To generate them,
+set `eval: true` for the MCMC chunks and render the document.
+
 ```{r mcmc-run}
 #| eval: false
 #| echo: true
@@ -459,6 +463,9 @@ plot_mcmc_selectivity(df_set1)
 ```
 
 ### Additional prior sets
+
+This section is also code-defined with `eval: false`; therefore, no additional
+prior-set outputs appear in default renders unless those chunks are enabled.
 
 ```{r mcmc-prior-sets}
 #| eval: false

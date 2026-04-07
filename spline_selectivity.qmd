@@ -1,6 +1,6 @@
 ---
 title: "Spline-Based Selectivity"
-subtitle: "Penalized B-spline selectivity with smoothness control"
+subtitle: "Penalized B-spline selectivity with smoothness control."
 ---
 
 ## Overview

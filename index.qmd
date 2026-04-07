@@ -52,7 +52,7 @@ differentiation, Laplace approximation for random effects, and integration with
 Bayesian sampling via SparseNUTS, making it a natural platform for exploring both
 maximum likelihood and posterior-based inference on selectivity parameters.
 
-We organize the comparison around four selectivity families:
+We organize the comparison around five selectivity families:
 
 1. **Standard logistic** ([Section](#standard-logistic-selectivity)): the two-parameter ascending logistic,
    widely used for fisheries where retention is assumed to be monotonically
@@ -60,9 +60,12 @@ We organize the comparison around four selectivity families:
 2. **Double logistic** ([Section](#double-logistic-selectivity-3-parameter-formulation)): a dome-shaped three-parameter
    formulation allowing selectivity to decline at older ages, motivated by gear
    avoidance, ontogenetic habitat shifts, or differential availability.
-3. **Spline-based** ([Section](#spline-based-selectivity)): a penalized B-spline approach offering flexible,
+3. **Generalized logistic (Richards)** ([Section](#sec-richards)): a flexible extension of logistic selectivity
+   that can represent asymmetric transitions and plateau-like behavior while
+   remaining smooth and differentiable.
+4. **Spline-based** ([Section](#spline-based-selectivity)): a penalized B-spline approach offering flexible,
    data-driven selectivity shapes with smoothness controlled by a penalty parameter.
-4. **Time-varying 2D AR1** ([Section](#time-varying-selectivity-with-2d-autoregressive-structure)): a separable autoregressive structure
+5. **Time-varying 2D AR1** ([Section](#time-varying-selectivity-with-2d-autoregressive-structure)): a separable autoregressive structure
    over year and age dimensions, allowing selectivity to evolve smoothly through
    time while maintaining age-specific coherence via a Kronecker-structured
    precision matrix.
@@ -158,6 +161,28 @@ selectivity deviations, rather than only in curve geometry.
 
 {{< embed double_logistic_selectivity.qmd >}}
 
+## Generalized Logistic (Richards) {#sec-richards}
+
+The generalized logistic (Richards) form is a practical extension of the standard
+and double logistic families when additional curvature is required, particularly
+for asymmetric transitions and near-plateau behavior. The interactive tool linked
+from Maunder's selectivity page ("Fitting Double Richards to Double Normal
+Selectivity") shows that a double generalized logistic can closely approximate a
+split-normal-with-plateau target while preserving smooth derivatives useful for
+optimization.
+
+In assessment practice, this flexibility can reduce structural bias relative to
+overly rigid parametric shapes, but it also introduces additional parameters and
+therefore greater identifiability risk. With limited composition information,
+shape parameters can become weakly determined and confound with other model
+components such as natural mortality, catchability, and recruitment patterns.
+
+A defensible use case is as a candidate or sensitivity model, with regularization
+or parameter bounds and explicit comparison against simpler alternatives
+(logistic/double logistic) and semi-parametric alternatives (for example, spline
+selectivity). Diagnostics should include residual structure, parameter-profile
+behavior, and sensitivity of management quantities to the added flexibility.
+
 
 ## Spline-Based Selectivity {#sec-spline .unnumbered .unlisted .embed-shell}
 
@@ -202,7 +227,7 @@ knitr::kable(compare_tv)
 
 ## Comparison and Discussion {#sec-discussion}
 
-The four selectivity families evaluated here span a practical gradient from
+The five selectivity families evaluated here span a practical gradient from
 low-dimensional structural assumptions to high-dimensional latent-process
 flexibility. The logistic model ([Section](#standard-logistic-selectivity); [Figure](#fig-logistic-scenarios)) provides
 an interpretable baseline with strong monotonicity assumptions and minimal
@@ -210,6 +235,12 @@ parameter burden. The double-logistic model ([Section](#double-logistic-selectiv
 [Table](#tbl-dl-scenarios), [Figure](#fig-dl-faceted), [Figure](#fig-dl-sensitivity)) adds biologically
 plausible dome-shape behavior, but also increases confounding risk with natural
 mortality and cohort effects when data support is limited [@thompson1994].
+
+The generalized logistic (Richards) option ([Section](#sec-richards)) extends this
+parametric family by allowing asymmetric transitions and plateau-like behavior.
+Its additional flexibility can improve fit when conventional logistic forms are
+too restrictive, but the associated parameter expansion requires stronger
+identifiability checks and careful regularization.
 
 Spline selectivity ([Section](#spline-based-selectivity); [Figure](#fig-spline-basis); [Figure](#fig-spline-examples)) offers
 useful middle ground: flexible shape estimation with transparent control of

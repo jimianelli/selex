@@ -159,7 +159,7 @@ selectivity deviations, rather than only in curve geometry.
 
 ## Double Logistic Selectivity {#sec-double-logistic .unnumbered .unlisted .embed-shell}
 
-{{< embed double_logistic_selectivity.qmd >}}
+{{< include double_logistic_selectivity_body.qmd >}}
 
 ## Generalized Logistic (Richards) {#sec-richards}
 

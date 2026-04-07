@@ -2797,13 +2797,51 @@ Figure 3: Sensitivity to p1, p2, and p3 with other parameters fixed.
 \mu = \log(m), \qquad \sigma = \sqrt{\log(\text{CV}^2 + 1)}.
 \]</span></p>
 <p>Parameter <span class="math inline">\(p_2\)</span> can remain unconstrained (normal prior) or be modeled on the log scale if you want to enforce <span class="math inline">\(p_2 &gt; 0\)</span>.</p>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>outer mgc:  0 </code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>outer mgc:  0 
+outer mgc:  0.006737636 
+outer mgc:  0.006737636 
+outer mgc:  0.001 
+outer mgc:  0.001 
+outer mgc:  0.003252194 
+outer mgc:  0.003252194 
+outer mgc:  2.5 </code></pre>
+</div>
+</div>
 </section>
 <section id="mcmc-evaluation" class="level2" data-number="8">
 <h2 data-number="8" class="anchored" data-anchor-id="mcmc-evaluation"><span class="header-section-number">8</span> MCMC evaluation</h2>
 <div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>
+
+Gradient evaluation took 4.1e-05 seconds
+1000 transitions using 10 leapfrog steps per transition would take 0.41 seconds.
+Adjust your expectations accordingly!
+
+
+
+ Elapsed Time: 0.018 seconds (Warm-up)
+               0.196 seconds (Sampling)
+               0.214 seconds (Total)
+
+
+
+Model &#39;selectivity_set1&#39; has 3 pars, and was fit using NUTS with a &#39;diag&#39; metric
+1 chain(s) of 1300 total iterations (150 warmup) were used
+Average run time per chain was 0.21 seconds 
+Minimum ESS=360.7 (31.37%), and maximum Rhat=1.015
+There were 0 divergences after warmup</code></pre>
+</div>
+</div>
+<div class="cell">
 <details class="code-fold">
 <summary>Show R code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>SparseNUTS<span class="sc">::</span><span class="fu">plot_marginals</span>(fit_set1, <span class="at">pars =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>SparseNUTS<span class="sc">::</span><span class="fu">plot_marginals</span>(fit_set1, <span class="at">pars =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output-display">
 <div id="fig-dl-marginals" class="quarto-float quarto-figure quarto-figure-center anchored">
@@ -2823,7 +2861,7 @@ p_3)\)</span> under prior set 1.</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Show R code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">pairs</span>(fit_set1)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">pairs</span>(fit_set1)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output-display">
 <div id="fig-dl-pairs" class="quarto-float quarto-figure quarto-figure-center anchored">
@@ -2841,8 +2879,8 @@ Figure 5: Pairwise posterior scatterplots for selectivity parameters.
 <div class="cell">
 <details class="code-fold">
 <summary>Show R code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>df_set1 <span class="ot">&lt;-</span> <span class="fu">mcmc_selectivity_df</span>(fit_set1, age)</span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_mcmc_selectivity</span>(df_set1)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>df_set1 <span class="ot">&lt;-</span> <span class="fu">mcmc_selectivity_df</span>(fit_set1, age)</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_mcmc_selectivity</span>(df_set1)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output-display">
 <div id="fig-dl-mcmc-set1" class="quarto-float quarto-figure quarto-figure-center anchored">
@@ -2860,10 +2898,54 @@ Figure 6: MCMC selectivity draws for prior set 1 (p1 median 1.5, p3 median 2.5,
 <section id="additional-prior-sets" class="level3" data-number="8.1">
 <h3 data-number="8.1" class="anchored" data-anchor-id="additional-prior-sets"><span class="header-section-number">8.1</span> Additional prior sets</h3>
 <div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>
+
+Gradient evaluation took 2.6e-05 seconds
+1000 transitions using 10 leapfrog steps per transition would take 0.26 seconds.
+Adjust your expectations accordingly!
+
+
+
+ Elapsed Time: 0.018 seconds (Warm-up)
+               0.13 seconds (Sampling)
+               0.148 seconds (Total)
+
+
+
+Model &#39;selectivity_set2&#39; has 3 pars, and was fit using NUTS with a &#39;diag&#39; metric
+1 chain(s) of 1300 total iterations (150 warmup) were used
+Average run time per chain was 0.15 seconds 
+Minimum ESS=393.8 (34.24%), and maximum Rhat=1.003
+There were 0 divergences after warmup</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+
+Gradient evaluation took 2.2e-05 seconds
+1000 transitions using 10 leapfrog steps per transition would take 0.22 seconds.
+Adjust your expectations accordingly!
+
+
+
+ Elapsed Time: 0.017 seconds (Warm-up)
+               0.129 seconds (Sampling)
+               0.146 seconds (Total)
+
+
+
+Model &#39;selectivity_set3&#39; has 3 pars, and was fit using NUTS with a &#39;diag&#39; metric
+1 chain(s) of 1300 total iterations (150 warmup) were used
+Average run time per chain was 0.15 seconds 
+Minimum ESS=427 (37.13%), and maximum Rhat=1.005
+There were 0 divergences after warmup</code></pre>
+</div>
+</div>
+<div class="cell">
 <details class="code-fold">
 <summary>Show R code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>df_set2 <span class="ot">&lt;-</span> <span class="fu">mcmc_selectivity_df</span>(fit_set2, age)</span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_mcmc_selectivity</span>(df_set2)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>df_set2 <span class="ot">&lt;-</span> <span class="fu">mcmc_selectivity_df</span>(fit_set2, age)</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_mcmc_selectivity</span>(df_set2)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output-display">
 <div id="fig-dl-mcmc-set2" class="quarto-float quarto-figure quarto-figure-center anchored">
@@ -2881,8 +2963,8 @@ Figure 7: MCMC selectivity draws for prior set 2 (p1 median 1.5, p3 median 8, p
 <div class="cell">
 <details class="code-fold">
 <summary>Show R code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>df_set3 <span class="ot">&lt;-</span> <span class="fu">mcmc_selectivity_df</span>(fit_set3, age)</span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_mcmc_selectivity</span>(df_set3)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>df_set3 <span class="ot">&lt;-</span> <span class="fu">mcmc_selectivity_df</span>(fit_set3, age)</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_mcmc_selectivity</span>(df_set3)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output-display">
 <div id="fig-dl-mcmc-set3" class="quarto-float quarto-figure quarto-figure-center anchored">
